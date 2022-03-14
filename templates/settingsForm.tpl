@@ -29,10 +29,6 @@
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.passwordInstructions"}</span>
 		{fbvElement type="text" id="instId" value=$instId label="plugins.generic.lucene.settings.instId" required=true}
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.instIdInstructions"}</span>
-		{fbvFormSection list=true}
-			{fbvElement type="checkbox" id="useProxySettings" value="1" checked=$useProxySettings label="plugins.generic.lucene.settings.useProxySettings"}
-			<span class="instruct">{translate key="plugins.generic.lucene.settings.useProxySettingsInstructions"}</span>
-		{/fbvFormSection}
 
 		{fbvFormSection list=true}
 			{fbvElement type="checkbox" id="useSolr7" value="1" checked=$useSolr7 label="plugins.generic.lucene.settings.solr7"}

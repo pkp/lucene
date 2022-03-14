@@ -296,12 +296,6 @@ msgstr ""
 msgid "plugins.generic.lucene.settings.usageStatistics"
 msgstr "Statistiche d'uso"
 
-msgid "plugins.generic.lucene.settings.useProxySettings"
-msgstr "Parmatri del proxy"
-
-msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
-msgstr "Usa i parametri del proxy prendendoli dal file config.inc.php per le richieste al Solr web service."
-
 msgid "plugins.generic.lucene.settings.username"
 msgstr "Username"
 

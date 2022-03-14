@@ -98,21 +98,20 @@ class LuceneSettingsForm extends Form {
 	 */
 	function fetch($request, $template = null, $display = FALSE) {
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign(array(
-		  'pluginName' => $this->_plugin->getName(),
-		  'autosuggestTypes' => $this->_getAutosuggestTypes(),
-		  'metricName' => $metricName = $this->_getDefaultMetric(),
-		  'noMainMetric',
-		  empty($metricName),
-		  'serverIsAvailable' => $this->_embeddedServer->isAvailable(),
-		  'serverIsRunning' => $this->_embeddedServer->isRunning(),
-		  'journalsToReindex' => $this->_getJournalsToReindex(),
-		  'canWriteBoostFile' => is_writable(Config::getVar('files', 'files_dir') . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'data'),
-		  'canExecuteResult' => $this->_embeddedServer->_scriptsAreExecutable() ? '<span class="fa fa-smile-o" style="color: green;"></span>' : '<span class="fa fa-frown" style="color: red;"></span>',
-		  'filesAreWriteableResult' => $this->_embeddedServer->_filesAreWriteable() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
-		  'solrIsRunningUnderPHPUser' => $this->_embeddedServer->_solrIsRunningUnderPHPUser() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
-		  'safemodeOrExecDisabled' => $this->_embeddedServer->_safemodeOrExecDisabled() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
-		));
+		$templateMgr->assign([
+			'pluginName' => $this->_plugin->getName(),
+			'autosuggestTypes' => $this->_getAutosuggestTypes(),
+			'metricName' => $metricName = $this->_getDefaultMetric(),
+			'noMainMetric' => empty($metricName),
+			'serverIsAvailable' => $this->_embeddedServer->isAvailable(),
+			'serverIsRunning' => $this->_embeddedServer->isRunning(),
+			'journalsToReindex' => $this->_getJournalsToReindex(),
+			'canWriteBoostFile' => is_writable(Config::getVar('files', 'files_dir') . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'data'),
+			'canExecuteResult' => $this->_embeddedServer->_scriptsAreExecutable() ? '<span class="fa fa-smile-o" style="color: green;"></span>' : '<span class="fa fa-frown" style="color: red;"></span>',
+			'filesAreWriteableResult' => $this->_embeddedServer->_filesAreWriteable() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
+			'solrIsRunningUnderPHPUser' => $this->_embeddedServer->_solrIsRunningUnderPHPUser() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
+			'safemodeOrExecDisabled' => $this->_embeddedServer->_safemodeOrExecDisabled() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
+		]);
 
 		$templateMgr->addStylesheet('fontawesome', $request->getBaseUrl() . '/' . '/lib/pkp/styles/fontawesome/fontawesome.css');
 
@@ -125,34 +124,33 @@ class LuceneSettingsForm extends Form {
 	function execute() {
 		$plugin = $this->_plugin;
 		$formFields[] = 'password';
-        $formFieldsString = $this->_getFormFieldsString();
-        $formFieldsBool = $this->_getFormFieldsBool();
-        foreach($formFieldsBool as $formField) {
-            $plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'bool');
-        }
-        $formFieldsString[] = 'password';
-        foreach($formFieldsString as $formField) {
-            $plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'string');
-        }
+		$formFieldsString = $this->_getFormFieldsString();
+		$formFieldsBool = $this->_getFormFieldsBool();
+		foreach($formFieldsBool as $formField) {
+			$plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'bool');
+		}
+		$formFieldsString[] = 'password';
+		foreach($formFieldsString as $formField) {
+			$plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'string');
+		}
 	}
 
 
 	function _getFormFieldsBool() {
-        return  array(
-            'autosuggest',
-            'spellcheck',
-            'pullIndexing',
-            'simdocs',
-            'highlighting',
-            'facetCategoryDiscipline',
-            'facetCategorySubject',
-            'facetCategoryType',
-            'facetCategoryCoverage',
-            'facetCategoryJournalTitle',
-            'facetCategoryAuthors',
-            'facetCategoryPublicationDate',
-            'customRanking',
-            'useProxySettings',
+		return [
+			'autosuggest',
+			'spellcheck',
+			'pullIndexing',
+			'simdocs',
+			'highlighting',
+			'facetCategoryDiscipline',
+			'facetCategorySubject',
+			'facetCategoryType',
+			'facetCategoryCoverage',
+			'facetCategoryJournalTitle',
+			'facetCategoryAuthors',
+			'facetCategoryPublicationDate',
+			'customRanking',
 			'orderByRelevance',
 			'orderByAuthor',
 			'orderByIssue',
@@ -160,17 +158,17 @@ class LuceneSettingsForm extends Form {
 			'orderByArticle',
 			'orderByJournal',
 			'useSolr7',
-        );
-    }
+		];
+	}
 
-    function _getFormFieldsString() {
-	    return array(
-            'searchEndpoint',
-            'username',
-            'instId',
-            'autosuggestType'
-        );
-    }
+	function _getFormFieldsString() {
+		return [
+			'searchEndpoint',
+			'username',
+			'instId',
+			'autosuggestType'
+		];
+	}
 	//
 	// Private helper methods
 	//
@@ -181,7 +179,7 @@ class LuceneSettingsForm extends Form {
 	 * @return array
 	 */
 	function _getFormFields() {
-	    return array_merge($this->_getFormFieldsBool(), $this->_getFormFieldsString());
+		return array_merge($this->_getFormFieldsBool(), $this->_getFormFieldsString());
 	}
 
 	/**
@@ -189,10 +187,10 @@ class LuceneSettingsForm extends Form {
 	 * @return array
 	 */
 	function _getAutosuggestTypes() {
-		return array(
-		  SOLR_AUTOSUGGEST_SUGGESTER => __('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
-		  SOLR_AUTOSUGGEST_FACETING => __('plugins.generic.lucene.settings.autosuggestTypeFaceting')
-		);
+		return [
+			SOLR_AUTOSUGGEST_SUGGESTER => __('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
+			SOLR_AUTOSUGGEST_FACETING => __('plugins.generic.lucene.settings.autosuggestTypeFaceting'),
+		];
 	}
 
 	/**
@@ -204,13 +202,12 @@ class LuceneSettingsForm extends Form {
 		static $journalsToReindex;
 
 		if (is_null($journalsToReindex)) {
-			$journalDao = DAORegistry::getDAO('JournalDAO');
-			/* @var $journalDao JournalDAO */
-			$journalsToReindex = array(
-			  '' => __('plugins.generic.lucene.settings.indexRebuildAllJournals')
-			);
+			$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
+			$journalsToReindex = [
+				'' => __('plugins.generic.lucene.settings.indexRebuildAllJournals')
+			];
 			foreach ($journalDao->getTitles(TRUE) as $journalId => $journalName) {
-				$journalsToReindex[$journalId] = __('plugins.generic.lucene.settings.indexRebuildJournal', array('journalName' => $journalName));
+				$journalsToReindex[$journalId] = __('plugins.generic.lucene.settings.indexRebuildJournal', ['journalName' => $journalName]);
 			}
 		}
 

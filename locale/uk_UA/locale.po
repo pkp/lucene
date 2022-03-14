@@ -299,12 +299,6 @@ msgstr ""
 msgid "plugins.generic.lucene.settings.usageStatistics"
 msgstr "Статистика використання"
 
-msgid "plugins.generic.lucene.settings.useProxySettings"
-msgstr "Налаштування проксі-сервера"
-
-msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
-msgstr "Використовувати налаштування проксі-сервера з файлу config.inc.php для запитів веб-служби Solr."
-
 msgid "plugins.generic.lucene.settings.username"
 msgstr "Ім'я користувача"
 

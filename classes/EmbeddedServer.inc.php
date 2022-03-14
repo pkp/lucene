@@ -223,7 +223,7 @@ class EmbeddedServer {
 	 */
 	function _scriptsAreExecutable() {
 		$scriptDir = $this->_getScriptDirectory();
-		foreach(array('start', 'stop', 'check') as $script) {
+		foreach(['start', 'stop', 'check'] as $script) {
 			$scriptPath = $this->_getScriptPath($script);
 			if (Core::isWindows()) {
 				if (!is_readable($scriptPath)) return false;
@@ -242,7 +242,7 @@ class EmbeddedServer {
 	 */
 	function _filesAreWriteable() {
 		$filesDir = Config::getVar('files', 'files_dir');
-		foreach(array('data', 'solr-java.log', 'solr-php.log', 'solr.pid') as $fileName) {
+		foreach(['data', 'solr-java.log', 'solr-php.log', 'solr.pid'] as $fileName) {
 			$filePath = $filesDir . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . $fileName;
 			if (file_exists($filePath) && !is_writable($filePath)) {
 				return false;

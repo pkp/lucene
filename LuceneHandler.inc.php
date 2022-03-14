@@ -33,7 +33,7 @@ class LuceneHandler extends Handler {
 		$this->validate(null, $request);
 
 		// Check whether auto-suggest is enabled.
-		$suggestionList = array();
+		$suggestionList = [];
 		$lucenePlugin = $this->_getLucenePlugin();
 		$enabled = (bool)$lucenePlugin->getSetting(CONTEXT_SITE, 'autosuggest');
 		if ($enabled) {
@@ -67,7 +67,7 @@ class LuceneHandler extends Handler {
 			// Prepare a suggestion list as understood by the
 			// autocomplete JS handler.
 			foreach($suggestions as $suggestion) {
-				$suggestionList[] = array('label' => $suggestion, 'value' => $suggestion);
+				$suggestionList[] = ['label' => $suggestion, 'value' => $suggestion];
 			}
 		}
 
@@ -103,7 +103,7 @@ class LuceneHandler extends Handler {
 		// Execute the pull indexing transaction.
 		$solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
 		$solrWebService->pullChangedArticles(
-			array($this, 'pullIndexingCallback'), SOLR_INDEXING_MAX_BATCHSIZE
+			[$this, 'pullIndexingCallback'], SOLR_INDEXING_MAX_BATCHSIZE
 		);
 	}
 
@@ -142,9 +142,9 @@ class LuceneHandler extends Handler {
 
 		// Redirect to a search query with these
 		// terms.
-		$searchParams = array(
+		$searchParams = [
 			'query' => implode(' ', $searchTerms),
-		);
+		];
 		$request->redirect(null, 'search', 'search', null, $searchParams);
 	}
 

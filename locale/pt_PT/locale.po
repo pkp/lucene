@@ -278,12 +278,6 @@ msgstr ""
 "\t\t\t<li>O seu servidor web pode não ter permissões de escrita na pasta  'files/lucene/data'. Garanta que ambos, o servidor web e o servidor solr, têm acesso a esta pasta, e recarregue esta página.</li>\n"
 "\t\t</ul>"
 
-msgid "plugins.generic.lucene.settings.useProxySettings"
-msgstr "Configurações de proxy"
-
-msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
-msgstr "Use configurações de proxy do ficheiro config.inc.php para os pedidos ao serviço web Solr."
-
 msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
 msgstr "O plugin Lucene/Solr permite-lhe ajustar o peso relativo dos artigos na lista de resultados para uma pesquisa específica. Aumentar ou diminuir o peso não coloca diretamente um artigo mais acima (ou abaixo) de todos os restantes artigos. No entanto, irá ordená-los melhor (ou pior) do que o que o faria sem estas configurações. Colocar esta opção em \"nunca mostrar\" irá  completamente excluir os artigos desta secção nos resultados de pesquisa."
 

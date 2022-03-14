@@ -300,12 +300,6 @@ msgstr ""
 msgid "plugins.generic.lucene.settings.usageStatistics"
 msgstr "Brugsstatistik"
 
-msgid "plugins.generic.lucene.settings.useProxySettings"
-msgstr "Proxy-indstillinger"
-
-msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
-msgstr "Brug proxy-indstillinger fra filen config.inc.php til Solr webservice-anmodninger."
-
 msgid "plugins.generic.lucene.settings.username"
 msgstr "Brugernavn"
 

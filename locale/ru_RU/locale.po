@@ -303,12 +303,6 @@ msgstr ""
 msgid "plugins.generic.lucene.settings.usageStatistics"
 msgstr "Статистика использования"
 
-msgid "plugins.generic.lucene.settings.useProxySettings"
-msgstr "Настройки прокси-сервера"
-
-msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
-msgstr "Использовать настройки прокси-сервера из файла config.inc.php для запросов веб-службы Solr."
-
 msgid "plugins.generic.lucene.settings.username"
 msgstr "Имя пользователя"
 

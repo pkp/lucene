@@ -25,12 +25,12 @@ class SolrSearchRequest {
 	 * @var array A field->search phrase assignment defining fieldwise
 	 *  search phrases.
 	 */
-	var $_query = array();
+	var $_query = [];
 
 	/**
 	 * @var array An array of unique IDs to exclude.
 	 */
-	var $_excludedIds = array();
+	var $_excludedIds = [];
 
 	/**
 	 * @var integer For paginated queries: The page to be returned.
@@ -48,7 +48,7 @@ class SolrSearchRequest {
 	 */
 	var $_fromDate = null;
 
-    var $_authors = null;
+	var $_authors = null;
 	/**
 	 * @var string Timestamp representing the last publication date to be
 	 *  included in the result set. Null means: No limitation.
@@ -80,17 +80,17 @@ class SolrSearchRequest {
 	/**
 	 * @var boolean Enabled facet categories (none by default).
 	 */
-	var $_facetCategories = array();
+	var $_facetCategories = [];
 
 	/**
 	 * @var array A field->value->boost factor assignment.
 	 */
-	var $_boostFactors = array();
+	var $_boostFactors = [];
 
 	/**
 	 * @var array Fields with multiplicative boost values.
 	 */
-	var $_boostFields = array();
+	var $_boostFields = [];
 
 	/**
 	 * Constructor
@@ -214,21 +214,22 @@ class SolrSearchRequest {
 	function setFromDate($fromDate) {
 		$this->_fromDate = $fromDate;
 	}
-    /**
-     * Get the authors to be queried.
-     * @return Authors
-     */
-    function getAuthors() {
-        return $this->_authors;
-    }
 
-    /**
-     * Set the authors to be queried
-     * @param $journal Authors
-     */
-    function setAuthors($authors) {
-        $this->_authors = $authors;
-    }
+	/**
+	 * Get the authors to be queried.
+	 * @return Authors
+	 */
+	function getAuthors() {
+		return $this->_authors;
+	}
+
+	/**
+	 * Set the authors to be queried
+	 * @param $journal Authors
+	 */
+	function setAuthors($authors) {
+		$this->_authors = $authors;
+	}
 
 	/**
 	 * Get the last publication date
@@ -360,7 +361,7 @@ class SolrSearchRequest {
 
 		// Save the boost factor.
 		if (!isset($this->_boostFactors[$field])) {
-			$this->_boostFactors[$field] = array();
+			$this->_boostFactors[$field] = [];
 		}
 		$this->_boostFactors[$field][$value] = $boostFactor;
 	}
@@ -414,7 +415,7 @@ class SolrSearchRequest {
 				// An empty search field means "all fields".
 				$solrFields = array_values($indexFieldMap);
 			} else {
-				$solrFields = array();
+				$solrFields = [];
 				foreach($indexFieldMap as $ojsField => $solrField) {
 					// The search field bitmap may stand for
 					// several actual index fields (e.g. the index terms
