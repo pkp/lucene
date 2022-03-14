@@ -13,7 +13,7 @@
 <version>
 	<application>lucene</application>
 	<type>plugins.generic</type>
-	<release>1.2.0.1</release>
+	<release>1.3.0.0</release>
 	<date>2021-05-23</date>
 	<lazy-load>1</lazy-load>
 	<sitewide>1</sitewide>
