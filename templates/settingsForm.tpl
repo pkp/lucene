@@ -66,13 +66,13 @@
 			{fbvElement type="checkbox" id="pullIndexing" value="1" checked=$pullIndexing label="plugins.generic.lucene.settings.pullIndexing"}
 		{/fbvFormSection}
 	{fbvFormSection list=true}
-		<label for="orderby">{translate key="plugins.generic.lucene.settings.orderby"}</label><br />
-		{fbvElement type="checkbox" id="orderByRelevance" value="1" checked=$orderByRelevance label="plugins.generic.lucene.settings.orderby.relevance"}
-		{fbvElement type="checkbox" id="orderByAuthor" value="1" checked=$orderByAuthor label="plugins.generic.lucene.settings.orderby.author"}
-		{fbvElement type="checkbox" id="orderByIssue" value="1" checked=$orderByIssue label="plugins.generic.lucene.settings.orderby.issue"}
-		{fbvElement type="checkbox" id="orderByDate" value="1" checked=$orderByDate label="plugins.generic.lucene.settings.orderby.date"}
-		{fbvElement type="checkbox" id="orderByArticle" value="1" checked=$orderByArticle label="plugins.generic.lucene.settings.orderby.article"}
-		{fbvElement type="checkbox" id="orderByJournal" value="1" checked=$orderByJournal label="plugins.generic.lucene.settings.orderby.journal"}
+		<label for="orderBy">{translate key="plugins.generic.lucene.settings.orderBy"}</label><br />
+		{fbvElement type="checkbox" id="orderByRelevance" value="1" checked=$orderByRelevance label="plugins.generic.lucene.settings.orderBy.relevance"}
+		{fbvElement type="checkbox" id="orderByAuthor" value="1" checked=$orderByAuthor label="plugins.generic.lucene.settings.orderBy.author"}
+		{fbvElement type="checkbox" id="orderByIssue" value="1" checked=$orderByIssue label="plugins.generic.lucene.settings.orderBy.issue"}
+		{fbvElement type="checkbox" id="orderByDate" value="1" checked=$orderByDate label="plugins.generic.lucene.settings.orderBy.date"}
+		{fbvElement type="checkbox" id="orderByArticle" value="1" checked=$orderByArticle label="plugins.generic.lucene.settings.orderBy.article"}
+		{fbvElement type="checkbox" id="orderByJournal" value="1" checked=$orderByJournal label="plugins.generic.lucene.settings.orderBy.journal"}
 	{/fbvFormSection}
 
 	{/fbvFormArea}

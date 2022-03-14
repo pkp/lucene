@@ -342,7 +342,7 @@ msgstr "Normal"
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "Rangér højere"
 
-msgid "plugins.generic.lucene.settings.orderby"
+msgid "plugins.generic.lucene.settings.orderBy"
 msgstr "Sorter resultater efter"
 
 msgid "plugins.generic.lucene.settings.orderBy.relevance"
