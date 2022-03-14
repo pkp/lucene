@@ -298,15 +298,8 @@ class SolrWebService {
 		// Run through all articles in the batch and generate an
 		// XML list for them.
 		$numDeleted = 0;
-	$submissionsIterator = Services::get('submission');
-	foreach($articles as $article) {
-			if (!is_a($article, 'PublishedArticle')) {
-				// Try to upgrade the article to a published article.
-		$publishedArticle = $submissionsIterator->get($article->getId());
-				if (is_a($publishedArticle, 'PublishedArticle')) {
-					$article = $publishedArticle;
-				}
-			}
+		$submissionsIterator = Services::get('submission');
+		foreach($articles as $article) {
 			$journal = $this->_getJournal($article->getJournalId());
 
 			// Check the publication state and subscription state of the article.
@@ -394,7 +387,7 @@ class SolrWebService {
 	 * XML article list.
 	 *
 	 * @param $articleDoc DOMDocument
-	 * @param $article PublishedArticle
+	 * @param $article Submission
 	 * @param $journal Journal
 	 * @param $markToDelete boolean If true the returned XML
 	 *  will only contain a deletion marker.
