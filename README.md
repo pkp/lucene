@@ -293,7 +293,7 @@ And to check that Solr is actually running execute:
 This should show you the java process running Solr.
 
 This might be a good time to change your admin password if you
-haven't already; see step 3.
+haven't already; see step 6.
 
 Alternatively you can start the Solr server from the Lucene plugin
 settings page.
