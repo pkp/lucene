@@ -207,7 +207,7 @@ If you install the OJS Lucene plugin for an additional OJS
 installation (i.e. you already have a running Solr server) please
 create a symbolic link to the installation of you Solr server:
 
-> ln -s  $OJS_INSTALL_PATH/plugins/generic/lucene/lib/solr-8.1.1> solr
+> ln -s  $OJS_INSTALL_PATH/plugins/generic/lucene/lib/solr-8.1.1 solr
 
 3)  Download the Solr binaries:
 
