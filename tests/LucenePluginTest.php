@@ -18,7 +18,6 @@ require_mock_env('env2'); // Required for mock app locale.
 
 import('lib.pkp.tests.DatabaseTestCase');
 import('lib.pkp.classes.core.PKPRouter');
-import('classes.article.Article');
 import('classes.journal.Journal');
 import('plugins.generic.lucene.LucenePlugin');
 import('plugins.generic.lucene.classes.SolrWebService');
@@ -47,7 +46,8 @@ class LucenePluginTest extends DatabaseTestCase {
 	/**
 	 * @see PKPTestCase::setUp()
 	 */
-	protected function setUp() {
+	protected function setUp() : void
+	{
 		parent::setUp();
 
 		$this->markTestSkipped('Needs fixing.');

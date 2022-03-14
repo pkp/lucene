@@ -27,7 +27,8 @@ class EmbeddedServerTest extends PKPTestCase {
 	/**
 	 * @see PKPTestCase::setUp()
 	 */
-	protected function setUp() {
+	protected function setUp() : void
+	{
 		parent::setUp();
 
 		// Instantiate the class for testing.

@@ -19,7 +19,6 @@ require_mock_env('env2'); // Make sure we're in an en_US environment by using th
 import('lib.pkp.tests.PKPTestCase');
 import('plugins.generic.lucene.classes.SolrWebService');
 import('plugins.generic.lucene.classes.EmbeddedServer');
-import('classes.article.PublishedArticle');
 import('classes.journal.Journal');
 import('classes.core.PageRouter');
 
@@ -54,7 +53,8 @@ class SolrWebServiceTest extends PKPTestCase {
 	/**
 	 * @see PKPTestCase::setUp()
 	 */
-	protected function setUp() {
+	protected function setUp() : void
+	{
 		parent::setUp();
 
 		// We need a router for URL generation.
@@ -251,7 +251,7 @@ class SolrWebServiceTest extends PKPTestCase {
 
 		// Generate test objects.
 		$articleToReplace = $this->_getTestArticle();
-		$articleToDelete = new PublishedArticle();
+		$articleToDelete = new Submission();
 		$articleToDelete->setId(99);
 		$articleToDelete->setJournalId(2);
 		$articleToDelete->setIssueId(2);
@@ -572,7 +572,7 @@ class SolrWebServiceTest extends PKPTestCase {
 		$this->_registerMockArticleGalleyDAO();
 
 		// Create a test article.
-		$article = new PublishedArticle();
+		$article = new Submission();
 		$article->setId(3);
 		$article->setJournalId(2);
 		$article->setIssueId(2);
