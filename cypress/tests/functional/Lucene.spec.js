@@ -43,12 +43,12 @@ describe('Lucene plugin tests', function() {
 		cy.get('input[id^="select-cell-luceneplugin-enabled"]').click();
 		cy.get('div:contains(\'The plugin "Lucene Search Plugin" has been enabled.\')');
 		cy.waitJQuery();
+		cy.wait(500); // FIXME: Necessary for the juggling of plugin rows pre/post enable?
 
 		// Go to settings
 		cy.get('tr[id*="luceneplugin"] a.show_extras').click();
 		cy.get('a[id*="luceneplugin-settings"]').click();
-		cy.wait(1000); // https://github.com/tinymce/tinymce/issues/4355
-		cy.get('input[id^="searchEndpoint-"]').type('http://127.0.0.1:8983/solr/ojs/search', {delay: 0});
+		cy.get('input[id^="searchEndpoint-"]', {timeout: 60000}).type('http://127.0.0.1:8983/solr/ojs/search', {delay: 0});
 		cy.get('input[id^="username-"]').type('solr', {delay: 0});
 		cy.get('input[id^="password-"]').clear().type('SolrRocks', {delay: 0});
 		cy.get('input[id^="instId-"]').type('ojs', {delay: 0});
