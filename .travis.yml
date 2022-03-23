@@ -13,6 +13,7 @@ addons:
 sudo: required
 
 php:
+  - 7.4
   - 8.0
 env:
   - APPLICATION=ojs BRANCH=stable-3_3_0 TEST=mysql
