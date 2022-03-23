@@ -87,8 +87,7 @@ class SolrWebService {
 		$this->_authPassword = $password;
 
 		// Remove trailing slashes.
-		assert(is_string($searchHandler) && !empty($searchHandler));
-		$searchHandler = rtrim($searchHandler, '/');
+		$searchHandler = rtrim((string) $searchHandler, '/');
 
 		// Parse the search handler URL.
 		$searchHandlerParts = explode('/', $searchHandler);
@@ -97,7 +96,6 @@ class SolrWebService {
 		$this->_solrServer = implode('/', $searchHandlerParts) . '/';
 
 		// Set the installation ID.
-		assert(is_string($instId) && !empty($instId));
 		$this->_instId = $instId;
 	}
 
@@ -373,7 +371,7 @@ class SolrWebService {
 		$issueAction = new IssueAction();
 		$subscriptionRequired = $issueAction->subscriptionRequired($issue, $journal);
 		if ($subscriptionRequired) {
-			$isSubscribedDomain = $issueAction->subscribedDomain(Application::getRequest(), $journal, $issue->getId(), $article->getId());
+			$isSubscribedDomain = $issueAction->subscribedDomain(Application::get()->getRequest(), $journal, $issue->getId(), $article->getId());
 
 			if (!$isSubscribedDomain) return false;
 		}
@@ -429,7 +427,7 @@ class SolrWebService {
 		}
 
 		// We need the request to retrieve locales and build URLs.
-		$request = PKPApplication::getRequest();
+		$request = PKPApplication::get()->getRequest();
 
 		// Get all supported locales.
 		$site = $request->getSite();
@@ -816,7 +814,8 @@ class SolrWebService {
 		}
 
 		// Prepare an XPath object.
-		$responseDom = DOMDocument::loadXML((string) $response->getBody());
+		$responseDom = new DOMDocument();
+		$responseDom->loadXML((string) $response->getBody());
 		assert($responseDom instanceof DOMDocument);
 		$result = new DOMXPath($responseDom);
 

@@ -404,7 +404,7 @@ class LucenePlugin extends GenericPlugin {
 		if (!in_array($op, $publicOps)) return;
 
 		// Get the journal object from the context (optimized).
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$router = $request->getRouter();
 		$journal = $router->getContext($request);
 		/* @var $journal Journal */
@@ -750,7 +750,7 @@ class LucenePlugin extends GenericPlugin {
 		// Read the section's ranking boost.
 		$rankingBoost = LUCENE_PLUGIN_DEFAULT_RANKING_BOOST;
 		$sectionDao = DAORegistry::getDAO('SectionDAO');
-		$journal = Application::getRequest()->getJournal();
+		$journal = Application::get()->getRequest()->getJournal();
 		$section = null;
 		if ($form->getSectionId()) {
 			$section = $sectionDao->getById($form->getSectionId(), $journal->getId());
@@ -804,7 +804,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		$sectionDao = DAORegistry::getDAO('SectionDAO');
-		$journal = Application::getRequest()->getJournal();
+		$journal = Application::get()->getRequest()->getJournal();
 
 		// Get or create the section object
 		if ($form->getSectionId()) {
@@ -833,7 +833,7 @@ class LucenePlugin extends GenericPlugin {
 		if (strpos($template,'frontend/pages/') === false) return false;
 
 		// Get the request.
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		// Get the context
 		$journal = $request->getContext();
 
@@ -866,7 +866,7 @@ class LucenePlugin extends GenericPlugin {
 	 * @see templates/search/searchResults.tpl
 	 */
 	function callbackTemplatePreResults($hookName, $params) {
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$templateMgr = TemplateManager::getManager($request);
 		// The spelling suggestion value is set in
 		// LucenePlugin::callbackRetrieveResults(), see there.
@@ -883,7 +883,7 @@ class LucenePlugin extends GenericPlugin {
 	}
 
 	function callbackTemplateAdditionalFilters($hookName, $params) {
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$templateMgr = TemplateManager::getManager($request);
 
 		$smarty =& $params[1];
@@ -958,7 +958,7 @@ class LucenePlugin extends GenericPlugin {
 		$urlParams = ['articleId' => $article->getId()];
 
 		// Create a URL that links to "similar documents".
-		$request = PKPApplication::getRequest();
+		$request = PKPApplication::get()->getRequest();
 		$router = $request->getRouter();
 		$simdocsUrl = $router->url(
 			$request, null, 'lucene', 'similarDocuments', null, $urlParams
@@ -988,7 +988,7 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function callbackTemplateSectionFormAdditionalMetadata($hookName, $params) {
 		// Assign the ranking boost options to the template.
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$templateMgr = TemplateManager::getManager($request);
 
 		$templateMgr->assign('rankingBoostOptions', $this->_getRankingBoostOptions());;
@@ -1057,7 +1057,7 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrdering($journal) {
 		// Retrieve the request.
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 
 		// Order field.
 		$orderBy = $request->getUserVar('orderBy');
@@ -1279,7 +1279,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		// Assign parameters.
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$site = $request->getSite();
 		$mail->assignParams(
 			['siteName' => $site->getLocalizedTitle(), 'error' => $error]
