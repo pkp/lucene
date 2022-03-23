@@ -829,7 +829,7 @@ class LucenePlugin extends GenericPlugin {
 
 		if ($template == 'frontend/pages/indexSite.tpl') return false;
 		// avoid recursive calls of the template
-		if (strpos($template,'plugins-plugins') !== false) return false;
+		if (strpos($template,'plugins-') !== false) return false;
 		if (strpos($template,'frontend/pages/') === false) return false;
 
 		// Get the request.
