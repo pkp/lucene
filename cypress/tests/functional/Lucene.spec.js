@@ -52,6 +52,7 @@ describe('Lucene plugin tests', function() {
 		cy.get('input[id^="username-"]').clear().type('solr', {delay: 0});
 		cy.get('input[id^="password-"]').clear().type('SolrRocks', {delay: 0});
 		cy.get('input[id^="instId-"]').clear().type('ojs', {delay: 0});
+		cy.get('input[id="autosuggest"]').check();
 		cy.get('form[id="luceneSettingsForm"] button[id^="submitFormButton-"]').click();
 		cy.waitJQuery();
 	});
@@ -64,14 +65,14 @@ describe('Lucene plugin tests', function() {
 
 	it('Tests a search without results using the Lucene plugin', function() {
 		cy.visit('/index.php/publicknowledge/search');
-		cy.get('#query').type('primary', {delay: 0});
+		cy.get('#query_input').type('primary', {delay: 0});
 		cy.get('button.submit').click();
 		cy.get('div').contains('No Results');
 	});
 
 	it('Tests a search with results using the Lucene plugin', function() {
 		cy.visit('/index.php/publicknowledge/search');
-		cy.get('#query').type('plasmid', {delay: 0});
+		cy.get('#query_input').type('plasmid', {delay: 0});
 		cy.get('button.submit').click();
 		cy.get('a').contains('Antimicrobial, heavy metal resistance and plasmid profile of coliforms isolated from nosocomial infections in a hospital in Isfahan, Iran');
 	});
