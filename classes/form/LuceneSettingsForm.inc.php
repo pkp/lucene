@@ -81,7 +81,7 @@ class LuceneSettingsForm extends Form {
 	function readInputData() {
 		// Read regular form data.
 		$this->readUserVars($this->_getFormFields());
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 
 		// Set the password to the one saved in the DB
 		// if we only got the placehlder from the form.
@@ -121,7 +121,9 @@ class LuceneSettingsForm extends Form {
 	/**
 	 * Execute the form.
 	 */
-	function execute() {
+	function execute(...$functionArgs) {
+		parent::execute(...$functionArgs);
+
 		$plugin = $this->_plugin;
 		$formFields[] = 'password';
 		$formFieldsString = $this->_getFormFieldsString();
