@@ -215,16 +215,6 @@ class SolrWebService {
 	function _indexingTransaction($sendXmlCallback, $batchSize = SOLR_INDEXING_MAX_BATCHSIZE, $journalId = null) {
 		$journalSettingsDao = DAORegistry::getDAO('JournalSettingsDAO');
 
-		if (is_null($journalId)) {
-			$journalDao = DAORegistry::getDAO('JournalDAO');
-			$journals = $journalDao->getAll();
-			while ($journal = $journals->next()) {
-				if ($journalSettingsDao->getSetting($journal->getId(), 'indexingState')) {
-					$journalId = $journal->getId();
-					break;
-				}
-			}
-		}
 		$submissionArray = [];
 		$submissionsIterator = Services::get('submission')->getMany(['contextId' => $journalId , 'status' => STATUS_PUBLISHED]);
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
@@ -264,10 +254,11 @@ class SolrWebService {
 		// Now that we are as sure as we can that the counterparty received
 		// our XML, let's mark the changed articles as "updated". This "commits"
 		// the indexing transaction.
+		$journalIds = [];
 		foreach($changedArticles as $indexedArticle) {
 			$this->setArticleStatus($indexedArticle->getId(), SOLR_INDEXINGSTATE_CLEAN);
+			$journalIds[$indexedArticle->getJournalId()] = true;
 		}
-		$journalSettingsDao->updateSetting($journalId,  'indexingState', SOLR_INDEXINGSTATE_CLEAN, 'bool');
 		return $numProcessed;
 	}
 
