@@ -580,7 +580,7 @@ class LucenePlugin extends GenericPlugin {
 		assert($hookName == 'ArticleSearchIndex::articleMetadataChanged');
 		list($article) = $params;
 		/* @var $article Article */
-		$this->_solrWebService->markArticleChanged($article->getId());
+		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
 		$this->callbackArticleChangesFinished(null, null);
@@ -595,7 +595,7 @@ class LucenePlugin extends GenericPlugin {
 		assert($hookName == 'ArticleSearchIndex::submissionFilesChanged');
 		list($article) = $params;
 		/* @var $article Article */
-		$this->_solrWebService->markArticleChanged($article->getId());
+		$this->_solrWebService->setArticleStatus($article->getId());
 
 		return true;
 	}
@@ -606,7 +606,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackSubmissionFileChanged($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::submissionFileChanged');
 		list($articleId, $type, $fileId) = $params;
-		$this->_solrWebService->markArticleChanged($articleId);
+		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
 		$this->callbackArticleChangesFinished(null, null);
@@ -620,7 +620,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackSubmissionFileDeleted($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::submissionFileDeleted');
 		list($articleId, $type, $assocId) = $params;
-		$this->_solrWebService->markArticleChanged($articleId);
+		$this->_solrWebService->setArticleStatus($article->getId());
 
 		return true;
 	}
