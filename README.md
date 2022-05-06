@@ -23,6 +23,7 @@ etc.)](#customizing-solr-additional-languages-stopwords-etc.)
 -   [Using facets](#using-facets)
 
 
+[![Build Status](https://travis-ci.org/pkp/lucene.svg?branch=stable-3_3_0)](https://travis-ci.org/pkp/lucene)
 
 ### Welcome to the OJS Lucene/Solr Plug-In!
 
