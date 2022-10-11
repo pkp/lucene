@@ -9,7 +9,7 @@ Plug-In](#decisions-to-take-before-enabling-the-plug-in)
 Mode](#embedded-versus-remote-server-mode)
 -   [Embedded Server Mode: Installation and
 Configuration](#embedded-server-mode-installation-and-configuration)
--   [Central Server Mode: Installation and
+-   [Remote Server Mode: Installation and
 Configuration](#central-server-mode-installation-and-configuration)
 -   [Troubleshooting](#troubleshooting)
 -   [Push versus Pull Indexing](#push-versus-pull-indexing)
@@ -115,13 +115,13 @@ procedure for the embedded server below for just one installation then
 you're on the right track.
 
 If you are a larger OJS provider and you have many OJS installations on
-one or several servers then central server mode is probably better
-suited to your needs. In central server mode you'll be able to install a
+one or several servers then Remote Server mode is probably better
+suited to your needs. In Remote Server mode you'll be able to install a
 single Solr instance somewhere on your network and use it for all your
 OJS installations. This will make your deployment much easier to monitor
 and administer.
 
-If you deploy in central server mode then you'll have to understand Solr
+If you deploy in Remote Server mode then you'll have to understand Solr
 a bit better. You'll have to be able to install a running Solr instance
 with one or more cores on your own. You can still use our Solr
 schema.xml and data import configuration file unchanged and you'll
@@ -132,7 +132,7 @@ your specific needs. You should also be able to set up a firewall and
 write a web server configuration as Solr itself comes with no security
 checks at all.
 
-If you deploy in central server mode you'll also have to decide which
+If you deploy in Remote Server mode you'll also have to decide which
 journals you want to collocate. You have to keep in mind that you only
 can search across OJS installations if you collocate articles from
 various installations in one core. On the other hand you should not
@@ -147,7 +147,7 @@ your Solr server.
 As a final preliminary step you'll have to make sure that your server
 meets the necessary installation requirements to install Solr. This is
 the OJS server if you decide to deploy in embedded server mode or the
-central search server if you deploy in central server mode:
+central search server if you deploy in Remote Server mode:
 
 -   Operating System: Any operating system that supports J2SE 1.8 or
 greater (this includes all recent versions of Linux and Windows).
@@ -374,7 +374,7 @@ string. Otherwise your plug-in was not correctly activated.
 
   Go to your OJS web frontend and test whether searching with Solr works as expected.
 
-### Central Server Mode: Installation and Configuration
+### Remote Server Mode: Installation and Configuration
 
 Solr can be installed and deployed in many different ways and there is
 no one best deployment for large OJS providers. You'll have to
