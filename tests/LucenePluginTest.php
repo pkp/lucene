@@ -3,12 +3,11 @@
 /**
  * @file tests/LucenePluginTest.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class LucenePluginTest
- * @ingroup plugins_generic_lucene_tests
  * @see LucenePlugin
  *
  * @brief Test class for the LucenePlugin class
@@ -16,12 +15,12 @@
 
 require_mock_env('env2'); // Required for mock app locale.
 
-import('lib.pkp.tests.DatabaseTestCase');
-import('lib.pkp.classes.core.PKPRouter');
-import('classes.journal.Journal');
-import('plugins.generic.lucene.LucenePlugin');
-import('plugins.generic.lucene.classes.SolrWebService');
-import('plugins.generic.lucene.classes.EmbeddedServer');
+use PKP\tests\DatabaseTestCase;
+use PKP\core\PKPRouter;
+use APP\journal\Journal;
+use APP\plugins\generic\lucene\LucenePlugin;
+use APP\plugins\generic\lucene\classes\SolrWebService;
+use APP\plugins\generic\lucene\classes\EmbeddedServer;
 
 class LucenePluginTest extends DatabaseTestCase {
 

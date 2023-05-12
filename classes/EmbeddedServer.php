@@ -1,18 +1,20 @@
 <?php
 
 /**
- * @file classes/EmbeddedServer.inc.php
+ * @file classes/EmbeddedServer.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class EmbeddedServer
- * @ingroup plugins_generic_lucene_classes
- *
  * @brief Implements a PHP interface to administer the embedded solr server.
  */
 
+namespace APP\plugins\generic\lucene\classes;
+
+use PKP\core\Core;
+use PKP\config\Config;
 
 class EmbeddedServer {
 

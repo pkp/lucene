@@ -1,21 +1,29 @@
 <?php
 
 /**
- * @file classes/form/LuceneSettingsForm.inc.php
+ * @file classes/form/LuceneSettingsForm.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class LuceneSettingsForm
- * @ingroup plugins_generic_lucene_classes_form
- *
  * @brief Form to configure Lucene/Solr search.
  */
 
+namespace APP\plugins\generic\lucene\classes\form;
 
-import('lib.pkp.classes.form.Form');
-import('plugins.generic.lucene.classes.EmbeddedServer');
+use PKP\form\Form;
+use APP\plugins\generic\lucene\classes\EmbeddedServer;
+use PKP\form\validation\FormValidatorUrl;
+use PKP\form\validation\FormValidatorInSet;
+use PKP\form\validation\FormValidatorBoolean;
+use PKP\form\validation\FormValidatorRegExp;
+use PKP\form\validation\FormValidator;
+use PKP\db\DAORegistry;
+use PKP\config\Config;
+use APP\template\TemplateManager;
+use APP\core\Application;
 
 // These are the first few letters of an md5 of '##placeholder##'.
 // FIXME: Any better idea how to prevent a password clash?
@@ -101,8 +109,6 @@ class LuceneSettingsForm extends Form {
 		$templateMgr->assign([
 			'pluginName' => $this->_plugin->getName(),
 			'autosuggestTypes' => $this->_getAutosuggestTypes(),
-			'metricName' => $metricName = $this->_getDefaultMetric(),
-			'noMainMetric' => empty($metricName),
 			'serverIsAvailable' => $this->_embeddedServer->isAvailable(),
 			'serverIsRunning' => $this->_embeddedServer->isRunning(),
 			'journalsToReindex' => $this->_getJournalsToReindex(),
@@ -214,24 +220,6 @@ class LuceneSettingsForm extends Form {
 		}
 
 		return $journalsToReindex;
-	}
-
-	/**
-	 * Return the default metric for the current request context.
-	 * @return null|string a metric identifier or null
-	 */
-	function _getDefaultMetric() {
-		$application = Application::getApplication();
-		$metricType = $application->getDefaultMetricType();
-		if (empty($metricType)) {
-			return null;
-		}
-		$metricNames = $application->getMetricTypes(TRUE);
-		if (!isset($metricNames[$metricType])) {
-			return null;
-		}
-
-		return $metricNames[$metricType];
 	}
 }
 

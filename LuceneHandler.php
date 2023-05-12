@@ -1,22 +1,22 @@
 <?php
 
 /**
- * @file LuceneHandler.inc.php
+ * @file LuceneHandler.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class LuceneHandler
- * @ingroup plugins_generic_lucene
- *
  * @brief Handle lucene AJAX and XML requests (auto-completion, pull indexation, etc.)
  */
 
-import('classes.handler.Handler');
-import('plugins.generic.lucene.classes.SolrWebService');
-import('lib.pkp.classes.core.JSONMessage');
-import('classes.search.ArticleSearch');
+namespace APP\plugins\generic\lucene;
+
+use APP\handler\Handler;
+use APP\plugins\generic\lucene\classes\SolrWebService;
+use PKP\core\JSONMessage;
+use APP\search\ArticleSearch;
 
 class LuceneHandler extends Handler {
 

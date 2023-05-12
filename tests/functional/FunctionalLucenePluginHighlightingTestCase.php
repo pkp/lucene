@@ -3,12 +3,11 @@
 /**
  * @file tests/functional/FunctionalLucenePluginHighlightingTest.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class FunctionalLucenePluginHighlightingTest
- * @ingroup plugins_generic_lucene_tests_functional
  * @see LucenePlugin
  *
  * @brief Integration/Functional test for the "highlighting" feature of

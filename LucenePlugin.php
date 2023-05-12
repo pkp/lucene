@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @file LucenePlugin.inc.php
+ * @file LucenePlugin.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class LucenePlugin
  * @ingroup plugins_generic_lucene
@@ -13,9 +13,18 @@
  * @brief Lucene plugin class
  */
 
+namespace APP\plugins\generic\lucene;
 
-import('lib.pkp.classes.plugins.GenericPlugin');
-import('plugins.generic.lucene.classes.SolrWebService');
+use PKP\plugins\GenericPlugin;
+use PKP\plugins\PluginRegistry;
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\plugins\Hook;
+use PKP\config\Config;
+use PKP\core\JSONMessage;
+use APP\plugins\generic\lucene\classes\SolrWebService;
+use APP\plugins\generic\lucene\classes\EmbeddedServer;
+use APP\plugins\generic\lucene\classes\form\LuceneSettingsForm;
 
 define('LUCENE_PLUGIN_DEFAULT_RANKING_BOOST', 1.0); // Default: No boost (=weight factor one).
 
@@ -105,11 +114,11 @@ class LucenePlugin extends GenericPlugin {
 
 		if ($success && $this->getEnabled($mainContextId)) {
 			// Register callbacks (application-level).
-			HookRegistry::register('PluginRegistry::loadCategory', [$this, 'callbackLoadCategory']);
-			HookRegistry::register('LoadHandler', [$this, 'callbackLoadHandler']);
+			Hook::add('PluginRegistry::loadCategory', [$this, 'callbackLoadCategory']);
+			Hook::add('LoadHandler', [$this, 'callbackLoadHandler']);
 
 			// Register callbacks (data-access level).
-			HookRegistry::register('Schema::get::submission', function ($hookName, $args) {
+			Hook::add('Schema::get::submission', function ($hookName, $args) {
 				$schema = $args[0];
 
 				$schema->properties->indexingState = (object)[
@@ -121,86 +130,57 @@ class LucenePlugin extends GenericPlugin {
 
 			$customRanking = (boolean) $this->getSetting(CONTEXT_SITE, 'customRanking');
 			if ($customRanking) {
-				HookRegistry::register('sectiondao::getAdditionalFieldNames', [$this,
-					'callbackSectionDaoAdditionalFieldNames'
-				]);
+				Hook::add('sectiondao::getAdditionalFieldNames', [$this, 'callbackSectionDaoAdditionalFieldNames']);
 			}
 
 			// Register callbacks (controller-level).
 			//these are current.
-			HookRegistry::register('ArticleSearch::getResultSetOrderingOptions', [$this,
-				'callbackGetResultSetOrderingOptions'
-			]);
-			HookRegistry::register('SubmissionSearch::retrieveResults', [$this, 'callbackRetrieveResults']);
-			HookRegistry::register('ArticleSearchIndex::articleMetadataChanged', [$this,
-				'callbackArticleMetadataChanged'
-			]);
-			HookRegistry::register('ArticleSearchIndex::submissionFileChanged', [$this,
-				'callbackSubmissionFileChanged'
-			]);
-			HookRegistry::register('ArticleSearchIndex::submissionFileDeleted', [$this,
-				'callbackSubmissionFileDeleted'
-			]);
-			HookRegistry::register('ArticleSearchIndex::submissionFilesChanged', [$this,
-				'callbackSubmissionFilesChanged'
-			]);
+			Hook::add('ArticleSearch::getResultSetOrderingOptions', [$this, 'callbackGetResultSetOrderingOptions']);
+			Hook::add('SubmissionSearch::retrieveResults', [$this, 'callbackRetrieveResults']);
+			Hook::add('ArticleSearchIndex::articleMetadataChanged', [$this, 'callbackArticleMetadataChanged']);
+			Hook::add('ArticleSearchIndex::submissionFileChanged', [$this, 'callbackSubmissionFileChanged']);
+			Hook::add('ArticleSearchIndex::submissionFileDeleted', [$this, 'callbackSubmissionFileDeleted']);
+			Hook::add('ArticleSearchIndex::submissionFilesChanged', [$this, 'callbackSubmissionFilesChanged']);
 
-			HookRegistry::register('ArticleSearchIndex::submissionDeleted', [$this, 'callbackArticleDeleted']);
-			HookRegistry::register('ArticleSearchIndex::articleDeleted', [$this, 'callbackArticleDeleted']);
-			HookRegistry::register('ArticleSearchIndex::articleChangesFinished', [$this,
-				'callbackArticleChangesFinished'
-			]);
-			HookRegistry::register('ArticleSearchIndex::rebuildIndex', [$this, 'callbackRebuildIndex']);
-			HookRegistry::register('ArticleSearch::getSimilarityTerms', [$this, 'callbackGetSimilarityTerms']);
+			Hook::add('ArticleSearchIndex::submissionDeleted', [$this, 'callbackArticleDeleted']);
+			Hook::add('ArticleSearchIndex::articleDeleted', [$this, 'callbackArticleDeleted']);
+			Hook::add('ArticleSearchIndex::articleChangesFinished', [$this, 'callbackArticleChangesFinished']);
+			Hook::add('ArticleSearchIndex::rebuildIndex', [$this, 'callbackRebuildIndex']);
+			Hook::add('ArticleSearch::getSimilarityTerms', [$this, 'callbackGetSimilarityTerms']);
 
 			// Register callbacks (forms).
 			// For custom ranking. Seems to work, but value is either not saved, or not set as seleceted after loading form
 			if ($customRanking) {
-				HookRegistry::register('sectionform::Constructor', [$this, 'callbackSectionFormConstructor']);
-				HookRegistry::register('sectionform::initdata', [$this, 'callbackSectionFormInitData']);
-				HookRegistry::register('sectionform::readuservars', [$this, 'callbackSectionFormReadUserVars']);
-				HookRegistry::register('sectionform::execute', [$this, 'callbackSectionFormExecute']);
-				HookRegistry::register('Templates::Manager::Sections::SectionForm::AdditionalMetadata', [$this,
-					'callbackTemplateSectionFormAdditionalMetadata'
-				]);
+				Hook::add('sectionform::Constructor', [$this, 'callbackSectionFormConstructor']);
+				Hook::add('sectionform::initdata', [$this, 'callbackSectionFormInitData']);
+				Hook::add('sectionform::readuservars', [$this, 'callbackSectionFormReadUserVars']);
+				Hook::add('sectionform::execute', [$this, 'callbackSectionFormExecute']);
+				Hook::add('Templates::Manager::Sections::SectionForm::AdditionalMetadata', [$this, 'callbackTemplateSectionFormAdditionalMetadata']);
 			}
 
-
-			$this->import('LuceneFacetsBlockPlugin');
 			PluginRegistry::register('blocks', new LuceneFacetsBlockPlugin($this), $this->getPluginPath());
 
 
 			// Register callbacks (view-level).
-			HookRegistry::register('TemplateManager::display', [$this, 'callbackTemplateDisplay']);
+			Hook::add('TemplateManager::display', [$this, 'callbackTemplateDisplay']);
 
 			//used to show alterative spelling suggestions
-			HookRegistry::register('Templates::Search::SearchResults::PreResults', [$this,
-				'callbackTemplatePreResults'
-			]);
+			Hook::add('Templates::Search::SearchResults::PreResults', [$this, 'callbackTemplatePreResults']);
 
 			//used to show additional filters for selected facet values
-			HookRegistry::register('Templates::Search::SearchResults::AdditionalFilters', [$this,
-				'callbackTemplateAdditionalFilters'
-			]);
+			Hook::add('Templates::Search::SearchResults::AdditionalFilters', [$this, 'callbackTemplateAdditionalFilters']);
 
 
 			// Called from template article_summary.tpl, used to add highlighted additional info to searchresult.
 			//As Templates::Search::SearchResults::AdditionalArticleLinks has been removed
 			//from OJS 3, we also need this same hook to display additionalArticleLinks .
-			HookRegistry::register('Templates::Issue::Issue::Article', [$this,
-				'callbackTemplateSearchResultHighligtedText'
-			]);
-			HookRegistry::register('Templates::Issue::Issue::Article', [$this,
-				'callbackTemplateSimilarDocumentsLinks'
-			]);
+			Hook::add('Templates::Issue::Issue::Article', [$this, 'callbackTemplateSearchResultHighligtedText']);
+			Hook::add('Templates::Issue::Issue::Article', [$this, 'callbackTemplateSimilarDocumentsLinks']);
 
-			//Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
-			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', [$this,
-				'callbackTemplateSyntaxInstructions'
-			]);
-			HookRegistry::register('Publication::unpublish', [$this,
-				'callbackUnpublish'
-			]);
+			// Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
+			Hook::add('Templates::Search::SearchResults::SyntaxInstructions', [$this, 'callbackTemplateSyntaxInstructions']);
+			Hook::add('Publication::unpublish', [$this, 'callbackUnpublish']);
+
 			// Instantiate the web service.
 			$searchHandler = $this->getSetting(CONTEXT_SITE, 'searchEndpoint');
 			$username = $this->getSetting(CONTEXT_SITE, 'username');
@@ -287,11 +267,9 @@ class LucenePlugin extends GenericPlugin {
 		switch ($request->getUserVar('verb')) {
 			case 'settings':
 				// Instantiate an embedded server instance.
-				$this->import('classes.EmbeddedServer');
 				$embeddedServer = new EmbeddedServer();
 
 				// Instantiate the settings form.
-				$this->import('classes.form.LuceneSettingsForm');
 				$form = new LuceneSettingsForm($this, $embeddedServer);
 
 				// Handle request to save configuration data.

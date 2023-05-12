@@ -1,21 +1,24 @@
 <?php
 
 /**
- * @file classes/SolrWebService.inc.php
+ * @file classes/SolrWebService.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class SolrWebService
- * @ingroup plugins_generic_lucene_classes
- *
  * @brief Implements the communication protocol with the solr search server.
  *
  * This class relies on the PHP curl extension. Please activate the
  * extension before trying to access a solr server through this class.
  */
 
+namespace APP\plugins\generic\lucene\classes;
+
+use APP\plugins\generic\lucene\classes\SolrSearchRequest;
+use PKP\core\PKPPageRouter;
+use APP\search\ArticleSearch;
 
 define('SOLR_STATUS_ONLINE', 0x01);
 define('SOLR_STATUS_OFFLINE', 0x02);
@@ -37,11 +40,6 @@ define('SOLR_AUTOSUGGEST_FACETING', 0x02);
 // The max. number of articles that can
 // be indexed in a single batch.
 define('SOLR_INDEXING_MAX_BATCHSIZE', 200);
-
-
-import('plugins.generic.lucene.classes.SolrSearchRequest');
-import('lib.pkp.classes.core.PKPPageRouter');
-import('classes.search.ArticleSearch');
 
 class SolrWebService {
 	var $_authUsername;
