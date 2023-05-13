@@ -19,6 +19,13 @@ namespace APP\plugins\generic\lucene\classes;
 use APP\plugins\generic\lucene\classes\SolrSearchRequest;
 use PKP\core\PKPPageRouter;
 use APP\search\ArticleSearch;
+use APP\core\Application;
+use PKP\db\DAORegistry;
+use APP\facades\Repo;
+use APP\submission\Submission;
+use PKP\cache\CacheManager;
+use PKP\facades\Locale;
+use PKP\core\PKPString;
 
 define('SOLR_STATUS_ONLINE', 0x01);
 define('SOLR_STATUS_OFFLINE', 0x02);
@@ -137,10 +144,9 @@ class SolrWebService {
 			assert(false);
 			return;
 		}
-		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
-		$submission = $submissionDao->getById($articleId);
+		$submission = Repo::submission()->get($articleId);
 		$submission->setData('indexingState', $indexingState);
-		$submissionDao->updateObject($submission);
+		Repo::submission()->edit($submission, ['indexingState']);
 	}
 
 
@@ -159,10 +165,8 @@ class SolrWebService {
 			return;
 		}
 
-		import('lib.pkp.classes.submission.PKPSubmission');
-		$submissionsIterator = Services::get('submission')->getMany(['contextId' => $journalId, 'status' => STATUS_PUBLISHED ]);
+		$submissionsIterator = Repo::submission()->getCollector()->filterByContextIds([$journalId])->filterByStatus([Submission::STATUS_PUBLISHED])->getMany();
 		$count = 0;
-		$submissionsDao = DAORegistry::getDAO('SubmissionDAO');
 		foreach ($submissionsIterator as $submission) {
 			$this->setArticleStatus($submission->getId());
 			$count++;
@@ -214,8 +218,7 @@ class SolrWebService {
 		$journalSettingsDao = DAORegistry::getDAO('JournalSettingsDAO');
 
 		$submissionArray = [];
-		$submissionsIterator = Services::get('submission')->getMany(['contextId' => $journalId , 'status' => STATUS_PUBLISHED]);
-		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
+		$submissionsIterator = Repo::submission()->getCollector()->filterByContextIds([$journalId])->filterByStatus([Submission::STATUS_PUBLISHED])->getMany();
 		$count = 0;
 		foreach ($submissionsIterator as $submission) {
 			if ($submission->getData('indexingState') == SOLR_INDEXINGSTATE_DIRTY) {
@@ -275,8 +278,7 @@ class SolrWebService {
 	 */
 	function _getArticleListXml($articles, $totalCount, &$numDeleted) {
 		// Create the DOM document.
-		$articleDoc = new DOMDocument();
-		assert($articleDoc instanceof DOMDocument);
+		$articleDoc = new \DOMDocument();
 
 		// Create the root node.
 		$articleList = $articleDoc->createElement('articleList');
@@ -285,7 +287,7 @@ class SolrWebService {
 		// Run through all articles in the batch and generate an
 		// XML list for them.
 		$numDeleted = 0;
-		$submissionsIterator = Services::get('submission');
+		$submissionsIterator = Repo::submission()->getCollector()->filterByContextIds([$journalId])->filterByStatus([Submission::STATUS_PUBLISHED])->getMany();
 		foreach($articles as $article) {
 			$journal = $this->_getJournal($article->getJournalId());
 
@@ -338,19 +340,19 @@ class SolrWebService {
 	 */
 	function _isArticleAccessAuthorized($article) {
 		// Did we get a published article?
-		if (!is_a($article, 'Submission')) return false;
+		if (! $article instanceof \APP\submission\Submission) return false;
 
 		// Get the article's journal.
 		$journal = $this->_getJournal($article->getData('contextId'));
 
-		if (!is_a($journal, 'Journal')) return false;
+		if (! $journal instanceof \APP\journal\Journal) return false;
 
 		// Get the article's issue.
 	$issueDao = DAORegistry::getDAO('IssueDAO');
 
 	$issue = $issueDao->getById($article->getCurrentPublication()->getData('issueId'));
 
-		if (!is_a($issue, 'Issue')) return false;
+		if (! $issue instanceof APP\issue\Issue) return false;
 
   		// Only index published articles.
 		if (!$issue->getPublished() || $article->getData('status') != STATUS_PUBLISHED) return false;
@@ -373,17 +375,14 @@ class SolrWebService {
 	 * Add the metadata XML of a single article to an
 	 * XML article list.
 	 *
-	 * @param $articleDoc DOMDocument
+	 * @param $articleDoc \DOMDocument
 	 * @param $article Submission
 	 * @param $journal Journal
 	 * @param $markToDelete boolean If true the returned XML
 	 *  will only contain a deletion marker.
 	 */
-	function _addArticleXml($articleDoc, $article, $journal, $markToDelete = false) {
-		assert($article instanceof Submission);
-
+	function _addArticleXml(\DOMDocument $articleDoc, \APP\submission\Submission $article, $journal, $markToDelete = false) {
 		// Get the root node of the list.
-		assert($articleDoc instanceof DOMDocument);
 		$articleList = $articleDoc->documentElement;
 
 		// Create a new article node.
@@ -601,7 +600,7 @@ class SolrWebService {
 		if (is_numeric($issueId)) {
 			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
 			$issue = $issueDao->getById($issueId);
-			if (is_a($issue, 'Issue')) {
+			if ($issue instanceof \APP\issue\Issue) {
 				$issuePublicationDate = $issue->getDatePublished();
 				if (!empty($issuePublicationDate)) {
 					// Transform and store issue publication date.
@@ -615,7 +614,7 @@ class SolrWebService {
 
 		// We need a PageRouter to build file URLs.
 		$router = $request->getRouter(); /* @var $router PageRouter */
-		if (!is_a($router, 'PKPKPageRouter')) {
+		if (! $router instanceof \PKP\core\PKPPageRouter) {
 			$router = new PKPPageRouter();
 			$application = Application::getApplication();
 			$router->setApplication($application);
@@ -764,10 +763,10 @@ class SolrWebService {
 	 * @param $params mixed array (key value pairs) or string request parameters
 	 * @param $method string GET or POST
 	 *
-	 * @return DOMXPath An XPath object with the response loaded. Null if an error occurred.
+	 * @return \DOMXPath An XPath object with the response loaded. Null if an error occurred.
 	 *  See _serviceMessage for more details about the error.
 	 */
-	function _makeRequest($url, $params = [], $method = 'GET') {
+	function _makeRequest($url, $params = [], $method = 'GET') : ?\DOMXpath {
 		$application = Application::get();
 
 		$client = $application->getHttpClient();
@@ -803,10 +802,9 @@ class SolrWebService {
 		}
 
 		// Prepare an XPath object.
-		$responseDom = new DOMDocument();
+		$responseDom = new \DOMDocument();
 		$responseDom->loadXML((string) $response->getBody());
-		assert($responseDom instanceof DOMDocument);
-		$result = new DOMXPath($responseDom);
+		$result = new \DOMXPath($responseDom);
 
 		// Return the result.
 		return $result;
@@ -880,7 +878,7 @@ class SolrWebService {
 			// NB: We only add fields in the current UI locale, i.e.
 			// facets are considered part of the navigation and not
 			// search results.
-			$locale = AppLocale::getLocale();
+			$locale = Locale::getLocale();
 
 			// Add facet fields corresponding to the
 			// solicited facet categories.
@@ -1180,7 +1178,7 @@ class SolrWebService {
 		}
 		// Add the journal as a filter query (if set).
 		$journal = $searchRequest->getJournal();
-		if (is_a($journal, 'Journal')) {
+		if ($journal instanceof \APP\journal\Journal) {
 			$params['fq'][] = 'journal_id:"' . $this->_instId . '-' . $journal->getId() . '"';
 		}
 
@@ -1495,7 +1493,7 @@ class SolrWebService {
 		// Order by a localized field.
 		if (in_array($field, $fieldNames['localized'])) {
 			// We can only sort if the current locale is indexed.
-			$currentLocale = AppLocale::getLocale();
+			$currentLocale = Locale::getLocale();
 			if (in_array($currentLocale, $availableFields[$field])) {
 				// Return the localized sort field name.
 				return $field . '_' . $currentLocale . '_txtsort' . $dirString . ',' . $defaultSort;
@@ -1604,7 +1602,7 @@ class SolrWebService {
 
 		// Make the request.
 		$response = $this->_makeRequest($url, $params);
-		if (!($response instanceof DOMXPath)) return [];
+		if (!($response instanceof \DOMXPath)) return [];
 
 		// Extract suggestions for the last word in the query.
 		$nodeList = $response->query('//lst[@name="suggestions"]/lst[last()]');
@@ -1702,7 +1700,7 @@ class SolrWebService {
 
 		// Make the request.
 		$response = $this->_makeRequest($url, $params);
-		if (!is_a($response, 'DOMXPath')) return [];
+		if ( ! $response instanceof \DOMXPath ) return [];
 
 		// Extract term suggestions.
 		$nodeList = $response->query('//lst[@name="facet_fields"]/lst/int/@name');
@@ -1743,8 +1741,8 @@ class SolrWebService {
 			'mlt.qf' => $this->_expandFieldList(['title', 'abstract', 'galleyFullText']),
 			'df' => 'submission_id',
 		];
-		$response = $this->_makeRequest($url, $params); /* @var $response DOMXPath */
-		if (!is_a($response, 'DOMXPath')) return null;
+		$response = $this->_makeRequest($url, $params); /* @var $response \DOMXPath */
+		if (! $response instanceof \DOMXPath) return null;
 
 		// Check whether a query will actually return something.
 		// This is an optimization to avoid unnecessary requests
@@ -1797,7 +1795,7 @@ class SolrWebService {
 		$url = $this->_getCoreAdminUrl() . 'luke';
 		$params = ['id' => $this->_instId . '-' . $articleId];
 		$response = $this->_makeRequest($url, $params);
-		if (!is_a($response, 'DOMXPath')) return false;
+		if (! $response instanceof \DOMXPath) return false;
 
 		// Retrieve all fields from the response.
 		$doc = [];
@@ -1843,7 +1841,7 @@ class SolrWebService {
 		}
 
 		// Is the core online?
-		assert(is_a($response, 'DOMXPath'));
+		assert($response instanceof \DOMXPath);
 		$nodeList = $response->query('/response/lst[@name="status"]/lst[@name="ojs"]/lst[@name="index"]/int[@name="numDocs"]');
 
 		// Check whether the core is active.
@@ -1939,7 +1937,7 @@ class SolrWebService {
 		// Make a request to the luke request handler.
 		$url = $this->_getCoreAdminUrl() . 'luke';
 		$response = $this->_makeRequest($url);
-		if (!is_a($response, 'DOMXPath')) return false;
+		if (! $response instanceof \DOMXPath) return false;
 
 		// Retrieve the field names from the response.
 		$nodeList = $response->query('/response/lst[@name="fields"]/lst/@name');
@@ -2053,7 +2051,7 @@ class SolrWebService {
 	/**
 	 * Retrieve the number of indexed documents
 	 * from a DIH response XML
-	 * @param $result DOMXPath
+	 * @param $result \DOMXPath
 	 * @return integer
 	 */
 	function _getDocumentsProcessed($result) {

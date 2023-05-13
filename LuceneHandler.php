@@ -19,6 +19,11 @@ use PKP\core\JSONMessage;
 use APP\search\ArticleSearch;
 
 class LuceneHandler extends Handler {
+	protected LucenePlugin $plugin;
+
+	function __construct(LucenePlugin $plugin) {
+		$this->plugin = $plugin;
+	}
 
 	//
 	// Public operations
@@ -34,8 +39,7 @@ class LuceneHandler extends Handler {
 
 		// Check whether auto-suggest is enabled.
 		$suggestionList = [];
-		$lucenePlugin = $this->_getLucenePlugin();
-		$enabled = (bool)$lucenePlugin->getSetting(CONTEXT_SITE, 'autosuggest');
+		$enabled = (bool)$this->plugin->getSetting(CONTEXT_SITE, 'autosuggest');
 		if ($enabled) {
 			// Retrieve search criteria from the user input.
 			$articleSearch = new ArticleSearch();
@@ -58,10 +62,10 @@ class LuceneHandler extends Handler {
 			$searchRequest->addQueryFromKeywords($keywords);
 
 			// Get the web service.
-			$solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
+			$solrWebService = $this->plugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
 			$suggestions = $solrWebService->getAutosuggestions(
 				$searchRequest, $autosuggestField, $userInput,
-				(int)$lucenePlugin->getSetting(CONTEXT_SITE, 'autosuggestType')
+				(int)$this->plugin->getSetting(CONTEXT_SITE, 'autosuggestType')
 			);
 
 			// Prepare a suggestion list as understood by the
@@ -97,11 +101,10 @@ class LuceneHandler extends Handler {
 		}
 
 		// Die if pull indexing is disabled.
-		$lucenePlugin = $this->_getLucenePlugin();
-		if (!$lucenePlugin->getSetting(CONTEXT_SITE, 'pullIndexing')) die(__('plugins.generic.lucene.message.pullIndexingDisabled'));
+		if (!$this->plugin->getSetting(CONTEXT_SITE, 'pullIndexing')) die(__('plugins.generic.lucene.message.pullIndexingDisabled'));
 
 		// Execute the pull indexing transaction.
-		$solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
+		$solrWebService = $this->plugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
 		$solrWebService->pullChangedArticles(
 			[$this, 'pullIndexingCallback'], SOLR_INDEXING_MAX_BATCHSIZE
 		);
@@ -116,7 +119,7 @@ class LuceneHandler extends Handler {
 	 * @param $args array
 	 * @param $request Request
 	 */
-	function similarDocuments($args, &$request) {
+	function similarDocuments($args, $request) {
 		$this->validate(null, $request);
 
 		// Retrieve the ID of the article that
@@ -126,15 +129,14 @@ class LuceneHandler extends Handler {
 		// Check error conditions.
 		// - The "similar documents" feature is not enabled.
 		// - We got a non-numeric article ID.
-		$lucenePlugin = $this->_getLucenePlugin();
-		if (!($lucenePlugin->getSetting(0, 'simdocs')
+		if (!($this->plugin->getSetting(0, 'simdocs')
 			&& is_numeric($articleId))) {
 			$request->redirect(null, 'search');
 		}
 
 		// Identify "interesting" terms of the
 		// given article.
-		$solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
+		$solrWebService = $this->plugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
 		$searchTerms = $solrWebService->getInterestingTerms($articleId);
 		if (empty($searchTerms)) {
 			$request->redirect(null, 'search');
@@ -180,17 +182,5 @@ class LuceneHandler extends Handler {
 		// is not working in practice then we'll have to
 		// implement a real application-level two-way handshake.
 		return $batchCount;
-	}
-
-
-	//
-	// Private helper methods
-	//
-	/**
-	 * Get the lucene plugin object
-	 * @return LucenePlugin
-	 */
-	function _getLucenePlugin() {
-		return PluginRegistry::getPlugin('generic', LUCENE_PLUGIN_NAME);
 	}
 }

@@ -13,6 +13,8 @@
 
 namespace APP\plugins\generic\lucene\classes;
 
+use APP\search\ArticleSearch;
+
 class SolrSearchRequest {
 
 	/**

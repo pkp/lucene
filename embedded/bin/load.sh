@@ -107,9 +107,9 @@ for FILENAME in `ls "$PULL_STAGING_DIR"`; do
   echo -n "$ARTICLES_PROCESSED of $ARTICLES_FOUND articles processed ... "
 
   if [ "$ARTICLES_FOUND" = "$ARTICLES_PROCESSED" ]; then
-    # Move the file to the arquive
+    # Move the file to the archive
     mv "$FULL_FILENAME" "$PULL_ARCHIVE_DIR"
-    echo "file arquived."
+    echo "file archived."
   else
     # Reject the file
     mv "$FULL_FILENAME" "$PULL_REJECT_DIR"

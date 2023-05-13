@@ -60,7 +60,7 @@ class SolrWebServiceTest extends PKPTestCase {
 		$application = Application::getApplication();
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$request = $application->getRequest();
-		if (!is_a($request->getRouter(), 'PKPRouter')) {
+		if (! $request->getRouter() instanceof \PKP\core\PKPRouter) {
 			$router = new PageRouter();
 			$router->setApplication($application);
 			$request->setRouter($router);

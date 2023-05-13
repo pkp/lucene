@@ -22,9 +22,15 @@ use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\Hook;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
+use APP\plugins\generic\lucene\classes\SolrSearchRequest;
 use APP\plugins\generic\lucene\classes\SolrWebService;
 use APP\plugins\generic\lucene\classes\EmbeddedServer;
 use APP\plugins\generic\lucene\classes\form\LuceneSettingsForm;
+use PKP\db\DAORegistry;
+use APP\core\Application;
+use APP\search\ArticleSearch;
+use APP\facades\Repo;
+use APP\template\TemplateManager;
 
 define('LUCENE_PLUGIN_DEFAULT_RANKING_BOOST', 1.0); // Default: No boost (=weight factor one).
 
@@ -93,7 +99,6 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function getMailTemplate($emailKey, $journal = null) {
 		if (!isset($this->_mailTemplates[$emailKey])) {
-			import('lib.pkp.classes.mail.MailTemplate');
 			$mailTemplate = new MailTemplate($emailKey, null, $journal, true, true);
 			$this->_mailTemplates[$emailKey] = $mailTemplate;
 		}
@@ -130,7 +135,14 @@ class LucenePlugin extends GenericPlugin {
 
 			$customRanking = (boolean) $this->getSetting(CONTEXT_SITE, 'customRanking');
 			if ($customRanking) {
-				Hook::add('sectiondao::getAdditionalFieldNames', [$this, 'callbackSectionDaoAdditionalFieldNames']);
+				Hook::add('Schema::get::section', function($hookName, $args) {
+					$schema = &$args[0];
+					$schema->properties->customRanking = (object)[
+						'type' => 'string',
+						'apiSummary' => false,
+						'validation' => ['nullable']
+					];
+				});
 			}
 
 			// Register callbacks (controller-level).
@@ -242,8 +254,6 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function getActions($request, $actionArgs) {
 		$router = $request->getRouter();
-		import('lib.pkp.classes.linkAction.request.AjaxModal');
-
 		return array_merge(
 			$this->getEnabled() ? [
 				new LinkAction(
@@ -285,7 +295,7 @@ class LucenePlugin extends GenericPlugin {
 						$journalId = $request->getUserVar('journalToReindex');
 						$journalDao = DAORegistry::getDAO('JournalDAO');
 						$journal = $journalDao->getById($journalId);
-						if (!is_a($journal, 'Journal')) $journal = null;
+						if (! $journal instanceof \APP\journal\Journal) $journal = null;
 					}
 
 					$this->_rebuildIndex(false, $journal, true, false, $message);
@@ -352,7 +362,6 @@ class LucenePlugin extends GenericPlugin {
 		if (empty($enabledFacetCategories)) return false;
 
 		// Instantiate the block plug-in for facets.
-		$this->import('LuceneFacetsBlockPlugin');
 		$luceneFacetsBlockPlugin = new LuceneFacetsBlockPlugin($this);
 
 		// Add the plug-in to the registry.
@@ -374,6 +383,7 @@ class LucenePlugin extends GenericPlugin {
 
 		// Check the operation.
 		$op = $args[1];
+		$handler = & $args[3];
 		$publicOps = [
 			'queryAutocomplete',
 			'pullChangedArticles',
@@ -388,27 +398,9 @@ class LucenePlugin extends GenericPlugin {
 		/* @var $journal Journal */
 
 		// Looks as if our handler had been requested.
-		define('HANDLER_CLASS', 'LuceneHandler');
-		define('LUCENE_PLUGIN_NAME', $this->getName());
-		$handlerFile =& $args[2];
-		$handlerFile = $this->getPluginPath() . '/' . 'LuceneHandler.inc.php';
+		$handler = new LuceneHandler($this);
+		return true;
 	}
-
-
-	//
-	// Data-access level hook implementations.
-	//
-	/**
-	 * @see DAO::getAdditionalFieldNames()
-	 */
-	function callbackSectionDaoAdditionalFieldNames($hookName, $args) {
-		// Add the custom ranking setting to the field names.
-		// This will be used to adjust the ranking boost of all
-		// articles in a given section.
-		$returner =& $args[1];
-		$returner[] = 'rankingBoost';
-	}
-
 
 	//
 	// Controller level hook implementations.
@@ -460,7 +452,7 @@ class LucenePlugin extends GenericPlugin {
 		// Configure faceting.
 		// 1) Faceting will be disabled for filtered search categories.
 		$activeFilters = array_keys($searchRequest->getQuery());
-		if ($journal instanceof Journal) $activeFilters[] = 'journalTitle';
+		if ($journal instanceof \APP\journal\Journal) $activeFilters[] = 'journalTitle';
 		if (!empty($fromDate) || !empty($toDate)) $activeFilters[] = 'publicationDate';
 		// 2) Switch faceting on for enabled categories that have no
 		// active filters.
@@ -470,23 +462,17 @@ class LucenePlugin extends GenericPlugin {
 		// Configure custom ranking.
 		$customRanking = (boolean) $this->getSetting(CONTEXT_SITE, 'customRanking');
 		if ($customRanking) {
-			$sectionDao = DAORegistry::getDAO('SectionDAO');
-			/* @var $sectionDao SectionDAO */
-			if (is_a($journal, 'Journal')) {
-				$sections = $sectionDao->getByJournalId($journal->getId());
+			if ($journal instanceof \APP\journal\Journal) {
+				$sections = Repo::section()->getCollector()->filterByContextIds([$journal->getId()])->getMany();
+			} else {
+				$sections = Repo::section()->getCollector()->getMany();
 			}
-			else {
-				$sections = $sectionDao->getAll();
-			}
-			while ($section = $sections->next()) {
-				/* @var $sections DAOResultFactory */
-				if ($section != null) {
-					$sectionBoost = (float) $section->getData('rankingBoost');
-					if ($sectionBoost != null && $sectionBoost != LUCENE_PLUGIN_DEFAULT_RANKING_BOOST) {
-						$searchRequest->addBoostFactor(
-							'section_id', $section->getId(), $sectionBoost
-						);
-					}
+			foreach ($sections as $section) {
+				$sectionBoost = (float) $section->getData('rankingBoost');
+				if ($sectionBoost != null && $sectionBoost != LUCENE_PLUGIN_DEFAULT_RANKING_BOOST) {
+					$searchRequest->addBoostFactor(
+						'section_id', $section->getId(), $sectionBoost
+					);
 				}
 			}
 			unset($sections);
@@ -727,14 +713,13 @@ class LucenePlugin extends GenericPlugin {
 
 		// Read the section's ranking boost.
 		$rankingBoost = LUCENE_PLUGIN_DEFAULT_RANKING_BOOST;
-		$sectionDao = DAORegistry::getDAO('SectionDAO');
 		$journal = Application::get()->getRequest()->getJournal();
 		$section = null;
 		if ($form->getSectionId()) {
-			$section = $sectionDao->getById($form->getSectionId(), $journal->getId());
+			$section = Repo::section()->get($form->getSectionId(), $journal->getId());
 		}
 
-		if (is_a($section, 'Section')) {
+		if ($section instanceof \APP\section\Section) {
 			$rankingBoostSetting = $section->getData('rankingBoost');
 			if (is_numeric($rankingBoostSetting)) $rankingBoost = (float) $rankingBoostSetting;
 		}
@@ -781,15 +766,14 @@ class LucenePlugin extends GenericPlugin {
 			$rankingBoost = LUCENE_PLUGIN_DEFAULT_RANKING_BOOST;
 		}
 
-		$sectionDao = DAORegistry::getDAO('SectionDAO');
 		$journal = Application::get()->getRequest()->getJournal();
 
 		// Get or create the section object
 		if ($form->getSectionId()) {
-			$section = $sectionDao->getById($form->getSectionId(), $journal->getId());
+			$section = Repo::section()->get($form->getSectionId(), $journal->getId());
 			// Update the ranking boost of the section.
 			$section->setData('rankingBoost', $rankingBoost);
-			$sectionDao->updateObject($section);
+			Repo::section()->edit($section, ['rankingBoost']);
 		}
 
 		return false;
@@ -936,7 +920,7 @@ class LucenePlugin extends GenericPlugin {
 		$urlParams = ['articleId' => $article->getId()];
 
 		// Create a URL that links to "similar documents".
-		$request = PKPApplication::get()->getRequest();
+		$request = Application::get()->getRequest();
 		$router = $request->getRouter();
 		$simdocsUrl = $router->url(
 			$request, null, 'lucene', 'similarDocuments', null, $urlParams
@@ -1003,7 +987,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		// Only show the "journal title" option if we have several journals.
-		if (!is_a($journal, 'Journal') && $this->getSetting(CONTEXT_SITE, 'orderByJournal')) {
+		if (! $journal instanceof \APP\journal\Journal && $this->getSetting(CONTEXT_SITE, 'orderByJournal')) {
 			$resultSetOrderingOptions['journalTitle'] = __('plugins.generic.lucene.results.orderBy.journal');
 		}
 
@@ -1103,7 +1087,7 @@ class LucenePlugin extends GenericPlugin {
 		if ($buildIndex) {
 			// If we got a journal instance then only re-index
 			// articles from that journal.
-			$journalIdOrNull = (is_a($journal, 'Journal') ? $journal->getId() : null);
+			$journalIdOrNull = $journal instanceof \APP\journal\Journal ? $journal->getId() : null;
 
 			// Clear index (if the journal id is null then
 			// all journals will be deleted from the index).
@@ -1112,7 +1096,7 @@ class LucenePlugin extends GenericPlugin {
 			$this->_indexingMessage($log, __('search.cli.rebuildIndex.done') . PHP_EOL, $messages);
 
 			// Re-build index, either of a single journal...
-			if ($journal instanceof Journal) {
+			if ($journal instanceof \APP\journal\Journal) {
 				$journals = [$journal];
 				unset($journal);
 				// ...or for all journals.
@@ -1246,11 +1230,10 @@ class LucenePlugin extends GenericPlugin {
 		}
 		else {
 			// Check whether this is journal or article index update problem.
-			if (is_a($journal, 'Journal')) {
+			if ($journal instanceof \APP\journal\Journal) {
 				// This must be a journal indexing problem.
 				$mail = $this->getMailTemplate('LUCENE_JOURNAL_INDEXING_ERROR_NOTIFICATION', $journal);
-			}
-			else {
+			} else {
 				// Instantiate an article mail template.
 				$mail = $this->getMailTemplate('LUCENE_ARTICLE_INDEXING_ERROR_NOTIFICATION');
 			}
