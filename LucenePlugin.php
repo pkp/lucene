@@ -408,13 +408,12 @@ class LucenePlugin extends GenericPlugin {
 	/**
 	 * @see ArticleSearch::getResultSetOrderingOptions()
 	 */
-	function callbackGetResultSetOrderingOptions($hookName, $params) {
+	public function callbackGetResultSetOrderingOptions(string $hookName, array $params) {
 		$resultSetOrderingOptions =& $params[1];
+		// FIXME: not implemented
 	}
 
-	/**
-	 */
-	function callbackRetrieveResults($hookName, $params) {
+	public function callbackRetrieveResults(string $hookName, array $params) {
 		assert($hookName == 'SubmissionSearch::retrieveResults');
 
 		// Unpack the parameters.
@@ -487,8 +486,7 @@ class LucenePlugin extends GenericPlugin {
 			$error .= ' ' . __('plugins.generic.lucene.message.techAdminInformed');
 
 			return [];
-		}
-		else {
+		} else {
 			// Store spelling suggestion, highlighting and faceting info
 			// internally. We cannot route these back through the request
 			// as the default search implementation does not support
@@ -528,12 +526,8 @@ class LucenePlugin extends GenericPlugin {
 			// Return the scored results.
 			if (isset($result['scoredResults']) && !empty($result['scoredResults'])) {
 				$results = $result['scoredResults'];
-
-				return $result['scoredResults'];
 			}
-			else {
-				return [];
-			}
+			return true;
 		}
 	}
 
@@ -1121,8 +1115,7 @@ class LucenePlugin extends GenericPlugin {
 					// When pull-indexing is configured then we leave it up to the
 					// Solr server to decide when the updates will actually be done.
 					$this->_indexingMessage($log, '... ' . __('plugins.generic.lucene.rebuildIndex.pullResult', ['numMarked' => $numMarked]) . PHP_EOL, $messages);
-				}
-				else {
+				} else {
 					// In case of push indexing we immediately update the index.
 					$numIndexed = 0;
 					do {

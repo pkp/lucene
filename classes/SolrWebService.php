@@ -26,6 +26,7 @@ use APP\submission\Submission;
 use PKP\cache\CacheManager;
 use PKP\facades\Locale;
 use PKP\core\PKPString;
+use APP\issue\IssueAction;
 
 define('SOLR_STATUS_ONLINE', 0x01);
 define('SOLR_STATUS_OFFLINE', 0x02);
@@ -126,8 +127,7 @@ class SolrWebService {
 		if (isset($this->_issueCache[$issueId])) {
 			$issue = $this->_issueCache[$issueId];
 		} else {
-			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
-			$issue = $issueDao->getById($issueId, $journalId, true);
+			$issue = Repo::issue()->get($issueId, $journalId);
 			$this->_issueCache[$issueId] = $issue;
 		}
 
@@ -215,8 +215,6 @@ class SolrWebService {
 	 *  for the given journal.
 	 */
 	function _indexingTransaction($sendXmlCallback, $batchSize = SOLR_INDEXING_MAX_BATCHSIZE, $journalId = null) {
-		$journalSettingsDao = DAORegistry::getDAO('JournalSettingsDAO');
-
 		$submissionArray = [];
 		$submissionsIterator = Repo::submission()->getCollector()->filterByContextIds([$journalId])->filterByStatus([Submission::STATUS_PUBLISHED])->getMany();
 		$count = 0;
@@ -287,7 +285,6 @@ class SolrWebService {
 		// Run through all articles in the batch and generate an
 		// XML list for them.
 		$numDeleted = 0;
-		$submissionsIterator = Repo::submission()->getCollector()->filterByContextIds([$journalId])->filterByStatus([Submission::STATUS_PUBLISHED])->getMany();
 		foreach($articles as $article) {
 			$journal = $this->_getJournal($article->getJournalId());
 
@@ -348,17 +345,13 @@ class SolrWebService {
 		if (! $journal instanceof \APP\journal\Journal) return false;
 
 		// Get the article's issue.
-	$issueDao = DAORegistry::getDAO('IssueDAO');
-
-	$issue = $issueDao->getById($article->getCurrentPublication()->getData('issueId'));
-
-		if (! $issue instanceof APP\issue\Issue) return false;
+		$issue = Repo::issue()->get((int) $article->getCurrentPublication()->getData('issueId'));
+		if (! ($issue instanceof \APP\issue\Issue)) return false;
 
   		// Only index published articles.
-		if (!$issue->getPublished() || $article->getData('status') != STATUS_PUBLISHED) return false;
+		if (!$issue->getPublished() || $article->getData('status') != Submission::STATUS_PUBLISHED) return false;
 
 		// Make sure the requesting party is authorized to access the article/issue.
-		import('classes.issue.IssueAction');
 		$issueAction = new IssueAction();
 		$subscriptionRequired = $issueAction->subscriptionRequired($issue, $journal);
 		if ($subscriptionRequired) {
@@ -382,6 +375,8 @@ class SolrWebService {
 	 *  will only contain a deletion marker.
 	 */
 	function _addArticleXml(\DOMDocument $articleDoc, \APP\submission\Submission $article, $journal, $markToDelete = false) {
+		$publication = $article->getCurrentPublication();
+
 		// Get the root node of the list.
 		$articleList = $articleDoc->documentElement;
 
@@ -403,7 +398,7 @@ class SolrWebService {
 		if ($markToDelete) return;
 
 		// Add authors.
-		$authors = $article->getAuthors();
+		$authors = $publication->getData('authors');
 		if (!empty($authors)) {
 			$authorList = $articleDoc->createElement('authorList');
 			foreach ($authors as $author) { /* @var $author Author */
@@ -415,7 +410,7 @@ class SolrWebService {
 		}
 
 		// We need the request to retrieve locales and build URLs.
-		$request = PKPApplication::get()->getRequest();
+		$request = Application::get()->getRequest();
 
 		// Get all supported locales.
 		$site = $request->getSite();
@@ -596,10 +591,9 @@ class SolrWebService {
 			$articleNode->appendChild($dateNode);
 		}
 
-		$issueId = $article->getCurrentPublication()->getData('issueId');
+		$issueId = $publication->getData('issueId');
 		if (is_numeric($issueId)) {
-			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
-			$issue = $issueDao->getById($issueId);
+			$issue = Repo::issue()->get($issueId);
 			if ($issue instanceof \APP\issue\Issue) {
 				$issuePublicationDate = $issue->getDatePublished();
 				if (!empty($issuePublicationDate)) {
@@ -620,22 +614,20 @@ class SolrWebService {
 			$router->setApplication($application);
 		}
 
-		$articleGalleyDao = DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $articleGalleyDao ArticleGalleyDAO */
-		$galleys = $articleGalleyDao->getByPublicationId($article->getCurrentPublication()->getId());
+		$galleys = $publication->getData('galleys');
 		$galleyList = null;
-		while ($galley = $galleys->next()) {
-			if ($galley->getFileId()) {
-				$locale = $galley->getLocale();
-				$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestArticleId(), $galley->getBestGalleyId()]);
-				if (!empty($locale) && !empty($galleyUrl)) {
-					if (is_null($galleyList)) {
-						$galleyList = $articleDoc->createElement('galleyList');
-					}
-					$galleyNode = $articleDoc->createElement('galley');
-					$galleyNode->setAttribute('locale', $locale);
-					$galleyNode->setAttribute('fileName', $galleyUrl);
-					$galleyList->appendChild($galleyNode);
+		foreach ($galleys as $galley) {
+			if (!$galley->getData('submissionFileId')) continue;
+			$locale = $galley->getLocale();
+			$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestArticleId(), $galley->getBestGalleyId()]);
+			if (!empty($locale) && !empty($galleyUrl)) {
+				if (is_null($galleyList)) {
+					$galleyList = $articleDoc->createElement('galleyList');
 				}
+				$galleyNode = $articleDoc->createElement('galley');
+				$galleyNode->setAttribute('locale', $locale);
+				$galleyNode->setAttribute('fileName', $galleyUrl);
+				$galleyList->appendChild($galleyNode);
 			}
 		}
 
@@ -780,15 +772,14 @@ class SolrWebService {
 		} elseif ($method == 'GET') {
 			$guzzleParams['query'] = $params;
 		} else {
-			throw new Exception('Unknown request method!');
+			throw new \Exception('Unknown request method!');
 		}
 		$response = $client->request($method, $url, $guzzleParams);
-		$nullValue = null;
 
 		// Did we get a response at all?
 		if (!$response) {
 			$this->_serviceMessage = __('plugins.generic.lucene.message.searchServiceOffline');
-			return $nullValue;
+			return null;
 		}
 
 		// Did we get a "200 - OK" response?
@@ -798,16 +789,13 @@ class SolrWebService {
 			// to avoid information leakage and log the exact error.
 			error_log($application->getName() . ' - Lucene plugin:' . PHP_EOL . "The Lucene web service returned a status code $status and the message" . PHP_EOL . (string) $response->getBody());
 			$this->_serviceMessage = __('plugins.generic.lucene.message.webServiceError');
-			return $nullValue;
+			return null;
 		}
 
-		// Prepare an XPath object.
+		// Prepare and return an XPath object.
 		$responseDom = new \DOMDocument();
 		$responseDom->loadXML((string) $response->getBody());
-		$result = new \DOMXPath($responseDom);
-
-		// Return the result.
-		return $result;
+		return new \DOMXPath($responseDom);
 	}
 
 	/**
@@ -1014,9 +1002,9 @@ class SolrWebService {
 		}
 
 		// Read highlighting results (if any).
-		$highligthedArticles = null;
+		$highlightedArticles = null;
 		if ($searchRequest->getHighlighting()) {
-			$highligthedArticles = [];
+			$highlightedArticles = [];
 			$highlightingNodeList = $response->query('/response/lst[@name="highlighting"]/lst');
 			foreach($highlightingNodeList as $highlightingNode) { /* @var $highlightingNode DOMElement */
 				if ($highlightingNode->hasChildNodes()) {
@@ -1028,7 +1016,7 @@ class SolrWebService {
 						$excerpt = $highlightingNode->firstChild->firstChild->textContent;
 					}
 					if (is_numeric($articleId) && !empty($excerpt)) {
-						$highligthedArticles[$articleId] = $excerpt;
+						$highlightedArticles[$articleId] = $excerpt;
 					}
 				}
 			}
@@ -1098,7 +1086,7 @@ class SolrWebService {
 		return [
 			'scoredResults' => $scoredResults,
 			'spellingSuggestion' => $spellingSuggestion,
-			'highlightedArticles' => $highligthedArticles,
+			'highlightedArticles' => $highlightedArticles,
 			'facets' => $facets,
 		];
 	}
