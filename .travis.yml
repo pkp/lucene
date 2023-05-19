@@ -65,7 +65,7 @@ script:
   - cd ../../../../..
 
   # Run plugin test set
-  - $(npm bin)/cypress run --config '{"specPattern":["plugins/generic/lucene/cypress/tests/*.cy.js"]}'
+  - $(npm bin)/cypress run --config '{"specPattern":["plugins/generic/lucene/cypress/tests/functional/*.cy.js"]}'
 
 after_failure:
   - cat error.log
