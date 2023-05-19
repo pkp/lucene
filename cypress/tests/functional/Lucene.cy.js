@@ -18,16 +18,19 @@ describe('Lucene plugin tests', function() {
 
 		// Fill in various details
 		cy.wait(1000); // https://github.com/tinymce/tinymce/issues/4355
-		cy.get('div[id=editContext]').find('button[label="Français (Canada)"]').click();
+		cy.get('div[id=editContext]').find('button[label="French"]').click();
 		cy.get('input[name="name-fr_CA"]').type('journal2-fr', {delay: 0});
-		cy.get('input[name="name-en_US"]').type('journal2-en', {delay: 0});
-		cy.get('input[name=acronym-en_US]').type('J2', {delay: 0});
+		cy.get('input[name="name-en"]').type('journal2-en', {delay: 0});
+		cy.get('input[name=acronym-en]').type('J2', {delay: 0});
+		cy.get('#context-contactName-control').type('Ramiro Vaca');
+		cy.get('#context-contactEmail-control').type('rvaca@mailinator.com');
+		cy.get('#context-country-control').select('Canada');
 		cy.get('span').contains('Enable this journal').siblings('input').check();
-		cy.get('input[name="supportedLocales"][value="en_US').check();
+		cy.get('input[name="supportedLocales"][value="en').check();
 		cy.get('input[name="supportedLocales"][value="fr_CA').check();
-		cy.get('input[name="primaryLocale"][value="en_US').check();
+		cy.get('input[name="primaryLocale"][value="en').check();
 		cy.get('input[name=urlPath]').clear().type('journal2', {delay: 0});
-		cy.setTinyMceContent('context-description-control-en_US', 'description-en');
+		cy.setTinyMceContent('context-description-control-en', 'description-en');
 		cy.setTinyMceContent('context-description-control-fr_CA', 'description-fr');
 		cy.get('button').contains('Save').click();
 
