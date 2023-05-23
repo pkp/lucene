@@ -178,7 +178,7 @@ more physical RAM.
 activate it before enabling the plug-in. If you have a large OJS
 installation then rebuilding your index (see the dedicated chapter)
 may require lots of memory. Please increase the 'memory\_limit' in
-php.ini until you no longer get `Allowed memory size ... exhausted'
+php.ini until you no longer get 'Allowed memory size ... exhausted'
 errors.
 
 ### Embedded Server Mode: Installation and Configuration
@@ -192,7 +192,7 @@ installations. The following paragraphs will explain how to do this.
 This will transform your OJS server into a Solr search server. If you
 already installed the Solr server for one of your installations and just
 want to install the plugin for another OJS installation you can ommit
-steps 1) and 3) - 5).
+steps 1)  3) and 5).
 
 1)  Install java: You'll need a working installation of the Java 8
 Platform, Standard Edition (J2SE) Runtime Environment, Version 1.8
