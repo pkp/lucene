@@ -105,6 +105,7 @@ class SolrWebService {
 		$this->_instId = $instId;
 	}
 
+use GuzzleHttp\Psr7\Query;
 
 	//
 	// Getters and Setters
@@ -770,7 +771,7 @@ class SolrWebService {
 			if (is_array($params)) $guzzleParams['form_params'] = $params;
 			else $guzzleParams['body'] = $params;
 		} elseif ($method == 'GET') {
-			$guzzleParams['query'] = $params;
+			$guzzleParams['query'] = Query::build($params);
 		} else {
 			throw new \Exception('Unknown request method!');
 		}
@@ -861,7 +862,7 @@ class SolrWebService {
 		$facetCategories = $searchRequest->getFacetCategories();
 		if (!empty($facetCategories)) {
 			$params['facet'] = 'on';
-			$params['facet.field'] = [];
+			$params['facet.field'] = '';
 
 			// NB: We only add fields in the current UI locale, i.e.
 			// facets are considered part of the navigation and not
@@ -872,18 +873,22 @@ class SolrWebService {
 			// solicited facet categories.
 			$facetFields = $this->_getFieldNames('facet');
 			$enabledFields = 0;
+			$facetFieldsSerialized = [];
 			foreach($facetFields['localized'] as $fieldName) {
 				if (in_array($fieldName, $facetCategories)) {
-					$params['facet.field'][] = $fieldName . '_' . $locale . '_facet';
+					$facetFieldsSerialized[] =  $fieldName . '_' . $locale . '_facet';
 					$enabledFields++;
 				}
 			}
 			foreach($facetFields['static'] as $categoryName => $fieldName) {
 				if (in_array($categoryName, $facetCategories)) {
-					$params['facet.field'][] = $fieldName;
+					$facetFieldsSerialized[] = $fieldName;
 					$enabledFields++;
 				}
 			}
+
+			$params['facet.field'] = $facetFieldsSerialized;
+
 			if (in_array('publicationDate', $facetCategories)) {
 				$params['facet.range'] = 'publicationDate_dt';
 				$params['facet.range.start'] = 'NOW/YEAR-50YEARS';
@@ -1132,7 +1137,8 @@ class SolrWebService {
 		}
 
 		// Add the installation ID as a filter query.
-		$params['fq'] = ['inst_id:"' . $this->_instId . '"'];
+		$filterFieldsSerialized = [];
+		$filterFieldsSerialized[] = 'inst_id:"' . $this->_instId . '"';
 
 		// Add a range search on the publication date (if set).
 		$fromDate = $searchRequest->getFromDate();
@@ -1155,26 +1161,27 @@ class SolrWebService {
 				//$toDate = $toDate . '-1DAY';
 			}
 			// We do not cache this filter as reuse seems improbable.
-			$params['fq'][] = "{!cache=false}publicationDate_dt:[$fromDate TO $toDate]";
+			$filterFieldsSerialized[] = "{!cache=false}publicationDate_dt:[$fromDate TO $toDate]";
 		}
 		// Add the authors as an filter query (if set).
 		$authors = $searchRequest->getAuthors();
 		if (!empty($authors)) {
-			foreach (explode(' ', $authors) as $author) {
-			$params['fq'][] = 'authors_txt:' . $author;
+			foreach ($authors as $author) {
+				$filterFieldsSerialized[] = 'authors_txt:' . $author;
 			}
 		}
 		// Add the journal as a filter query (if set).
 		$journal = $searchRequest->getJournal();
 		if ($journal instanceof \APP\journal\Journal) {
-			$params['fq'][] = 'journal_id:"' . $this->_instId . '-' . $journal->getId() . '"';
+			$filterFieldsSerialized[] = 'journal_id:"' . $this->_instId . '-' . $journal->getId() . '"';
 		}
 
 		// Add excluded IDs as a filter query (if set).
 		$excludedIds = $searchRequest->getExcludedIds();
 		if (!empty($excludedIds)) {
-			$params['fq'][] = 'article_id:(-"' . $this->_instId . '-' . implode('" -"' . $this->_instId . '-', $excludedIds) . '")';
+			$filterFieldsSerialized[] = 'article_id:(-"' . $this->_instId . '-' . implode('" -"' . $this->_instId . '-', $excludedIds) . '")';
 		}
+		$params['fq'] = $filterFieldsSerialized;
 		return $params;
 	}
 
