@@ -780,7 +780,7 @@ class SolrWebService {
 		if ($method == 'POST') {
 			$guzzleParams['headers'] = ['Content-Type' => 'text/xml; charset=utf-8'];
 			if (is_array($params)) $guzzleParams['form_params'] = $params;
-			else $guzzleParams['body'] = Query::build($params);
+			else $guzzleParams['body'] = $params;
 		} elseif ($method == 'GET') {
 			$guzzleParams['query'] = Query::build($params);
 		} else {
