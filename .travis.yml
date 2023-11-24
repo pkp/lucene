@@ -14,7 +14,7 @@ addons:
       - libu2f-udev
 
 php:
-  - 8.0
+  - 8.1
 env:
   - APPLICATION=ojs BRANCH=main TEST=mysql
   - APPLICATION=ojs BRANCH=main TEST=pgsql
