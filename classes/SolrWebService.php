@@ -27,6 +27,7 @@ use PKP\cache\CacheManager;
 use PKP\facades\Locale;
 use PKP\core\PKPString;
 use APP\issue\IssueAction;
+use GuzzleHttp\Psr7\Query;
 
 define('SOLR_STATUS_ONLINE', 0x01);
 define('SOLR_STATUS_OFFLINE', 0x02);
@@ -104,8 +105,6 @@ class SolrWebService {
 		// Set the installation ID.
 		$this->_instId = $instId;
 	}
-
-use GuzzleHttp\Psr7\Query;
 
 	//
 	// Getters and Setters
