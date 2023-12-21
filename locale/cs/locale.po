@@ -1,2 +1,41 @@
 msgid ""
-msgstr "X-Generator: Weblate\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit"
+msgstr ""
+"PO-Revision-Date: 2023-12-22 21:39+0000\n"
+"Last-Translator: Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>\n"
+"Language-Team: Czech <http://translate.pkp.sfu.ca/projects/plugins/lucene/cs/"
+">\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.2\n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Plugin Lucene Search (Hledání Lucene)"
+
+msgid "plugins.generic.lucene.description"
+msgstr ""
+"Plugin Lucene poskytuje podporu více jazyků, lepší relevanci výsledků "
+"vyhledávání, rychlejší indexování, lepší škálovatelnost a další funkce."
+
+msgid "plugins.generic.lucene.faceting.displayName"
+msgstr "Lucene Faceting"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Blok Lucene Faceting"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Zásuvný modul Faceting Block pro Lucene"
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "zpřesnit vyhledávání"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Disciplína"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Klíčové slovo"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Metoda/přístup"
