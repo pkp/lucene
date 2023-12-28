@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-12-22 21:39+0000\n"
+"PO-Revision-Date: 2023-12-30 06:39+0000\n"
 "Last-Translator: Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>\n"
 "Language-Team: Czech <http://translate.pkp.sfu.ca/projects/plugins/lucene/cs/"
 ">\n"
@@ -39,3 +39,277 @@ msgstr "Klíčové slovo"
 
 msgid "plugins.generic.lucene.faceting.type"
 msgstr "Metoda/přístup"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Pokrytí"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Časopis"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Datum zveřejnění"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr "Požadované jádro '{$core}' nebylo na serveru Solr nalezeno. Je online?"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr ""
+"Při indexování došlo k chybě: Zpracováno {$numProcessed} z dávky "
+"{$batchCount} ({$numDeleted} smazaných dokumentů v této dávce)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Index s {$numDocs} dokumenty online."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr "Pull indexování není povoleno. Povolte jej v nastavení pluginu Lucene."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "Vyhledávací služba OJS je bohužel v současné době mimo provoz."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "O problému byl informován technický správce tohoto časopisu."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "Webová služba Lucene vrátila chybu."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} článků označeno k aktualizaci"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Měli jste na mysli"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Výsledky řadit podle"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevantnost"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr ""
+"Varování: Vyhledávací index je v současné době prázdný, protože je aktivní "
+"pull indexování. Musíte počkat, až SOLR-server stáhne změny, nebo spustit "
+"skript pull.sh a poté load.sh z příkazového řádku."
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Obnova slovníků"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Aktualizace statistických údajů o používání"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Číslo"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Datum zveřejnění"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Název časopisu"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Název článku"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Vzestupně"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Sestupně"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "podobné dokumenty"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Nastavení"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr ""
+"Automatický návrh (zobrazení dynamického rozbalovacího seznamu s návrhy "
+"hledaných výrazů při zadávání vyhledávacího dotazu)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Zkontrolujte si podmínky pro výsledky"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Použít globální slovník"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr ""
+"Vlastní hodnocení (nastavení individuálních vah hodnocení pro jednotlivé "
+"sekce časopisu)"
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Přestavba slovníků"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr ""
+"Fasetování (zobrazení navigačního pole s dalšími filtry pro zpřesnění "
+"vyhledávání)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr ""
+"Můžete vybrat konkrétní kategorie faset (odpovídající metadata musí být "
+"vybrána pro indexování v nastavení časopisu, krok 3.4)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr ""
+"\n"
+"\t\tPlugin Lucene poskytuje několik volitelných funkcí vyhledávání. Většina "
+"těchto funkcí je ve výchozím nastavení povolena, ale lze je vypnout nebo "
+"doladit.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr ""
+"Zvýraznění (zobrazení krátkého výňatku z plného textu každého článku "
+"obsahujícího dotazovaná klíčová slova)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Správa indexu"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Obnovit index"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr ""
+"Obnovení indexu a/nebo slovníků může trvat dlouho. Jste si jisti, že chcete "
+"pokračovat?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Obnovení indexu pro všechny časopisy"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Obnovení indexu časopisu \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Výstup z poslední obnovy indexu:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr ""
+"Okamžité vyhledávání (okamžité vrácení výsledků vyhledávání, když uživatel "
+"zadá vyhledávací dotaz – pozor: využívá značné prostředky serveru)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Jedinečné ID instalace"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr ""
+"Zadejte prosím ID, které jednoznačně identifikuje tuto instalaci OJS pro "
+"vyhledávací server Solr."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr ""
+"Pokud používáte centrální vyhledávací server, budete muset zadat jedinečné "
+"ID instalace pro každou instalaci OJS, která sdílí stejný vyhledávací "
+"index.  Může to být libovolný text, ale musí být odlišný pro každý "
+"zúčastněný server OJS (např. statická IP adresa serveru, pokud máte jednu "
+"instalaci OJS na server)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Neplatný výběr."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Plugin Lucene: Nastavení"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Heslo"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Zadejte heslo serveru Solr."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "Zadejte platné heslo pro ověření na vyhledávacím serveru Solr."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr ""
+"Pull indexování (jedná se o pokročilou funkci, více informací naleznete v "
+"souboru README)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr ""
+"Pořadí podle statistik používání (k ovlivnění pořadí budou použita vaše "
+"statistická data '{$metricName}')"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr ""
+"Pořadí podle statistik používání (pro aktivaci této možnosti prosím "
+"aktivujte alespoň jeden statistický/reportovací plugin a v nastavení webu "
+"vyberte „hlavní metriku“)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "Adresa URL koncového bodu vyhledávání"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr ""
+"Koncový bod vyhledávání Solr se skládá z adresy URL serveru a obsluhy "
+"vyhledávání. Jako příklad viz výchozí nastavení. Toto nastavení změňte pouze "
+"v případě, že používáte centrální vyhledávací server."
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr ""
+"Nelze odstranit mezipaměť pole. Spusťte prosím 'rm cache/fc-plugins-lucene-"
+"fieldCache.php' ručně s příslušnými oprávněními."
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"\n"
+"\t\t<strong>Zkontrolujte podmínky pro výsledky</strong>: Navrhujte pouze "
+"výrazy, které skutečně přinesou výsledky vyhledávání. Návrhy budou\n"
+"\t\tporovnány s aktuálním časopisem a termíny již zadanými do jiných "
+"vyhledávacích polí.<br />\n"
+"\t\t<strong>Použijte globální slovník</strong>: Je to rychlejší, "
+"spotřebovává to méně prostředků na vyhledávacím serveru, a proto se lépe "
+"škáluje.\n"
+"\t\tpro velké instalace. Návrhy však mohou obsahovat irelevantní termíny, "
+"např. z jiných časopisů nebo termíny, které nepřinášejí \n"
+"\t\tžádné výsledky.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"\n"
+"\t\tPlugin Lucene přistupuje k vyhledávacímu indexu Lucene prostřednictvím "
+"serveru Solr. Tato konfigurační stránka umožňuje nastavit přístup k serveru "
+"Solr.\n"
+"\t\t<strong>Než se pokusíte změnit výchozí konfiguraci, přečtěte si prosím "
+"soubor README zásuvného modulu (plugins/generic/lucene/README).</strong>\n"
+"\t\tPokud používáte integrovaný scénář za firewallem, jak je vysvětleno v "
+"souboru README, můžete pravděpodobně ponechat všechny konfigurační parametry "
+"beze změny.\n"
+"\t"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"\n"
+"\t\tTipy pro vyhledávání: <ul>\n"
+"\t\t\t<li>Při vyhledávání se nerozlišují velká a malá písmena</li>\n"
+"\t\t\t<li>Běžná slova jsou ignorována</li>\n"
+"\t\t\t<li>Ve výchozím nastavení jsou vráceny <em>všechny</em> články "
+"obsahující libovolný výraz v dotazu (tj. <em>OR</em> je implicitní).</li>\n"
+"\t\t\t<li>Ujistěte se, že slovo v článku existuje, tím, že mu dáte předponu "
+"<strong>+</strong>; např. <em>+journal +access scholarly academic</em></li>\n"
+"\t\t\t<li>Kombinujte více slov pomocí <em>AND</em> pro vyhledání článků "
+"obsahujících všechny výrazy; např., <em>education AND research</em></li>\n"
+"\t\t\t<li>Vyloučení slova předponou <strong>-</strong> nebo <em>NOT</em>; "
+"např., <em>online -politics</em> nebo <em>online NOT politics</em></li>\n"
+"\t\t\t<li>Přesnou frázi vyhledáte tak, že ji dáte do uvozovek, např., <em>"
+"\"open access publishing\"</em>. Tip: Citace čínských nebo japonských slov "
+"vám pomůže najít přesné shody slov ve vícejazyčných polích, např. \"中国\""
+".</li>\n"
+"\t\t\t<li>Pro vytváření složitějších dotazů používejte závorky, např., "
+"<em>archive ((journal AND conference) NOT theses)</em></li>\n"
+"\t\t </ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr ""
+"Pokud se váš index Lucene stal zastaralým nebo poškozeným, můžete svá data "
+"znovu indexovat pro jednotlivé časopisy nebo pro všechny časopisy této "
+"instalace. Při použití automatického navrhování nebo alternativních návrhů "
+"pravopisu je třeba po rozsáhlých aktualizacích indexu slovníky znovu "
+"vytvořit. (Podrobnosti a způsoby automatizace těchto procesů najdete v "
+"plugins/generic/lucene/README.)"
