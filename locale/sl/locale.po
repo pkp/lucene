@@ -1,2 +1,487 @@
 msgid ""
-msgstr "X-Generator: Weblate\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit"
+msgstr ""
+"PO-Revision-Date: 2024-01-02 17:39+0000\n"
+"Last-Translator: Primož Svetek <primoz.svetek@gmail.com>\n"
+"Language-Team: Slovenian <http://translate.pkp.sfu.ca/projects/plugins/"
+"lucene/sl/>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 4.18.2\n"
+
+msgid "plugins.generic.lucene.faceting.displayName"
+msgstr "Lucene faseta"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Blok za Lucene faseto"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Vtičnik za Lucene blok za faseto"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Disciplina"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Klučna beseda"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Metoda/pristop"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Pokritost"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Revija"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Avtor"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr ""
+"Prišlo je do napake pri indeksiranju: Obdelano {$numProcessed} od skupaj "
+"{$batchCount} ({$numDeleted} izbrisanih dokumentov v tem paketu)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Indeksirano z {$numDocs} dokumenti na spletu."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr ""
+"Indeksiranje na zahtevo ni omogočeno. Prosimo omogočite ga v nastavitvah za "
+"Lucene vtičnik."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "Na žalost je OJS iskalni servis trenutno nedelujoč."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "Tehnični administrator te revije je bil obveščen o tem problemu."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "Lucene spletni servis je vrnil napako."
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr ""
+"Zahtevano jedro '{$core}' ni bil najden na Solr strežniku. Je na spletu?"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} člankov je označno za posodobitev"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr ""
+"Opozorilo: Iskalni indeks je trenutno prazen, ker je aktivno indeksiranje na "
+"zahtevo. Počakati morate, da SOLR strežnik pridobi vse spremembe ali iz "
+"ukazne vrstice izvršite pull.sh in potem load.sh skripti."
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Obnova slovarjev"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Posodabljanje podatkov statisk uporabe"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Ali ste mislili"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Uredi zadetke po"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevantnosti"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Avtorju"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Datumu objave"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Naslovu revije"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Naslovu članka"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Padajoče"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "podobni dokumenti"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Nastavitve"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr ""
+"Avtomatski-namig (prikaži dinamični spustni seznam z namigi za iskalne pojme "
+"med vpisovanjem pojmov)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Preverite pogoje za rezultate"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Uporabi globalni slovar"
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Obnovi slovarje"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr ""
+"Urejanej faseta (prikaži navigacijski blok z dodatnimi filtri za izboljšanje "
+"iskanja)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr ""
+"Izberete lahko specifične faset kategorije (ustrezni metapodatki morajo biti "
+"izbrani za indeksiranje v namestitvi revije, korak 3.4)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr ""
+"\n"
+"\t\tLucene vtičnik ponuja več opcijskih iskalnih funkcij. Večina jih je "
+"omogočenih privzeto, a jih je možno izključiti ali izboljšati.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr ""
+"Poudarjki (prikaz krajših izvlečkov vsakega članka, ki vsebujejo zahtevane "
+"ključne besede)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Administracija indeksa"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Obnovi indeks"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr ""
+"Obnavljanje indeksa in/ali slovarjev lahko traja dalj časa. Ste prepričani, "
+"da želite nadaljevati?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Obnovi indeks za vse revije"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Obnovi indeks za revijo \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Rezultati zadnje obnovitve indeksa:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr ""
+"Takojšnje iskanje (takojšnje vračanje iskalnih rezultatov, ko uporabnik "
+"vnaša iskalne pojme - pozor: porabi občutno več strežniških virov)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Unikatni namestitveni ID"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr ""
+"Na Solr iskalni strežnik prosimo vnesite ID, ki unikatno identificira to OJS "
+"namestitev."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr ""
+"Če uporabljate centralni iskalni strežnik, potem morate podati unikatni "
+"instalacijski ID za vsako OJS namestitev, ki uprablja isti iskalni indeks. "
+"To je lahko poljubno besedila, a mora biti različen za vsak OJS strežnik, ki "
+"je vključen (npr. statičen IP strežnika, če imate vsak OJS nameščen na "
+"svojem strežniku)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Neveljavna izbira."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Lucene vtičnik: Nastavitve"
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr ""
+"Prosimo vnesite veljaven URL za iskalni endpoint (Solr iskalni strežnik in "
+"handler za iskanje) na katerega bi se radi povezali."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "Nastavitve iskalne funkcije"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Prosimo vnesite geslo za Solr strežnik."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr ""
+"Prosimo vnesite veljavno geslo za avtentikacijo na Solr iskalnem strežniku."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr ""
+"Indeksiranje na poziv (to je naprednejša funkcionalnost, poglejte README "
+"datoteko za več informacij)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr ""
+"Razvrstitev po statistikah uporabe (za aktiviranje prosimo vključite vsaj en "
+"statistični/poročilni vtičnik in izberite \"glavno metriko\" v nastavitvah "
+"spletišča)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "URL za iskalni endpoint"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricEnabled"
+msgstr ""
+"Urejanje po statistikah uporabe (Vaši '{$metricName}' statistični podatki "
+"bodo uporabljeni za ureditev po popularnosti)"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr ""
+"Alternativni predlogi za črkovanje (prikaži alternative za iskalne pojme)"
+
+msgid "plugins.generic.lucene.settings.startStopServer"
+msgstr "Administracija Solr strežnika"
+
+msgid "plugins.generic.lucene.settings.startServer"
+msgstr "Zagon strežnika"
+
+msgid "plugins.generic.lucene.settings.updateBoostFile"
+msgstr "Posodobi podatke za razvrščanje"
+
+msgid "plugins.generic.lucene.settings.usageStatistics"
+msgstr "Statistike uporabe"
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Uporabniško ime"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr ""
+"Solr iskalni strežnik uporablja HTTP BASIC avtentikacijo. Prosimo vnesite "
+"uporabniško ime."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "Razvrstitvene uteži po meri"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Prosimo izberite veljavno utež za razvrščanje po meri."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "Nikoli ne prikaži"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Razvrsti nižje"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Normalno"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Uredi rezultate po"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Ustreznost"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Avtor"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Številka"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Datum izdaje"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Naslov revije"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Uporabi Solr 7"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Preverite, če uporabljate Solr 7"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Vtičnik za Lucene iskalnik"
+
+msgid "plugins.generic.lucene.description"
+msgstr ""
+"Vtičnik za Lucene iskalnik omgoča večjezično iskanje, izboljšano "
+"relevantnost zadetkov, hitrejše indeksiranje, večjo skalabilnost in druge "
+"izboljšave."
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "Nastavitve Solr strežnika"
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "izboljšajte svoje iskanje"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Datum objave"
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr ""
+"Predpomnilnika za to polje ni bilo mogoče izprazniti. Prosimo ročno izvedite "
+"'rm cache/fc-plugins-lucene-fieldCache.php' z ustreznimi dovoljenji."
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"\n"
+"\t\tIskalni nasveti: <ul>\n"
+"\t\t\t<li>Iskalni pojmi so neobčutljivi na velikost črk</li>\n"
+"\t\t\t<li>Vsakodnevne besede se ignorirajo</li>\n"
+"\t\t\t<li>Privzeto iskani prispevki vsebujeo <em>katerikoli</em> iskan pojem "
+"(tj., <em>ALI</em> je uporabljen)</li>\n"
+"\t\t\t<li>Če želite, da je pojem nujno vsebovan v članku, potem pred njim "
+"zapišite <strong>+</strong>; npr, <em>+revija +dostopen raziskovalno "
+"znanstven</em></li>\n"
+"\t\t\t<li>Da najdete članke, ki vsebujejo vse pojme, jih združite z "
+"<em>AND</em>; npr., <em>izobraževanje AND raziskava</em></li>\n"
+"\t\t\t<li>Za izločitev pojma pred njim zapišite <strong>-</strong> ali "
+"<em>NOT</em>; npr., <em>online -politika</em> ali <em>online NOT "
+"politika</em></li>\n"
+"\t\t\t<li>Za iskanje po točnih izrazih dajte pojme med dvojne narekovaje; "
+"npr., <em>\"založništvo prostega dostopa\"</em>. Namig: Uporaba narekovajev "
+"za kitajske ali japonske besede vam bo pomagala najti točne pojme v "
+"večjezičnih poljih, npr. \"中国\".</li>\n"
+"\t\t\t<li>Za bolj kompleksna iskanja uporabite oklepaje; npr., <em>arhiv (("
+"revija AND konferena) NOT teza)</em></li>\n"
+"\t\t </ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Številki"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Naraščajoče"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"\n"
+"\t\t<strong>Preverite pogoje za iskanje</strong>: Predlagaj samo namige, ki "
+"bodo dejansko prikazali iskalne rezultate. Namigi bodo\n"
+"\t\tpreverjeni pri trenutni reviji in pojmi, vpisanimi v druga iskalna "
+"polja.<br />\n"
+"\t\t<strong>Uporabi globalni slovar</strong>: To je hitreje, potrebuje manj "
+"virov na iskalnem strežniku in je torej bolj skalabilno\n"
+"\t\tza večje namestitve. Namigi lahko vsebujejo nerelevantne pojme, npr. iz "
+"druge revije ali pojme, ki ne najdejo\n"
+"\t\tnobenih zadetkov.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr ""
+"Rangiranje po meri (nastavite individualne rangirne uteži za rubrike revije)"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"\n"
+"\t\tLucene vtičnik dostopa do Lucene iskalnega indeksa preko Solr strežnika. "
+"Ta nastavitvena stran vam omogoča, da nastavite dostop do Solr strežnika.\n"
+"\t\t<strong>Prosimo preberite README datoteko (plugins/generic/lucene/README)"
+" preden spreminjate privzete nastavitve.</strong>\n"
+"\t\tČe uporabljate vdealno opcijo za požarnim zidom, opisano v README "
+"datoteki, potem verjetno lahko pustite privzete nastavitve.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr ""
+"V primeru, da je indeks za Lucene zastarel ali pokvarjen, lahko ponovno "
+"indeksirate vaše podatke za vsako revijo posebej ali vse hkrati. Slovarji "
+"morajo biti obnovljeni po večjih reindeksacijah, ko uporabljate avtomatske "
+"namige ali alternativne namige črkovanja. (Poglejte plugins/generic/lucene/"
+"README za podrobnosti in načine, kako avtomatizirati te procese.)"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Geslo"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr ""
+"Razvrstitev po statistikah uporabe (Vaši '{$metricName}' statistični podatki "
+"bodo uporabljeni za vpliv na razvrstitev)"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr ""
+"Solr iskalni endpoint se sestoji is URL stržnika in iskalnega handlerja. Za "
+"primer poglejte privzete nastavitve. Nastavitve spremenite le, če "
+"uporabljate centralni iskalni strežnik."
+
+msgid "plugins.generic.lucene.settings.serverNotAvailable"
+msgstr ""
+"\n"
+"\t\tTrenutno ne morete administrirati Solr strežnika preko "
+"spletnegavmesnika.<br/>\n"
+"\t\t<br/>\n"
+"\t\tMožni vzroki so:\n"
+"\t\t<ul>\n"
+"\t\t\t<li>Na tej OJS instanci nimate nameščeneta vdelanega strežnika ("
+"poglejte 'plugins/generic/lucene/README' za podrobnosti).</li>\n"
+"\t\t\t<li>Namestitev vdelanega strežnika morda ni končana. Prosimo preverite "
+"mapi 'plugins/generic/lucene/lib/solr' in 'plugins/generic/lucene/lib/jetty' "
+", da vsebujeta (ali kažeta) na solr/jetty namestitvene datoteke.</li>\n"
+"            <li>Administratorski strežniški skripte 'start.sh', 'stop.sh' in "
+"'check.sh' v 'plugins/generic/lucene/embedded/bin' niso izvršljive. "
+"Preverite dostopne pravice teh datotek. {$canExecuteResult}</li>\n"
+"\t\t\t<li>Uporabnik za spletni strežnik na more pisati v datoteke v 'files/"
+"lucene/'. Preverite dostopne pravice teh datotek. "
+"{$filesAreWriteableResult}</li>\n"
+"\t\t\t<li>Vdelan solr proces že teče pdo drugim uporabniškim imenom. To "
+"pomeni, da ne morete upravljati s tem procesom iz PHP. "
+"{$solrIsRunningUnderPHPUser}</li>\n"
+"\t\t\t<li>Vaša PHP konfiguracija ne dovoljuje izvajanja skript. Preverite "
+"'safe_mode' in 'disabled_function' nastavitvi v vašem php.ini. Če nimate "
+"dostopa do vašega php.ini potem lahko ročno izvedete skripte za start/stop "
+"strežnika. {$safemodeOrExecDisabled}</li>\n"
+"\t\t</ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr ""
+"Več-podobnega (prikaži povezavo \"podobni dokumenti\" za vsak iskalni "
+"rezultat)"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricDisabled"
+msgstr ""
+"Urejanje po statistikah uporabe (da to omogočite, prosimo aktivirajte vsaj "
+"en statistični/poročilni vtičnik in izberite \"glavno metriko\" v "
+"nastavitvah spletišča)"
+
+msgid "plugins.generic.lucene.settings.stopServer"
+msgstr "Zaustavitev strežnika"
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDescription"
+msgstr ""
+"Statistike uporabe morajo biti redno skopirane na Solr strežnik, npr. dnevno "
+"ali mesečno - odvisno kako pogosto posodabljate statistike.D ato storite, "
+"kliknite na gumb zgoraj. To opravilo lahko tudi avtomatizirate (poglejte '"
+"plugins/generic/lucene/README' za podrobnosti)."
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDisabled"
+msgstr ""
+"\n"
+"\t\tStatistike uporabe morajo biti redno kopirane na Solr strežnik. Trenutno "
+"ne morete obnoviti statistik uporabe iz spletnega vmesnika.<br/>\n"
+"\t\t<br/>\n"
+"\t\tMožni vzroki so:\n"
+"\t\t<ul>\n"
+"\t\t\t<li>Če uporabljate indeksiranje na poziv, bo indeksni cron job na "
+"oddaljenem strežniku (\"pull.sh\") avtomatično posodobil statistične podtke, "
+"ko se bo zagnal (poglejte 'plugins/generic/lucene/README' za "
+"podrobnosti).</li>\n"
+"\t\t\t<li>Vaš spletni strežnik nima pravic pisati v datoteke v mapi 'files/"
+"lucene/data'. Prepričajte se, da imate oba, spletni strežnik in solr "
+"strežnik dostop do te mape in ponovno naložite to stran.</li>\n"
+"\t\t</ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr ""
+"Prosimo vnesite veljavno uporabniško ime za Solr iskalni strežnik (dvopičja "
+"niso dovoljena)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr ""
+"\n"
+"\t\tLucene/Solr iskalni vtičnik omogoča, da prilagodite relativne uteži za "
+"članke v iskalnih rezultatih.\n"
+"\t\tNastavitev večje ali manjše uteži ne bo razvrstilo članka v tej rubriki "
+"višle ali nižje.\n"
+"\t\tBo pa razvrščen bolje ali slabše kot bi bil brez teh prilagoditev.\n"
+"\t\tNastavitev \"nikoli ne prikaži\" bo članke iz te rubrike v celoti "
+"odstranila iz iskalnih rezultatov.\n"
+"\t"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Razvrsti višje"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Naslov članka"
