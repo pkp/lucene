@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE email_texts SYSTEM "../../../../../lib/pkp/dtd/emailTemplateData.dtd">
+
+<!--
+  * @file locale/ro_RO/emailTemplates.xml
+  *
+  * Copyright (c) 2014-2020 Simon Fraser University
+  * Copyright (c) 2003-2020 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  * Localization information: https://pkp.sfu.ca/wiki/index.php?title=Translating_OxS
+  * Localization strings.
+  -->
+
+<email_texts locale="ro_RO">
+	<email_text key="LUCENE_ARTICLE_INDEXING_ERROR_NOTIFICATION">
+		<subject>Eroare de indexare a articolului</subject>
+		<body><![CDATA[S-a produs o eroare de indexare în timpul actualizării indexului articolelor.<br />
+<br />
+Mesajul de eroare generat de serviciul web (dacă este cazul): &quot;{$error}&quot;<br />
+<br />
+Acest e-mail a fost generat de plugin-ul de căutare Lucene al Open Journal Systems.]]></body>
+		<description>Acest șablon de e-mail este utilizat pentru a notifica contactul tehnic al unei reviste că a apărut o eroare în timpul indexării articolelor.</description>
+	</email_text>
+	<email_text key="LUCENE_JOURNAL_INDEXING_ERROR_NOTIFICATION">
+		<subject>Eroare de indexare a jurnalului</subject>
+		<body><![CDATA[A apărut o eroare de indexare în timpul indexării jurnalului &quot;{$contextName}&quot;.<br />
+<br />
+Mesajul de eroare generat de serviciul web (dacă este cazul): &quot;{$error}&quot;<br />
+<br />
+Acest e-mail a fost generat de plugin-ul de căutare Lucene al Open Journal Systems.]]></body>
+		<description>Acest șablon de e-mail este utilizat pentru a notifica contactul tehnic al unei reviste că a apărut o eroare în timpul indexării articolelor.</description>
+	</email_text>
+	<email_text key="LUCENE_SEARCH_SERVICE_ERROR_NOTIFICATION">
+		<subject>Eroare la serviciul de căutare în jurnal</subject>
+		<body><![CDATA[A apărut o eroare în timp ce cineva încerca să caute în instalație &quot;{$siteName}&quot;.<br />
+<br />
+Mesajul de eroare generat de serviciul web (dacă este cazul): &quot;{$error}&quot;<br />
+<br />
+Acest e-mail a fost generat de plugin-ul de căutare Lucene al Open Journal Systems.]]></body>
+		<description>Acest șablon de e-mail este utilizat pentru a notifica contactul tehnic al unei reviste că a apărut o eroare în timpul indexării articolelor.</description>
+	</email_text>
+</email_texts>

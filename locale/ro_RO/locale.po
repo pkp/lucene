@@ -1,0 +1,350 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"Report-Msgid-Bugs-To: "
+"Last-Translator: Marti Brändle (UZH, via Deepl)"
+"Language-Team: "
+"MIME-Version: 1.0"
+"Content-Type: text/plain; charset=UTF-8"
+"Content-Transfer-Encoding: 8bit"
+"POT-Creation-Date: 2024-01-11T16:00:00+00:00"
+"PO-Revision-Date: 2024-01-11T16:00:00+00:00"
+"Language: Romanian (ro_RO)"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Plugin de căutare Lucene"
+
+msgid "plugins.generic.lucene.description"
+msgstr "Plugin-ul Lucene oferă suport pentru mai multe limbi, o mai bună relevanță a rezultatelor căutării, o indexare mai rapidă, o mai bună scalabilitate și multe altele."
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Bloc de fațetare Lucene"
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "rafinează-ți căutarea"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Disciplină"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Cuvânt cheie"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Metodă/Abordare"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Acoperire"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Jurnal"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Data publicării"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr "Nucleul solicitat '{$core}' nu a fost găsit pe serverul Solr. Este online?"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr "S-a produs o eroare în timpul indexării: S-a procesat {$numProcessed} dintr-un lot de {$batchCount} ({$numDeleted} documente șterse în acest lot)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Index cu {$numDocs} documente online."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr "Indexarea prin tragere nu este activată. Vă rugăm să o activați în setările pluginului Lucene."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "Din păcate, serviciul de căutare OJS este în prezent offline."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "Administratorul tehnic al acestei reviste a fost informat despre această problemă."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "Serviciul web Lucene a returnat o eroare."
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr "Nu s-a putut șterge memoria cache a câmpului. Vă rugăm să executați manual 'rm cache/fc-plugins-lucene-fieldCache.php' cu permisiunile corespunzătoare."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} articole marcate pentru actualizare"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr "Avertisment: Indexul de căutare este în prezent gol, deoarece indexarea prin tragere este activă. Trebuie să așteptați până când serverul Solr extrage modificările sau să executați scriptul pull.sh și apoi load.sh din linia de comandă."
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Reconstrucția dicționarelor"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Actualizarea datelor statistice de utilizare"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Ați vrut să spuneți"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Ordonați rezultatele după"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevanță"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Numărul ediției"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Data publicării"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Titlul jurnalului"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Titlul articolului"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Ascendant"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Coborâre"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "documente similare"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"Sfaturi de căutare:"
+"<ul>"
+"<li>Termenii de căutare nu țin cont de majuscule și minuscule</li>"
+"<li>Cuvintele comune sunt ignorate</li>"
+"<li>În mod implicit, sunt returnate articolele care conțin <em>orice</em> termen din interogare (adică, <em>OR</em> este implicit)</li>"
+"<li>Asigurați-vă că un cuvânt există într-un articol prin prefixarea lui cu <strong>+</strong>; de exemplu, <em>+journal +access scholarly academic</em></li>"
+"<li>Combinați mai multe cuvinte cu <em>AND</em> pentru a găsi articole care conțin toți termenii; de exemplu, <em>education AND research</em></li>"
+"<li>Excludeți un cuvânt prin prefixarea lui cu <strong>-</strong> sau <em>NOT</em>; de exemplu, <em>online -politics</em> sau <em>online NOT politics</em></li>"
+"<li>Căutați o frază exactă, punând-o între ghilimele; de exemplu, <em>\"open access publishing\"</em>. Indicație: Citarea cuvintelor chinezești sau japoneze vă va ajuta să găsiți corespondența exactă a cuvintelor în câmpurile cu limbi mixte, de exemplu, \"中国\".</li>"
+"<li>Folosiți parantezele pentru a crea interogări mai complexe; de exemplu, <em>archive ((journal AND conference) NOT theses)</em></li>"
+"</ul>"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Setări"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr "Auto-Sugestie (afișează o listă verticală dinamică cu sugestii de termeni de căutare în timp ce introduceți o interogare de căutare)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"<br />"
+"<strong>Verificați termenii pentru rezultate</strong>: Sugerați numai termeni care vor produce rezultate de căutare. Sugestiile vor fi verificate în raport cu revista curentă și cu termenii deja introduși în alte câmpuri de căutare.<br />"
+"<strong>Utilizați dicționarul global</strong>: Acest lucru este mai rapid, consumă mai puține resurse pe serverul de căutare și, prin urmare, se adaptează mai bine la instalațiile mari. Totuși, sugestiile pot conține termeni irelevanți, de exemplu, din alte reviste sau termeni care nu produc rezultate de căutare."
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Verificați termenii pentru rezultate"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Utilizați dicționarul global"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr "Clasament personalizat (setați ponderi individuale de clasament pentru fiecare secțiune a revistei)"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"<p>Plugin-ul Lucene accesează indexul de căutare Lucene prin intermediul unui server Solr. Această pagină de configurare vă permite să configurați accesul la serverul Solr.</p>"
+"<p><strong>Asigurați-vă că ați citit fișierul README al plugin-ului (plugins/generic/lucene/README) înainte de a încerca să modificați configurația implicită.</strong></p>"
+"<p>Dacă utilizați scenariul încorporat în spatele unui firewall, așa cum se explică în fișierul README, atunci probabil că puteți lăsa neschimbați toți parametrii de configurare.</p>"
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Reconstruiți dicționarele"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr "Faceting (afișați o casetă de navigare cu filtre suplimentare pentru a vă rafina căutarea)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr "Plugin-ul Lucene oferă mai multe caracteristici opționale de căutare. Cele mai multe dintre aceste caracteristici sunt activate în mod implicit, dar pot fi dezactivate sau ajustate cu precizie."
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr "Evidențiere (afișarea unui scurt extras din textul integral al fiecărui articol care conține cuvintele cheie interogate)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Administrarea indicilor"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Reconstruiți indexul"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr "Reconstrucția indexului și/sau a dicționarelor poate dura mult timp. Sunteți sigur că doriți să continuați?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Refaceți indexul pentru toate revistele"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr "Dacă indexul Lucene a devenit învechit sau corupt, puteți re-indexa datele pentru fiecare jurnal sau pentru toate jurnalele din această instalație. Dicționarele trebuie reconstruite după actualizări mari ale indexului atunci când se utilizează sugestii automate sau sugestii ortografice alternative. (Consultați plugins/generic/lucene/README pentru detalii și modalități de automatizare a acestor procese)."
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Reconstituirea indexului pentru jurnal \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Ieșire de la ultima reconstrucție a indexului:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr "Căutare instantanee (returnează rezultatele căutării instantaneu atunci când un utilizator tastează o interogare de căutare - obs: utilizează resurse considerabile ale serverului)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "ID unic de instalare"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "Vă rugăm să introduceți un ID care identifică în mod unic această instalare OJS pentru serverul de căutare Solr."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "Dacă utilizați un server de căutare central, va trebui să furnizați un ID unic de instalare pentru fiecare instalație OJS care utilizează același index de căutare.  Acesta poate fi orice text arbitrar, dar trebuie să fie diferit pentru fiecare server OJS participant (de exemplu, adresa IP statică a serverului, dacă aveți o singură instalație OJS pe server)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Selecție invalidă."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Lucene Plugin: Setări"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Parola"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Vă rugăm să introduceți parola serverului Solr."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "Vă rugăm să introduceți o parolă validă pentru a vă autentifica pe serverul de căutare Solr."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr "Indexare prin tragere (aceasta este o caracteristică avansată, consultați fișierul README pentru mai multe informații)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr "Clasament în funcție de statisticile de utilizare (datele dvs. statistice '{$metricName}' vor fi folosite pentru a influența clasamentul)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr "Clasament în funcție de statisticile de utilizare (vă rugăm să activați cel puțin un plugin de statistici/raportare și să selectați o \"metrică principală\" în setările site-ului pentru a activa această opțiune."
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "URL-ul punctului final de căutare"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "Punctul final de căutare Solr este format din adresa URL a serverului și un gestionar de căutare. Consultați setarea implicită ca exemplu. Modificați acest lucru numai dacă utilizați un server de căutare central."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "Vă rugăm să introduceți o adresă URL validă care reprezintă punctul final de căutare (serverul de căutare Solr și gestionarul de căutare) la care doriți să vă conectați."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "Configurarea funcției de căutare"
+
+msgid "plugins.generic.lucene.settings.serverNotAvailable"
+msgstr ""
+"În prezent, nu puteți administra serverul Solr din interfața web.<br/>"
+"<br/>"
+"Motivele posibile sunt:"
+"<ul>"
+"<li>Este posibil să nu aveți un server încorporat instalat în această instanță OJS (consultați 'plugins/generic/lucene/README' pentru detalii).</li>"
+"<li>Este posibil ca instalarea serverului încorporat să fie incompletă. Vă rugăm să verificați dacă directoarele 'plugins/generic/lucene/lib/solr' și 'plugins/generic/lucene/lib/jetty' conțin efectiv (sau indică) fișierele de instalare solr/jetty.</li>"
+"<li>Este posibil ca scripturile de administrare a serverului 'start.sh', 'stop.sh' și 'check.sh' din 'plugins/generic/lucene/embedded/bin' să nu fie executabile. Verificați stegulețele de permisiune ale acestor fișiere. {$canExecuteResult}</li>"
+"<li>Este posibil ca fișierele din 'files/lucene/' să nu poată fi scrise de către utilizatorul serverului dumneavoastră web. Verificați marcajele de permisiune ale acestor fișiere. {$filesAreWriteableResult}"
+"<li>Este posibil ca un proces solr încorporat să ruleze deja, dar sub un alt utilizator al sistemului de operare. Acest lucru înseamnă că nu puteți manipula procesul din PHP. {$solrIsRunningUnderPHPUser}</li>"
+"<li>Este posibil ca configurația PHP să nu permită executarea scripturilor. Verificați setările 'safe_mode' și 'disabled_function' din php.ini. Dacă nu aveți acces la php.ini, puteți executa scripturile manual pentru a porni/opri serverul. {$safemodeOrExecDisabled}</li>"
+"</ul>"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr "More-Like-This (afișează un link \"documente similare\" pentru fiecare rezultat al căutării)"
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "Setări ale serverului Solr"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricEnabled"
+msgstr "Sortarea după statisticile de utilizare (datele statistice '{$metricName}' vor fi folosite pentru a sorta după popularitate)"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricDisabled"
+msgstr "Sortarea în funcție de statisticile de utilizare (vă rugăm să activați cel puțin un plugin de statistică/raportare și să selectați o \"metrică principală\" în setările site-ului pentru a activa această opțiune)"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr "Sugestii ortografice alternative (afișează termeni de căutare alternativi)"
+
+msgid "plugins.generic.lucene.settings.startStopServer"
+msgstr "Administrarea serverului Solr"
+
+msgid "plugins.generic.lucene.settings.startServer"
+msgstr "Porniți serverul"
+
+msgid "plugins.generic.lucene.settings.stopServer"
+msgstr "Opriți serverul"
+
+msgid "plugins.generic.lucene.settings.updateBoostFile"
+msgstr "Actualizarea datelor de clasificare"
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDescription"
+msgstr "Statisticile de utilizare trebuie să fie copiate în mod regulat pe serverul Solr, de exemplu, zilnic sau lunar - în funcție de frecvența cu care actualizați statisticile. Pentru a face acest lucru, faceți clic pe butonul de mai sus. Puteți, de asemenea, să automatizați această sarcină (consultați 'plugins/generic/lucene/README' pentru detalii)."
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDisabled"
+msgstr ""
+"Statisticile de utilizare trebuie să fie copiate periodic pe serverul Solr. În prezent, nu puteți actualiza statisticile de utilizare din interfața web.<br/>"
+"<br/>"
+"Motivele posibile sunt:"
+"<ul>"
+"<li>Dacă folosiți indexarea pull, cron job-ul de actualizare a indexului de pe serverul de la distanță (\"pull.sh\") va actualiza automat datele statistice ori de câte ori este executat (consultați 'plugins/generic/lucene/README' pentru detalii).</li>"
+"<li>Este posibil ca serverul dvs. web să nu aibă permisiuni de scriere în directorul 'files/lucene/data'. Asigurați-vă că atât serverul web, cât și serverul Solr au acces la acest director și reîmprospătați pagina.</li>"
+"</ul>"
+
+msgid "plugins.generic.lucene.settings.usageStatistics"
+msgstr "Statistici de utilizare"
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Nume utilizator"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "Serverul de căutare Solr utilizează autentificarea HTTP BASIC. Vă rugăm să introduceți numele de utilizator."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "Vă rugăm să introduceți un nume de utilizator valid pentru a vă autentifica pe serverul de căutare Solr (colonele nu sunt permise)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "Pondere de clasificare personalizată"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr "Plugin-ul de căutare Lucene/Solr vă permite să ajustați ponderea relativă a articolelor în lista de rezultate a unei interogări de căutare. Setarea unei ponderi mai mari (sau mai mici) nu plasează articolele din această secțiune deasupra (sau sub) tuturor celorlalte articole. Dar acestea se vor clasifica mai bine (sau mai prost) decât ar fi făcut-o fără ajustarea efectuată. Dacă setați această opțiune la \"Nu arată niciodată\", articolele din această secțiune vor fi complet excluse din rezultatele căutării."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Vă rugăm să selectați o greutate de clasificare personalizată validă."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "Nu arată niciodată"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Clasament inferior"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Normal"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Clasament superior"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Ordonați rezultatele după"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevanță"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Numărul ediției"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Data publicării"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Titlul jurnalului"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Titlul articolului"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Utilizați Solr 7"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Verificați dacă utilizați Solr 7"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE email_texts SYSTEM "../../../../../lib/pkp/dtd/emailTemplateData.dtd">
+
+<!--
+  * @file locale/fr_FR/emailTemplates.xml
+  *
+  * Copyright (c) 2014-2020 Simon Fraser University
+  * Copyright (c) 2003-2020 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  * Localization information: https://pkp.sfu.ca/wiki/index.php?title=Translating_OxS
+  * Localization strings.
+  -->
+
+<email_texts locale="fr_FR">
+	<email_text key="LUCENE_ARTICLE_INDEXING_ERROR_NOTIFICATION">
+		<subject>Erreur d'indexation des articles</subject>
+		<body><![CDATA[Une erreur d'indexation s'est produite lors de la mise à jour de l'index des articles.<br />
+<br />
+Le message d'erreur généré par le service web (le cas échéant) : &quot;{$error}&quot;<br />
+<br />
+Ce courriel a été généré par le plugin de recherche Lucene d'Open Journal Systems.]]></body>
+		<description>Ce modèle de courrier électronique est utilisé pour informer le contact technique d'une revue qu'une erreur s'est produite lors de l'indexation d'un article.</description>
+	</email_text>
+	<email_text key="LUCENE_JOURNAL_INDEXING_ERROR_NOTIFICATION">
+		<subject>Erreur d'indexation du journal</subject>
+		<body><![CDATA[Une erreur d'indexation s'est produite lors de l'indexation du journal &quot;{$contextName}&quot;.<br />
+<br />
+Le message d'erreur généré par le service web (le cas échéant) : &quot;{$error}&quot;<br />
+<br />
+Ce courriel a été généré par le plugin de recherche Lucene d'Open Journal Systems.]]></body>
+		<description>Ce modèle de courrier électronique est utilisé pour informer le contact technique d'une revue qu'une erreur s'est produite lors de l'indexation d'un article.</description>
+	</email_text>
+	<email_text key="LUCENE_SEARCH_SERVICE_ERROR_NOTIFICATION">
+		<subject>Erreur du service de recherche du journal</subject>
+		<body><![CDATA[Une erreur s'est produite lorsque quelqu'un a essayé de rechercher l'installation &quot;{$siteName}&quot;.<br />
+<br />
+Le message d'erreur généré par le service web (le cas échéant) : &quot;{$error}&quot;<br />
+<br />
+Ce courriel a été généré par le plugin de recherche Lucene d'Open Journal Systems.]]></body>
+		<description>Ce modèle de courrier électronique est utilisé pour informer le contact technique d'une revue qu'une erreur s'est produite lors de l'indexation d'un article.</description>
+	</email_text>
+</email_texts>
