@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-01-12 08:39+0000\n"
+"PO-Revision-Date: 2024-01-14 09:39+0000\n"
 "Last-Translator: Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>\n"
 "Language-Team: Czech <http://translate.pkp.sfu.ca/projects/plugins/lucene/cs/"
 ">\n"
@@ -103,7 +103,7 @@ msgid "plugins.generic.lucene.results.orderBy.author"
 msgstr "Autor"
 
 msgid "plugins.generic.lucene.results.orderBy.issue"
-msgstr "Číslo"
+msgstr "Vydání"
 
 msgid "plugins.generic.lucene.results.orderBy.date"
 msgstr "Datum zveřejnění"
@@ -432,3 +432,59 @@ msgid "plugins.generic.lucene.settings.usernameInstructions"
 msgstr ""
 "Vyhledávací server Solr používá ověřování HTTP BASIC. Zadejte prosím "
 "uživatelské jméno."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "Nikdy neukazovat"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Hodnotit níže"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Hodnotit výše"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Řadit výsledky podle"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevance"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Vydání"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Název časopisu"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Název článku"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Použít Solr 7"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Zkontrolovat, zda používáte Solr 7"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr ""
+"\n"
+"\t\tPlugin pro vyhledávání Lucene/Solr umožňuje nastavit relativní váhu "
+"článků v seznamu výsledků\n"
+"\t\tvyhledávacího dotazu. Nastavení vyšší (nebo nižší) váhy řazení "
+"neumisťuje články do tohoto části nad \n"
+"\t\t(nebo pod) všechny ostatní články. Budou však hodnoceny lépe (nebo hůře)"
+", než by tomu bylo v případě\n"
+"\t\tbez provedené úpravy. Nastavením této možnosti na hodnotu \"nikdy "
+"nezobrazovat\" budou články zcela vyloučeny\n"
+"\t\tv této sekci z výsledků vyhledávání.\n"
+"\t"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Vyberte prosím platnou vlastní váhu hodnocení."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Hodnotit normálně"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Datum zveřejnění"
