@@ -2,14 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-11-17T11:28:08+00:00\n"
+"PO-Revision-Date: 2024-01-30 11:39+0000\n"
+"Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
+"Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
+"plugins/lucene/pt_PT/>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-17T11:28:08+00:00\n"
-"PO-Revision-Date: 2020-11-17T11:28:08+00:00\n"
-"Language: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.lucene.displayName"
 msgstr "Plugin de Pesquisa Lucene"
@@ -147,7 +150,9 @@ msgid "plugins.generic.lucene.message.techAdminInformed"
 msgstr "O técnico desta revista foi informado sobre este problema."
 
 msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
-msgstr "Não foi possível apagar a cache. Por favor execute  'rm cache/fc-plugins-lucene-fieldCache.php' manualmente, com as permissões apropriadas."
+msgstr ""
+"Não foi possível apagar a cache. Por favor execute 'rm cache/fc-plugins-"
+"lucene-fieldCache.php' manualmente, com as permissões apropriadas."
 
 msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
 msgstr "A reindexar os dicionários"
@@ -195,7 +200,10 @@ msgid "plugins.generic.lucene.settings.dictionaryRebuild"
 msgstr "Recalcular dicionários"
 
 msgid "plugins.generic.lucene.settings.facetingSelectCategory"
-msgstr "Pode escolher uma categoria específica de faceta (os metadados correspondentes devem ser selecionados para indexação, no passo 3.4 da configuração da revista)."
+msgstr ""
+"Pode escolher uma categoria específica de faceta (os metadados "
+"correspondentes devem ser selecionados para indexação, no passo 3.4 da "
+"configuração da revista)"
 
 msgid "plugins.generic.lucene.settings.featureDescription"
 msgstr "O plugin Lucene permite várias funcionalidades opcionais de pesquisa. A maior parte destas funcionalidades vêm pré-ativadas, mas podem ser desativadas ou reconfiguradas."
@@ -225,7 +233,9 @@ msgid "plugins.generic.lucene.settings.passwordRequired"
 msgstr "Introduza uma senha válida para autenticar no servidor de pesquisa Solr."
 
 msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
-msgstr "Ordenação por Estatística de Uso (Os seus dados estatísticos '{$metricName}' serão usados para influenciar a ordenação de resultados)."
+msgstr ""
+"Ordenação por Estatística de Uso (Os seus dados estatísticos '{$metricName}' "
+"serão usados para influenciar a ordenação de resultados)"
 
 msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
 msgstr "Ordenação por Estatísticas de Uso (ative pelo menos um plugin de estatística/relatórios e selecione uma \"métrica principal\" nas configurações do website, para tivar esta opção)"
@@ -283,3 +293,76 @@ msgstr "O plugin Lucene/Solr permite-lhe ajustar o peso relativo dos artigos na 
 
 msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
 msgstr "Selecione um peso personalizado válido."
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Ascendente"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Ordenar resultados por"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevância"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Verificar se está a usar Solr 7"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr ""
+"Aviso: O índice de pesquisa está atualmente vazio porque a indexação pull "
+"está ativa. Deve aguardar até que o servidor SOLR efectue as alterações ou "
+"execute o script pull.sh e depois o script load.sh a partir da linha de "
+"comandos."
+
+msgid "plugins.generic.lucene.faceting.displayName"
+msgstr "Facetas Lucene"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Bloco Facetas Lucene"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Plugin Bloco de Facetas Lucene"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Ordenar resultados por"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevância"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Número"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Data de Publicação"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Título da Revista"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Título do Artigo"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Descendente"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "documentos similares"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Número"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Data de Publicação"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Título da Revista"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Título do Trabalho"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Usar Solr 7"
