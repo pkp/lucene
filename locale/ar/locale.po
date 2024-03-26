@@ -2,14 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-11-17T11:25:10+00:00\n"
+"PO-Revision-Date: 2024-03-27 02:55+0000\n"
+"Last-Translator: \"M. Ali\" <vorteem@gmail.com>\n"
+"Language-Team: Arabic <http://translate.pkp.sfu.ca/projects/plugins/lucene/"
+"ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-17T11:25:10+00:00\n"
-"PO-Revision-Date: 2020-11-17T11:25:10+00:00\n"
-"Language: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.lucene.displayName"
 msgstr "إضافة بحث Lucene"
@@ -251,3 +255,54 @@ msgstr "إعتيادي"
 
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "قيمه أعلى"
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr ""
+"تعذر حذف مخبوء الحقل. يرجى تنفيذ الأمر 'rm cache/fc-plugins-lucene-"
+"fieldCache.php' يدويًا مع الصلاحيات المناسبة."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr ""
+"تحذير: فهرس البحث خالٍ حاليًا لأن فهرس السحب نشط. ينبغي عليك الانتظار حتى "
+"ينتهي مخدم SOLR من سحب التغييرات أو تنفيذ الأمر pull.sh ومن ثم الأمر load.sh "
+"من سطر الأوامر."
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "تجري إعادة بناء القواميس"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "يجري تحديث بيانات إحصائيات الاستعمال"
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "إعادة بناء القواميس"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "إدارة الفهرس"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "إعادة بناء الفهرس"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr ""
+"إعادة بناء الفهرس و/أو القواميس قد يستغرق وقتًا طويلاً، هل أنت متأكد من "
+"رغبتك في المتابعة؟"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "إعادة بناء الفهرس لكل المجلات"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "إعادة بناء الفهرس لمجلة \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "مخرجات آخر بناء للفهرس:"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "كتلة مواجهة Lucene"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr ""
+"إذا صار فهرس Lucene عندك قديمًا أو تالفًا، بإمكانك إعادة فهرسة بياناتك لكل "
+"مجلة أو لكل المجلات لهذا التنصيب. تنبغي إعادة بناء القواميس بعد تحديثات "
+"كبيرة في الفهرس عند استعمال الاقتراح التلقائي أو اقتراحات الإملاء البديلة. ("
+"إنظر plugins/generic/lucene/README للتفاصيل والطرق المتبعة لأتمتة تلك "
+"العمليات.)"
