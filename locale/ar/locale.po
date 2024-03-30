@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-17T11:25:10+00:00\n"
-"PO-Revision-Date: 2024-03-27 02:55+0000\n"
+"PO-Revision-Date: 2024-03-31 02:39+0000\n"
 "Last-Translator: \"M. Ali\" <vorteem@gmail.com>\n"
 "Language-Team: Arabic <http://translate.pkp.sfu.ca/projects/plugins/lucene/"
 "ar/>\n"
@@ -306,3 +306,30 @@ msgstr ""
 "كبيرة في الفهرس عند استعمال الاقتراح التلقائي أو اقتراحات الإملاء البديلة. ("
 "إنظر plugins/generic/lucene/README للتفاصيل والطرق المتبعة لأتمتة تلك "
 "العمليات.)"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "رتب النتائج حسب"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "الصلة"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "المؤلف"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "العدد"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "تاريخ النشر"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "عنوان المجلة"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "استعمل Solr 7"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "عنوان المؤلَّف"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "تحقق فيما أنك تستعمل Solr 7"
