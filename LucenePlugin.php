@@ -57,6 +57,12 @@ class LucenePlugin extends GenericPlugin {
 	/** @var array */
 	var $_facets;
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->application = Application::get()->getName();
+	}
+
 
 	//
 	// Getters and Setters
@@ -541,7 +547,7 @@ class LucenePlugin extends GenericPlugin {
 		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
-		$this->callbackArticleChangesFinished(null, null);
+		$this->callbackArticleChangesFinished(null, null, $article->getData('contextId'));
 
 		return true;
 	}
@@ -567,7 +573,7 @@ class LucenePlugin extends GenericPlugin {
 		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
-		$this->callbackArticleChangesFinished(null, null);
+		$this->callbackArticleChangesFinished(null, null,$article->getData('contextId'));
 
 		return true;
 	}
@@ -608,7 +614,7 @@ class LucenePlugin extends GenericPlugin {
 	/**
 	 * @see ArticleSearchIndex::articleChangesFinished()
 	 */
-	function callbackArticleChangesFinished($hookName, $params) {
+	function callbackArticleChangesFinished($hookName, $params, $journalId = null) {
 		// In the case of pull-indexing we ignore this call
 		// and let the Solr server initiate indexing.
 		if ($this->getSetting(CONTEXT_SITE, 'pullIndexing')) return true;
@@ -620,7 +626,7 @@ class LucenePlugin extends GenericPlugin {
 		// locked in case a race condition with a large index update
 		// occurs.
 		$solrWebService = $this->getSolrWebService();
-		$result = $solrWebService->pushChangedArticles(5);
+		$result = $solrWebService->pushChangedArticles(5, $journalId);
 		if (is_null($result)) {
 			$this->_informTechAdmin($solrWebService->getServiceMessage());
 		}

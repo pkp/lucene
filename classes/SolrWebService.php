@@ -774,6 +774,7 @@ class SolrWebService {
 		} else {
 			throw new \Exception('Unknown request method!');
 		}
+		// $guzzleParams['debug'] = true;
 		$response = $client->request($method, $url, $guzzleParams);
 
 		// Did we get a response at all?
@@ -1165,8 +1166,12 @@ class SolrWebService {
 		// Add the authors as an filter query (if set).
 		$authors = $searchRequest->getAuthors();
 		if (!empty($authors)) {
-			foreach ($authors as $author) {
-				$filterFieldsSerialized[] = 'authors_txt:' . $author;
+			if (is_array($authors)) {
+				foreach ($authors as $author) {
+					$filterFieldsSerialized[] = 'authors_txt:' . $author;
+				}
+			} else {
+				$filterFieldsSerialized[] = 'authors_txt:' . $authors;
 			}
 		}
 		// Add the journal as a filter query (if set).
@@ -1962,7 +1967,8 @@ class SolrWebService {
 
 			// Localized and multiformat fields have a locale suffix.
 			$locale = $fieldSuffix;
-			if ($locale != 'txt') {
+			// check for double locales
+			if ($locale != 'txt' && ctype_upper($locale)) {
 				$locale = array_pop($fieldNameParts) . '_' . $locale;
 			}
 
