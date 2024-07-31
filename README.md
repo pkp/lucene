@@ -1,3 +1,4 @@
+### Table of content
 -   [Welcome to the OJS Lucene/Solr
 Plug-In!](#welcome-to-the-ojs-lucenesolr-plug-in)
 - [Demo websites](#demonstrations)
@@ -22,7 +23,9 @@ etc.)](#customizing-solr-additional-languages-stopwords-etc.)
 -   [Subscription-Based Publications](#subscription-based-publications)
 -   [Using facets](#using-facets)
 
-
+| main | 3.4.0 | 3.3.0
+| ---- | ---- | ----
+  | [![lucene](https://github.com/pkp/lucene/actions/workflows/main.yml/badge.svg)](https://github.com/pkp/lucene/actions/workflows/main.yml)                                     | ---                                                                                                                                                                                                       | [![lucene](https://github.com/pkp/lucene/actions/workflows/stable-3_3_0.yml/badge.svg)](https://github.com/pkp/lucene/actions/workflows/stable-3_3_0.yml)                               | b.com/pkp/lucene/actions/workflows/stable-3_3_0.yml/badge.svg)](https://github.com/pkp/lucene/actions/workflows/stable-3_3_0.yml)                               | 
 
 ### Welcome to the OJS Lucene/Solr Plug-In!
 
