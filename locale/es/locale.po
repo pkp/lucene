@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2024-11-20 11:40+0000\n"
-"Last-Translator: Darío Hereñú <magallania@gmail.com>\n"
+"Last-Translator: Jordi LC <jordi.lacruz@uab.cat>\n"
 "Language-Team: Spanish <http://translate.pkp.sfu.ca/projects/plugins/lucene/"
 "es/>\n"
 "Language: es\n"
@@ -178,3 +178,30 @@ msgstr "El servicio web Lucene retornó un error."
 
 msgid "plugins.generic.lucene.settings.password"
 msgstr "Contraseña"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Bloque de aspecto de Lucene"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Módulo del bloque de aspecto para Lucene"
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr ""
+"La indexación 'pull' no está activada. Para activarla vaya a los ajustes del "
+"módulo Lucene."
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Ordenar resultados por"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr ""
+"Autosugerir (muestra un desplegable dinámico con sugerencias de búsqueda "
+"mientras se introduce la consulta)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Comprobar los términos para los resultados"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr ""
+"El núcleo '{$core}' solicitado no se encontró en el servidor de Solr. ¿Está "
+"en línea?"
