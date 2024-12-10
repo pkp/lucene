@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-03-02 04:40+0000\n"
-"Last-Translator: Jordi LC <jordi.lacruz@uab.cat>\n"
+"PO-Revision-Date: 2024-12-04 18:50+0000\n"
+"Last-Translator: Darío Hereñú <magallania@gmail.com>\n"
 "Language-Team: Spanish <http://translate.pkp.sfu.ca/projects/plugins/lucene/"
 "es/>\n"
 "Language: es\n"
@@ -22,3 +22,360 @@ msgstr ""
 
 msgid "plugins.generic.lucene.faceting.displayName"
 msgstr "Lucene Faceting"
+
+msgid "plugins.generic.lucene.settings.startStopServer"
+msgstr "Administración del servidor Solr"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Normal"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Palabra clave"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Método/Abordaje"
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Índice con {$numDocs} documentos en línea."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} artículos marcados para actualización"
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Reconstruyendo diccionarios"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Configuración"
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Selección inválida."
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Reconstruir diccionarios"
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr ""
+"Por favor introduce una contraseña válida para autenticarse en el servidor "
+"de búsqueda Solr."
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "afinar la búsqueda"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Disciplina"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Actualizando datos de estadísticas de uso"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Quisiste decir"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevancia"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Número"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Fecha de publicación"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Título de la revista"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Título del artículo"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Ascendente"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Descendente"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "documentos similares"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Usar diccionario global"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Reconstruir índice"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Reconstruir índices para todas las revistas"
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Módulo Lucene: Configuración"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Por favor introduce la contraseña del servidor Solr."
+
+msgid "plugins.generic.lucene.settings.startServer"
+msgstr "Iniciar servidor"
+
+msgid "plugins.generic.lucene.settings.stopServer"
+msgstr "Interrumpir servidor"
+
+msgid "plugins.generic.lucene.settings.usageStatistics"
+msgstr "Estadísticas de uso"
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Nombre de usuario"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Ordenar resultados por"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevancia"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Edición"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Fecha de publicación"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Título de la revista"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Título del artículo"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Usar Solr7"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Cobertura"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Revista"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Autor"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Fecha de publicación"
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr ""
+"El administrador técnico de esta revista ha sido informado acerca del "
+"problema."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "Desafortunadamente el servicio de búsqueda de OJS está sin conexión."
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr ""
+"Ocurrió un error al generar el índice: se procesaron {$numProcessed} de un "
+"lote de {$batchCount} ({$numDeleted} documentos borrados en este lote)."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "El servicio web Lucene retornó un error."
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Contraseña"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Bloque de aspecto de Lucene"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Módulo del bloque de aspecto para Lucene"
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr ""
+"La indexación 'pull' no está activada. Para activarla vaya a los ajustes del "
+"módulo Lucene."
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Ordenar resultados por"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr ""
+"Autosugerir (muestra un desplegable dinámico con sugerencias de búsqueda "
+"mientras se introduce la consulta)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Comprobar los términos para los resultados"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr ""
+"El núcleo '{$core}' solicitado no se encontró en el servidor de Solr. ¿Está "
+"en línea?"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricEnabled"
+msgstr ""
+"Ordenar por estadísticas de uso (Sus datos estadísticos '{$metricName}' se "
+"utilizarán para ordenar por popularidad)"
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr ""
+"No se ha podido eliminar la caché de campos. Ejecute 'rm cache/fc-plugins-"
+"lucene-fieldCache.php' manualmente con los permisos adecuados."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr ""
+"Advertencia: El índice de búsqueda está actualmente vacío porque la "
+"indexación está activa. Debe esperar a que el servidor SOLR extraiga los "
+"cambios o ejecutar el script pull.sh y, a continuación, desde la línea de "
+"comandos load.sh."
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr ""
+"Clasificación personalizada (establecer ponderaciones de clasificación "
+"individuales por sección de la revista)"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr ""
+"Facetado (mostrar un cuadro de navegación con filtros adicionales para "
+"afinar la búsqueda)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr ""
+"Puede seleccionar categorías de facetas específicas (los metadatos "
+"correspondientes deben haberse seleccionado para la indexación en la "
+"configuración de la revista, paso 3.4)"
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr ""
+"Resaltar (mostrar un breve extracto del texto completo de cada artículo que "
+"contenga las palabras clave buscadas)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Administración del índice"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr ""
+"Reconstruir el índice y/o los diccionarios puede llevar mucho tiempo. ¿Está "
+"seguro de que desea continuar?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Reconstruir índice de la revista \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Resultado de la última reconstrucción del índice:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr ""
+"Búsqueda instantánea (devuelve resultados de búsqueda al instante cuando un "
+"usuario escribe una consulta de búsqueda - obs: utiliza considerables "
+"recursos del servidor)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "ID único de instalación"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr ""
+"Por favor ingrese un ID que identifique de forma exclusiva esta instalación "
+"OJS ante el servidor de búsqueda Solr."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr ""
+"Pull indexing (esta es una función avanzada, vea el archivo README para más "
+"información)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr ""
+"Clasificación por estadísticas de uso (sus datos estadísticos '{$metricName}"
+"' se utilizarán para influir en la clasificación)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "URL de búsqueda"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr ""
+"El punto final de búsqueda de Solr consta de la URL del servidor y un "
+"controlador de búsqueda. Vea la configuración predeterminada como ejemplo. "
+"Cámbiela únicamente si utiliza un servidor de búsqueda central."
+
+#, fuzzy
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr ""
+"Por favor ingrese  una URL válida que represente una búsqueda (servidor de "
+"búsqueda Solr y controlador de búsqueda) al que desea conectarse."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "Configuración de las funciones de búsqueda"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr ""
+"Más-como-esto (mostrar un enlace \"documentos similares\" para cada "
+"resultado de búsqueda)"
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "Ajustes del servidor Solr"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricDisabled"
+msgstr ""
+"Ordenar por estadísticas de uso (active al menos un módulo de estadísticas/"
+"informes y seleccione una \"métrica principal\" en la configuración del "
+"sitio para activar esta opción)"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr ""
+"Sugerencias ortográficas alternativas (mostrar términos de búsqueda "
+"alternativos)"
+
+msgid "plugins.generic.lucene.settings.updateBoostFile"
+msgstr "Actualizar datos de clasificación"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr ""
+"El servidor de búsqueda Solr utiliza la autenticación HTTP BASIC. Por favor, "
+"ingrese el nombre de usuario."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr ""
+"Ingrese un nombre de usuario válido para autenticarse en el servidor de "
+"búsqueda Solr (no se permiten los dos puntos)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "Clasificación personalizada de ponderación"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Por favor seleccione una clasificación personalizada de ponderación."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "No mostrar nunca"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Rango inferior"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Rango superior"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Compruebe si está utilizando Solr 7"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr ""
+"Si su índice Lucene se ha quedado obsoleto o dañado, puede volver a indexar "
+"sus datos por revista o para todas las revistas de esta instalación. Los "
+"diccionarios deben reconstruirse después de grandes actualizaciones del "
+"índice cuando se usan auto-sugerencias o sugerencias ortográficas "
+"alternativas. (Vea plugins/generic/lucene/README para más detalles y formas "
+"de automatizar estos procesos)."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr ""
+"Si utiliza un servidor central de búsqueda, tendrá que suministrar un ID de "
+"instalación único por cada instalación OJS que comparta el mismo índice de "
+"búsqueda.  Puede ser cualquier texto arbitrario, pero debe ser diferente "
+"para cada servidor OJS participante (por ejemplo, la dirección IP estática "
+"del servidor si tiene una instalación OJS por servidor)."
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr ""
+"Clasificación por estadísticas de uso (active al menos un módulo de estadí"
+"sticas/informes y seleccione una \"métrica principal\" en la configuración "
+"del sitio para activar esta opción)"
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDescription"
+msgstr ""
+"Las estadísticas de uso deben copiarse regularmente en el servidor Solr, por "
+"ejemplo, diaria o mensualmente, dependiendo de la frecuencia con la que "
+"actualice las estadísticas. Para ello, haga clic en el botón de arriba. Vea "
+"los detalles en 'plugins/generic/lucene/README'."
