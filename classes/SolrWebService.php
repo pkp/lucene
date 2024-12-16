@@ -386,7 +386,7 @@ class SolrWebService {
 		// Add ID information.
 		$articleNode->setAttribute('id', $article->getId());
 		$articleNode->setAttribute('sectionId', $article->getSectionId());
-		$articleNode->setAttribute('journalId', $article->getJournalId());
+		$articleNode->setAttribute('journalId', $article->getData('contextId'));
 		$articleNode->setAttribute('instId', $this->_instId);
 
 		// Set the load action.
@@ -423,7 +423,7 @@ class SolrWebService {
 		// them in all supported locales.
 		assert(!empty($supportedLocales));
 		foreach($supportedLocales as $locale) {
-			$localizedTitle = $article->getFullTitle($locale);
+			$localizedTitle = $publication->getFullTitles()[$locale];
 			if (!is_null($localizedTitle)) {
 				// Add the localized title.
 				$titleNode = $articleDoc->createElement('title');
@@ -432,7 +432,7 @@ class SolrWebService {
 
 				// If the title does not exist in the given locale
 				// then use the localized title for sorting only.
-				$title = $article->getTitle($locale);
+				$title = $publication->getData('title', $locale);
 				$titleNode->setAttribute('sortOnly', empty($title) ? 'true' : 'false');
 
 				$titleList->appendChild($titleNode);
@@ -441,7 +441,7 @@ class SolrWebService {
 		$articleNode->appendChild($titleList);
 
 		// Add abstracts.
-		$abstracts = $article->getAbstract(null); // return all locales
+		$abstracts = $publication->getData('abstract'); // return all locales
 		if (!empty($abstracts)) {
 			$abstractList = $articleDoc->createElement('abstractList');
 			foreach ($abstracts as $locale => $abstract) {
@@ -456,7 +456,7 @@ class SolrWebService {
 
 		// Add disciplines.
 		$submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
-		$disciplines = $submissionDisciplineDao->getDisciplines($article->getId(), $supportedLocales);
+		$disciplines = $submissionDisciplineDao->getDisciplines($publication->getId(), $supportedLocales);
 
 		foreach ($disciplines as $locale => $discipline) {
 			if (empty($discipline)) {
@@ -482,7 +482,7 @@ class SolrWebService {
 		}
 
 		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
-		$subjects = $submissionSubjectDao->getSubjects($article->getId(), $supportedLocales);
+		$subjects = $submissionSubjectDao->getSubjects($publication->getId(), $supportedLocales);
 		foreach ($subjects as $locale => $subject) {
 			if (empty($subject)) {
 				unset($subjects[$locale]);
@@ -492,7 +492,7 @@ class SolrWebService {
 		// in OJS2, keywords and subjects where put together into the subject Facet.
 		// For now, I do the same here. TODO: Decide if this is wanted.
 		$submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
-		$keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
+		$keywords = $submissionKeywordDAO->getKeywords($publication->getId(), $supportedLocales);
 		foreach($keywords as $locale => $keyword) {
 			if (empty($keyword)) {
 				unset($keywords[$locale]);
@@ -544,7 +544,7 @@ class SolrWebService {
 		}
 
 		// Add coverage.
-		$coverage = (array) $article->getCoverage(null);
+		$coverage = (array) $publication->getData('coverage');
 		if (!empty($coverage)) {
 			$coverageList = $articleDoc->createElement('coverageList');
 			foreach($coverage as $locale => $coverageLocalized) {
@@ -582,7 +582,7 @@ class SolrWebService {
 		$articleNode->appendChild($journalTitleList);
 
 		// Add publication dates.
-		$publicationDate = $article->getDatePublished();
+		$publicationDate = $publication->getData('datePublished');
 		if (!empty($publicationDate)) {
 			// Transform and store article publication date.
 			$publicationDate = $this->_convertDate($publicationDate);
@@ -610,7 +610,7 @@ class SolrWebService {
 		$router = $request->getRouter(); /* @var $router PageRouter */
 		if (! $router instanceof \PKP\core\PKPPageRouter) {
 			$router = new PKPPageRouter();
-			$application = Application::getApplication();
+			$application = Application::get();
 			$router->setApplication($application);
 		}
 
@@ -619,7 +619,7 @@ class SolrWebService {
 		foreach ($galleys as $galley) {
 			if (!$galley->getData('submissionFileId')) continue;
 			$locale = $galley->getLocale();
-			$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestArticleId(), $galley->getBestGalleyId()]);
+			$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestId(), $galley->getBestGalleyId()]);
 			if (!empty($locale) && !empty($galleyUrl)) {
 				if (is_null($galleyList)) {
 					$galleyList = $articleDoc->createElement('galleyList');

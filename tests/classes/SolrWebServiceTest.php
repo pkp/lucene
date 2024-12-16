@@ -57,7 +57,7 @@ class SolrWebServiceTest extends PKPTestCase {
 		parent::setUp();
 
 		// We need a router for URL generation.
-		$application = Application::getApplication();
+		$application = Application::get();
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$request = $application->getRequest();
 		if (! $request->getRouter() instanceof \PKP\core\PKPRouter) {
