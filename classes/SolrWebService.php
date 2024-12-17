@@ -456,7 +456,7 @@ class SolrWebService {
 
 		// Add disciplines.
 		$submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
-		$disciplines = $submissionDisciplineDao->getDisciplines($publication->getId(), $supportedLocales);
+		$disciplines = $submissionDisciplineDao->getDisciplines($publication->getId());
 
 		foreach ($disciplines as $locale => $discipline) {
 			if (empty($discipline)) {
@@ -482,7 +482,7 @@ class SolrWebService {
 		}
 
 		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
-		$subjects = $submissionSubjectDao->getSubjects($publication->getId(), $supportedLocales);
+		$subjects = $submissionSubjectDao->getSubjects($publication->getId());
 		foreach ($subjects as $locale => $subject) {
 			if (empty($subject)) {
 				unset($subjects[$locale]);
@@ -492,7 +492,7 @@ class SolrWebService {
 		// in OJS2, keywords and subjects where put together into the subject Facet.
 		// For now, I do the same here. TODO: Decide if this is wanted.
 		$submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
-		$keywords = $submissionKeywordDAO->getKeywords($publication->getId(), $supportedLocales);
+		$keywords = $submissionKeywordDAO->getKeywords($publication->getId());
 		foreach($keywords as $locale => $keyword) {
 			if (empty($keyword)) {
 				unset($keywords[$locale]);
