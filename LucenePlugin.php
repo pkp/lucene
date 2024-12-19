@@ -299,6 +299,7 @@ class LucenePlugin extends GenericPlugin {
 					$journal = null;
 					if ($request->getUserVar('journalToReindex')) {
 						$journalId = $request->getUserVar('journalToReindex');
+						/** @var JournalDAO $journalDao */
 						$journalDao = DAORegistry::getDAO('JournalDAO');
 						$journal = $journalDao->getById($journalId);
 						if (! $journal instanceof \APP\journal\Journal) $journal = null;
@@ -543,7 +544,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackArticleMetadataChanged($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::articleMetadataChanged');
 		list($article) = $params;
-		/* @var $article Article */
+		/** @var Submission $article  */
 		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
@@ -558,7 +559,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackSubmissionFilesChanged($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::submissionFilesChanged');
 		list($article) = $params;
-		/* @var $article Article */
+		/** @var Submission $article */
 		$this->_solrWebService->setArticleStatus($article->getId());
 
 		return true;

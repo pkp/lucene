@@ -16,18 +16,23 @@
 
 namespace APP\plugins\generic\lucene\classes;
 
-use APP\plugins\generic\lucene\classes\SolrSearchRequest;
-use PKP\core\PKPPageRouter;
-use APP\search\ArticleSearch;
 use APP\core\Application;
 use PKP\db\DAORegistry;
 use APP\facades\Repo;
-use APP\submission\Submission;
-use PKP\cache\CacheManager;
-use PKP\facades\Locale;
-use PKP\core\PKPString;
+use APP\issue\Issue;
 use APP\issue\IssueAction;
+use APP\journal\Journal;
+use APP\search\ArticleSearch;
+use APP\submission\Submission;
+use DOMDocument;
+use DOMXPath;
+use Exception;
+use Illuminate\Support\Str;
 use GuzzleHttp\Psr7\Query;
+use PKP\cache\CacheManager;
+use PKP\core\PKPPageRouter;
+use PKP\core\PKPString;
+use PKP\facades\Locale;
 
 define('SOLR_STATUS_ONLINE', 0x01);
 define('SOLR_STATUS_OFFLINE', 0x02);
@@ -256,7 +261,7 @@ class SolrWebService {
 		$journalIds = [];
 		foreach($changedArticles as $indexedArticle) {
 			$this->setArticleStatus($indexedArticle->getId(), SOLR_INDEXINGSTATE_CLEAN);
-			$journalIds[$indexedArticle->getJournalId()] = true;
+			$journalIds[$indexedArticle->getData('contextId')] = true;
 		}
 		return $numProcessed;
 	}
@@ -276,7 +281,7 @@ class SolrWebService {
 	 */
 	function _getArticleListXml($articles, $totalCount, &$numDeleted) {
 		// Create the DOM document.
-		$articleDoc = new \DOMDocument();
+		$articleDoc = new DOMDocument();
 
 		// Create the root node.
 		$articleList = $articleDoc->createElement('articleList');
@@ -286,7 +291,7 @@ class SolrWebService {
 		// XML list for them.
 		$numDeleted = 0;
 		foreach($articles as $article) {
-			$journal = $this->_getJournal($article->getJournalId());
+			$journal = $this->_getJournal($article->getData('contextId'));
 
 			// Check the publication state and subscription state of the article.
 			if ($this->_isArticleAccessAuthorized($article)) {
@@ -319,8 +324,9 @@ class SolrWebService {
 		if (isset($this->_journalCache[$journalId])) {
 			$journal = $this->_journalCache[$journalId];
 		} else {
-			$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
+			$journalDao = DAORegistry::getDAO('JournalDAO'); /** @var JournalDAO $journalDao */
 			$journal = $journalDao->getById($journalId);
+			$journal =
 			$this->_journalCache[$journalId] = $journal;
 		}
 
@@ -332,21 +338,21 @@ class SolrWebService {
 	 * is authorized to the requesting party (i.e. the
 	 * Solr server).
 	 *
-	 * @param $article Article
+	 * @param $article Submission
 	 * @return boolean True if authorized, otherwise false.
 	 */
 	function _isArticleAccessAuthorized($article) {
 		// Did we get a published article?
-		if (! $article instanceof \APP\submission\Submission) return false;
+		if (! $article instanceof Submission) return false;
 
 		// Get the article's journal.
 		$journal = $this->_getJournal($article->getData('contextId'));
 
-		if (! $journal instanceof \APP\journal\Journal) return false;
+		if (! $journal instanceof Journal) return false;
 
 		// Get the article's issue.
 		$issue = Repo::issue()->get((int) $article->getCurrentPublication()->getData('issueId'));
-		if (! ($issue instanceof \APP\issue\Issue)) return false;
+		if (! ($issue instanceof Issue)) return false;
 
   		// Only index published articles.
 		if (!$issue->getPublished() || $article->getData('status') != Submission::STATUS_PUBLISHED) return false;
@@ -368,13 +374,10 @@ class SolrWebService {
 	 * Add the metadata XML of a single article to an
 	 * XML article list.
 	 *
-	 * @param $articleDoc \DOMDocument
-	 * @param $article Submission
-	 * @param $journal Journal
 	 * @param $markToDelete boolean If true the returned XML
 	 *  will only contain a deletion marker.
 	 */
-	function _addArticleXml(\DOMDocument $articleDoc, \APP\submission\Submission $article, $journal, $markToDelete = false) {
+	function _addArticleXml(\DOMDocument $articleDoc, Submission $article, Journal $journal, bool $markToDelete = false) {
 		$publication = $article->getCurrentPublication();
 
 		// Get the root node of the list.
@@ -386,7 +389,7 @@ class SolrWebService {
 		// Add ID information.
 		$articleNode->setAttribute('id', $article->getId());
 		$articleNode->setAttribute('sectionId', $article->getSectionId());
-		$articleNode->setAttribute('journalId', $article->getJournalId());
+		$articleNode->setAttribute('journalId', $article->getData('contextId'));
 		$articleNode->setAttribute('instId', $this->_instId);
 
 		// Set the load action.
@@ -423,7 +426,7 @@ class SolrWebService {
 		// them in all supported locales.
 		assert(!empty($supportedLocales));
 		foreach($supportedLocales as $locale) {
-			$localizedTitle = $article->getFullTitle($locale);
+			$localizedTitle = $publication->getFullTitles()[$locale];
 			if (!is_null($localizedTitle)) {
 				// Add the localized title.
 				$titleNode = $articleDoc->createElement('title');
@@ -432,7 +435,7 @@ class SolrWebService {
 
 				// If the title does not exist in the given locale
 				// then use the localized title for sorting only.
-				$title = $article->getTitle($locale);
+				$title = $publication->getData('title', $locale);
 				$titleNode->setAttribute('sortOnly', empty($title) ? 'true' : 'false');
 
 				$titleList->appendChild($titleNode);
@@ -441,7 +444,7 @@ class SolrWebService {
 		$articleNode->appendChild($titleList);
 
 		// Add abstracts.
-		$abstracts = $article->getAbstract(null); // return all locales
+		$abstracts = $publication->getData('abstract'); // return all locales
 		if (!empty($abstracts)) {
 			$abstractList = $articleDoc->createElement('abstractList');
 			foreach ($abstracts as $locale => $abstract) {
@@ -455,8 +458,9 @@ class SolrWebService {
 		}
 
 		// Add disciplines.
+		/** @var SubmissionDisciplineDAO $submissionDisciplineDao */
 		$submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
-		$disciplines = $submissionDisciplineDao->getDisciplines($article->getId(), $supportedLocales);
+		$disciplines = $submissionDisciplineDao->getDisciplines($publication->getId());
 
 		foreach ($disciplines as $locale => $discipline) {
 			if (empty($discipline)) {
@@ -481,8 +485,9 @@ class SolrWebService {
 			$articleNode->appendChild($disciplineList);
 		}
 
+		/** @var SubmissionSubjectDAO $submissionSubjectDao */
 		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
-		$subjects = $submissionSubjectDao->getSubjects($article->getId(), $supportedLocales);
+		$subjects = $submissionSubjectDao->getSubjects($publication->getId());
 		foreach ($subjects as $locale => $subject) {
 			if (empty($subject)) {
 				unset($subjects[$locale]);
@@ -491,8 +496,9 @@ class SolrWebService {
 
 		// in OJS2, keywords and subjects where put together into the subject Facet.
 		// For now, I do the same here. TODO: Decide if this is wanted.
+		/** @var mixed SubmissionKeywordDAO $submissionKeywordDAO */
 		$submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
-		$keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
+		$keywords = $submissionKeywordDAO->getKeywords($publication->getId());
 		foreach($keywords as $locale => $keyword) {
 			if (empty($keyword)) {
 				unset($keywords[$locale]);
@@ -531,7 +537,7 @@ class SolrWebService {
 		}
 
 		// Add type.
-		$types = $article->getType(null); // return all locales
+		$types = $publication->getData('type'); // return all locales
 		if (!empty($types)) {
 			$typeList = $articleDoc->createElement('typeList');
 			foreach ($types as $locale => $type) {
@@ -544,7 +550,7 @@ class SolrWebService {
 		}
 
 		// Add coverage.
-		$coverage = (array) $article->getCoverage(null);
+		$coverage = (array) $publication->getData('coverage');
 		if (!empty($coverage)) {
 			$coverageList = $articleDoc->createElement('coverageList');
 			foreach($coverage as $locale => $coverageLocalized) {
@@ -582,7 +588,7 @@ class SolrWebService {
 		$articleNode->appendChild($journalTitleList);
 
 		// Add publication dates.
-		$publicationDate = $article->getDatePublished();
+		$publicationDate = $publication->getData('datePublished');
 		if (!empty($publicationDate)) {
 			// Transform and store article publication date.
 			$publicationDate = $this->_convertDate($publicationDate);
@@ -594,7 +600,7 @@ class SolrWebService {
 		$issueId = $publication->getData('issueId');
 		if (is_numeric($issueId)) {
 			$issue = Repo::issue()->get($issueId);
-			if ($issue instanceof \APP\issue\Issue) {
+			if ($issue instanceof Issue) {
 				$issuePublicationDate = $issue->getDatePublished();
 				if (!empty($issuePublicationDate)) {
 					// Transform and store issue publication date.
@@ -608,9 +614,9 @@ class SolrWebService {
 
 		// We need a PageRouter to build file URLs.
 		$router = $request->getRouter(); /* @var $router PageRouter */
-		if (! $router instanceof \PKP\core\PKPPageRouter) {
+		if (! $router instanceof PKPPageRouter) {
 			$router = new PKPPageRouter();
-			$application = Application::getApplication();
+			$application = Application::get();
 			$router->setApplication($application);
 		}
 
@@ -619,7 +625,7 @@ class SolrWebService {
 		foreach ($galleys as $galley) {
 			if (!$galley->getData('submissionFileId')) continue;
 			$locale = $galley->getLocale();
-			$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestArticleId(), $galley->getBestGalleyId()]);
+			$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', [$article->getBestId(), $galley->getBestGalleyId()]);
 			if (!empty($locale) && !empty($galleyUrl)) {
 				if (is_null($galleyList)) {
 					$galleyList = $articleDoc->createElement('galleyList');
@@ -755,10 +761,10 @@ class SolrWebService {
 	 * @param $params mixed array (key value pairs) or string request parameters
 	 * @param $method string GET or POST
 	 *
-	 * @return \DOMXPath An XPath object with the response loaded. Null if an error occurred.
+	 * @return DOMXPath An XPath object with the response loaded. Null if an error occurred.
 	 *  See _serviceMessage for more details about the error.
 	 */
-	function _makeRequest($url, $params = [], $method = 'GET') : ?\DOMXpath {
+	function _makeRequest($url, $params = [], $method = 'GET') : ?DOMXpath {
 		$application = Application::get();
 
 		$client = $application->getHttpClient();
@@ -772,7 +778,7 @@ class SolrWebService {
 		} elseif ($method == 'GET') {
 			$guzzleParams['query'] = Query::build($params);
 		} else {
-			throw new \Exception('Unknown request method!');
+			throw new Exception('Unknown request method!');
 		}
 		// $guzzleParams['debug'] = true;
 		$response = $client->request($method, $url, $guzzleParams);
@@ -794,9 +800,9 @@ class SolrWebService {
 		}
 
 		// Prepare and return an XPath object.
-		$responseDom = new \DOMDocument();
+		$responseDom = new DOMDocument();
 		$responseDom->loadXML((string) $response->getBody());
-		return new \DOMXPath($responseDom);
+		return new DOMXPath($responseDom);
 	}
 
 	/**
@@ -1176,7 +1182,7 @@ class SolrWebService {
 		}
 		// Add the journal as a filter query (if set).
 		$journal = $searchRequest->getJournal();
-		if ($journal instanceof \APP\journal\Journal) {
+		if ($journal instanceof Journal) {
 			$filterFieldsSerialized[] = 'journal_id:"' . $this->_instId . '-' . $journal->getId() . '"';
 		}
 
@@ -1200,9 +1206,9 @@ class SolrWebService {
 		if (is_null($queryKeywords)) {
 			// Query keywords.
 			$queryKeywords = [
-				PKPString::strtoupper(__('search.operator.not')) => 'NOT',
-				PKPString::strtoupper(__('search.operator.and')) => 'AND',
-				PKPString::strtoupper(__('search.operator.or')) => 'OR'
+				Str::upper(__('search.operator.not')) => 'NOT',
+				Str::upper(__('search.operator.and')) => 'AND',
+				Str::upper(__('search.operator.or')) => 'OR'
 			];
 		}
 
@@ -1601,7 +1607,7 @@ class SolrWebService {
 
 		// Make the request.
 		$response = $this->_makeRequest($url, $params);
-		if (!($response instanceof \DOMXPath)) return [];
+		if (!($response instanceof DOMXPath)) return [];
 
 		// Extract suggestions for the last word in the query.
 		$nodeList = $response->query('//lst[@name="suggestions"]/lst[last()]');
@@ -1629,12 +1635,12 @@ class SolrWebService {
 		// Check whether the suggestion really concerns the
 		// last word of the user input.
 		if (!(isset($startOffset) && isset($endOffset)
-			&& PKPString::strlen($userInput) == $endOffset)) return [];
+			&& Str::length($userInput) == $endOffset)) return [];
 
 		// Replace the last word in the user input
 		// with the suggestions maintaining case.
 		foreach($suggestions as &$suggestion) {
-			$suggestion = $userInput . PKPString::substr($suggestion, $endOffset - $startOffset);
+			$suggestion = $userInput . Str::substr($suggestion, $endOffset - $startOffset);
 		}
 		return $suggestions;
 	}
@@ -1660,7 +1666,7 @@ class SolrWebService {
 		// facet results. This may be an invalid query
 		// but edismax will deal gracefully with syntax
 		// errors.
-		$userInput = substr($userInput, 0, -PKPString::strlen($facetPrefix));
+		$userInput = substr($userInput, 0, -Str::length($facetPrefix));
 
 		switch ($fieldName) {
 			case 'query':
@@ -1699,7 +1705,7 @@ class SolrWebService {
 
 		// Make the request.
 		$response = $this->_makeRequest($url, $params);
-		if ( ! $response instanceof \DOMXPath ) return [];
+		if ( ! $response instanceof DOMXPath ) return [];
 
 		// Extract term suggestions.
 		$nodeList = $response->query('//lst[@name="facet_fields"]/lst/int/@name');
@@ -1740,8 +1746,8 @@ class SolrWebService {
 			'mlt.qf' => $this->_expandFieldList(['title', 'abstract', 'galleyFullText']),
 			'df' => 'submission_id',
 		];
-		$response = $this->_makeRequest($url, $params); /* @var $response \DOMXPath */
-		if (! $response instanceof \DOMXPath) return null;
+		$response = $this->_makeRequest($url, $params); /** @var DOMXPath $response  */
+		if (! $response instanceof DOMXPath) return null;
 
 		// Check whether a query will actually return something.
 		// This is an optimization to avoid unnecessary requests
@@ -1794,7 +1800,7 @@ class SolrWebService {
 		$url = $this->_getCoreAdminUrl() . 'luke';
 		$params = ['id' => $this->_instId . '-' . $articleId];
 		$response = $this->_makeRequest($url, $params);
-		if (! $response instanceof \DOMXPath) return false;
+		if (! $response instanceof DOMXPath) return false;
 
 		// Retrieve all fields from the response.
 		$doc = [];
@@ -1840,7 +1846,7 @@ class SolrWebService {
 		}
 
 		// Is the core online?
-		assert($response instanceof \DOMXPath);
+		assert($response instanceof DOMXPath);
 		$nodeList = $response->query('/response/lst[@name="status"]/lst[@name="ojs"]/lst[@name="index"]/int[@name="numDocs"]');
 
 		// Check whether the core is active.
@@ -1936,7 +1942,7 @@ class SolrWebService {
 		// Make a request to the luke request handler.
 		$url = $this->_getCoreAdminUrl() . 'luke';
 		$response = $this->_makeRequest($url);
-		if (! $response instanceof \DOMXPath) return false;
+		if (! $response instanceof DOMXPath) return false;
 
 		// Retrieve the field names from the response.
 		$nodeList = $response->query('/response/lst[@name="fields"]/lst/@name');
@@ -2051,7 +2057,7 @@ class SolrWebService {
 	/**
 	 * Retrieve the number of indexed documents
 	 * from a DIH response XML
-	 * @param $result \DOMXPath
+	 * @param $result DOMXPath
 	 * @return integer
 	 */
 	function _getDocumentsProcessed($result) {
