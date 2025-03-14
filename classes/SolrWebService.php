@@ -1624,8 +1624,10 @@ class SolrWebService {
 
 					case 'suggestion':
 						$suggestions = [];
-						foreach($childNode->childNodes as $suggestionNode) {
-							$suggestions[] = $suggestionNode->textContent;
+						foreach($childNode->childNodes as $suggestionNodeChild) {
+							if ($suggestionNodeChild->localName == 'str') {
+								$suggestions[] = $suggestionNodeChild->textContent;
+							}
 						}
 						break;
 				}
@@ -1695,8 +1697,10 @@ class SolrWebService {
 			$params['q'] = '*:*';
 		}
 		if ($fieldName == 'query') {
+			$params['qf'] = '*';
 			$params['facet.field'] = 'default_spell';
 		} else {
+			$params['q'] .= '*';
 			$params['facet.field'] = $fieldName . '_spell';
 		}
 		$facetPrefixLc = strtolower($facetPrefix);

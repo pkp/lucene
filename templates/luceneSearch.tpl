@@ -28,8 +28,7 @@
 		</script>
 	{/if}
 		<span id="queryAutocomplete">
-			<input type="text" id="query_input" name="query" size="{$size|default:40}" maxlength="255" value="{$query|escape}"
-			   class="textField"/>
+			<input type="text" id="query_input" name="query" value="{$query|escape}" class="query" placeholder="{translate|escape key="common.search"}" />
 			<input type="hidden" id="query" name="query_hidden" value="{$query|escape}"/>
 		</span>
 
@@ -63,8 +62,7 @@
 		</script>
 	{/if}
 		<span id="simpleQueryAutocomplete">
-			<input type="text" id="simpleQuery_input" name="query" size="{$size|default:40}" maxlength="255"
-				   value="{$query|escape}" class="textField"/>
+			<input type="text" id="simpleQuery_input" name="query" value="{$query|escape}" class="query" placeholder="{translate|escape key="common.search"}" />
 			<input type="hidden" id="simpleQuery" name="simpleQuery_hidden" value="{$query|escape}"/>
 		</span>
 

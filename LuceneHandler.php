@@ -14,6 +14,7 @@
 namespace APP\plugins\generic\lucene;
 
 use APP\handler\Handler;
+use APP\plugins\generic\lucene\classes\SolrSearchRequest;
 use APP\plugins\generic\lucene\classes\SolrWebService;
 use PKP\core\JSONMessage;
 use APP\search\ArticleSearch;
