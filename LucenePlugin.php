@@ -1265,4 +1265,10 @@ class LucenePlugin extends GenericPlugin {
 			4 => __('plugins.generic.lucene.sectionForm.ranking.high')
 		];
 	}
+	function getCanDisable() {
+    if ($this->getCurrentContextId() != \PKPApplication::CONTEXT_SITE && $this->getSetting(\PKPApplication::CONTEXT_SITE, 'enabled')) {
+        return false;
+    }
+    return true;
+	}
 }
