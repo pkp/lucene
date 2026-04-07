@@ -48,7 +48,8 @@ class LuceneSettingsForm extends Form {
 		parent::__construct($plugin->getTemplateResource('settingsForm.tpl'));
 
 		// Server configuration.
-		$this->addCheck(new FormValidatorUrl($this, 'searchEndpoint', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.searchEndpointRequired'));
+		# UZH CHANGE OJS-265 2025/02/28/mb Remove more strict FormValidatorUrl check because of new jqueryValidation version
+		$this->addCheck(new FormValidator($this, 'searchEndpoint', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.searchEndpointRequired'));
 		// The username is used in HTTP basic authentication and according to RFC2617 it therefore may not contain a colon.
 		$this->addCheck(new FormValidatorRegExp($this, 'username', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.usernameRequired', '/^[^:]+$/'));
 		$this->addCheck(new FormValidator($this, 'password', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.passwordRequired'));
@@ -165,7 +166,6 @@ class LuceneSettingsForm extends Form {
 			'orderByDate',
 			'orderByArticle',
 			'orderByJournal',
-			'useSolr7',
 		];
 	}
 

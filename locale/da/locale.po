@@ -357,8 +357,39 @@ msgstr "Tidsskriftstitel"
 msgid "plugins.generic.lucene.settings.orderBy.article"
 msgstr "Artikeltitel"
 
-msgid "plugins.generic.lucene.settings.solr7"
-msgstr "Køre på Solr 7"
+msgid "plugins.generic.lucene.article.indexing.error.subject"
+msgstr "Artikelindekseringsfejl"
 
-msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
-msgstr "Check hvis du bruger Solr 7 "
+msgid "plugins.generic.lucene.article.indexing.error.body"
+msgstr ""
+"Der opstod en indekseringsfejl under opdatering af artiklens indeks.<br /><br />"
+"Fejlmeddelelsen genereret af webtjenesten (hvis nogen): \"{$error}\"<br /><br />"
+"Denne e-mail blev genereret af Open Journal Systems' Lucene-søge-plugin."
+
+msgid "plugins.generic.lucene.article.indexing.error.description"
+msgstr "Denne e-mail-skabelon bruges til at underrette den tekniske kontaktperson hos det tidsskrift, hvor der opstod en fejl under artikelindekseringen."
+
+msgid "plugins.generic.lucene.journal.indexing.error.subject"
+msgstr "Tidsskriftsindekseringsfejl"
+
+msgid "plugins.generic.lucene.journal.indexing.error.body"
+msgstr ""
+"Der opstod en indekseringsfejl under indeksering af tidsskriftet \"{$contextName}\".<br /><br />"
+"Fejlmeddelelsen genereret af webtjenesten (hvis nogen): \"{$error}\"<br /><br />"
+"Denne e-mail blev genereret af Open Journal Systems' Lucene-søge-plugin."
+
+msgid "plugins.generic.lucene.journal.indexing.error.description"
+msgstr "Denne e-mail-skabelon bruges til at underrette den tekniske kontaktperson hos det tidsskrift, hvor der opstod en fejl under tidsskriftsindekseringen."
+
+msgid "plugins.generic.lucene.search.service.error.subject"
+msgstr "Fejlmelding fra tidsskriftets søgetjeneste"
+
+msgid "plugins.generic.lucene.search.service.error.body"
+msgstr ""
+"Der opstod en fejl, mens nogen forsøgte at søge i installationen \"{$siteName}\".<br /><br />"
+"Fejlmeddelelsen genereret af webtjenesten (hvis nogen): \"{$error}\"<br /><br />"
+"Denne e-mail blev genereret af Open Journal Systems' Lucene-søge-plugin."
+
+msgid "plugins.generic.lucene.search.service.error.description"
+msgstr "Denne e-mail-skabelon bruges til at underrette den tekniske kontaktperson hos det tidsskrift, hvor der opstod en fejl under forsøget på at få adgang til Solr-søgetjenesten."
+

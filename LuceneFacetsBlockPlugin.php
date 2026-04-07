@@ -129,7 +129,8 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 	/**
 	 * @see BlockPlugin::getBlockTemplateFilename()
 	 */
-	function getBlockTemplateFilename() {
+	function getBlockTemplateFilename(): string 
+    {
 		// Return the facets template.
 		return 'facetsBlock.tpl';
 	}
@@ -176,4 +177,9 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		return $this->_lucenePlugin;
 	}
 }
+
+if (!PKP_STRICT_MODE) {
+    class_alias('\APP\plugins\generic\lucene\LuceneFacetsBlockPlugin', '\LuceneFacetsBlockPlugin');
+}
+
 
