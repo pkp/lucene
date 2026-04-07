@@ -145,9 +145,6 @@ msgstr "Título de la revista"
 msgid "plugins.generic.lucene.settings.orderBy.article"
 msgstr "Título del artículo"
 
-msgid "plugins.generic.lucene.settings.solr7"
-msgstr "Usar Solr7"
-
 msgid "plugins.generic.lucene.faceting.coverage"
 msgstr "Cobertura"
 
@@ -347,9 +344,6 @@ msgstr "Rango inferior"
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "Rango superior"
 
-msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
-msgstr "Compruebe si está utilizando Solr 7"
-
 msgid "plugins.generic.lucene.settings.indexRebuildDescription"
 msgstr ""
 "Si su índice Lucene se ha quedado obsoleto o dañado, puede volver a indexar "
@@ -379,3 +373,40 @@ msgstr ""
 "ejemplo, diaria o mensualmente, dependiendo de la frecuencia con la que "
 "actualice las estadísticas. Para ello, haga clic en el botón de arriba. Vea "
 "los detalles en 'plugins/generic/lucene/README'."
+
+msgid "plugins.generic.lucene.article.indexing.error.subject"
+msgstr "Error en la indexación del artículo"
+
+msgid "plugins.generic.lucene.article.indexing.error.body"
+msgstr ""
+"Ha ocurrido un error de indexación mientras se actualizaba el índice del artículo.<br /><br />"
+"El error generado por el servicio web es: \"{$error}\"<br /><br />"
+"Este correo electrónico lo ha generado el módulo de búsqueda Open Journal Systems' Lucene."
+
+msgid "plugins.generic.lucene.article.indexing.error.description"
+msgstr "Esta plantilla de correo se utiliza para notificar al contacto técnico de una revista que ha ocurrido un error durante la indexación de un artículo."
+
+msgid "plugins.generic.lucene.journal.indexing.error.subject"
+msgstr "Error en la indexación de la revista"
+
+msgid "plugins.generic.lucene.journal.indexing.error.body"
+msgstr ""
+"Ha ocurrido un error de indexación mientras se indexaba la revista \"{$contextName}\".<br /><br />"
+"El mensaje de error generado por el servicio web es: \"{$error}\"<br /><br />"
+"Este correo electrónico lo ha generado el módulo de búsqueda Open Journal Systems' Lucene."
+
+msgid "plugins.generic.lucene.journal.indexing.error.description"
+msgstr "Esta plantilla de correo se utiliza para notificar al contacto técnico de una revista que ha ocurrido un error durante la indexación de una revista."
+
+msgid "plugins.generic.lucene.search.service.error.subject"
+msgstr "Error en el servicio de búsqueda de la revista"
+
+msgid "plugins.generic.lucene.search.service.error.body"
+msgstr ""
+"Ha ocurrido un error mientras alguien intentaba buscar la instalación \"{$siteName}\".<br /><br />"
+"El mensaje de error generado por el servicio web es: \"{$error}\"<br /><br />"
+"Este correo electrónico lo ha generado el módulo de búsqueda Open Journal Systems' Lucene."
+
+msgid "plugins.generic.lucene.search.service.error.description"
+msgstr "Esta plantilla de correo se utiliza para notificar al contacto técnico de una revista que ha ocurrido un error al intentar acceder al servicio de búsqueda Solr."
+

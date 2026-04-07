@@ -113,3 +113,37 @@ msgstr "De gevraagde core '{$core}' is niet te vinden op de solr server. Is die 
 
 msgid "plugins.generic.lucene.message.indexOnline"
 msgstr "Index met {$numDocs} documenten online."
+
+msgid "plugins.generic.lucene.search.service.error.subject"
+msgstr "Tijdschrif zoekservice fout"
+
+msgid "plugins.generic.lucene.search.service.error.body"
+msgstr ""
+"Er is een fout opgetreden toen iemand probeerde te zoeken in \"{$siteName}\".<br /><br />"
+"Deze e-mail is gegenereerd door de Lucene zoekplugin van Open Journal Systems."
+
+msgid "plugins.generic.lucene.search.service.error.description"
+msgstr "Dit e-mail sjabloon wordt gebruikt om de technische contactpersoon van een tijdschrift op de hoogte te brengen van een fout toen iemand de solr zoekdienst probeerde te gebruiken"
+
+msgid "plugins.generic.lucene.journal.indexing.error.subject"
+msgstr "Indexeerfout bij tijdschrift"
+
+msgid "plugins.generic.lucene.journal.indexing.error.body"
+msgstr ""
+"Er is een indexeerfout opgetreden bij het indexeren van het tijdschrift \"{$contextName}\".<br /><br />"
+"Deze e-mail is gegenereerd door de Lucene zoekplugin van Open Journal Systems."
+
+msgid "plugins.generic.lucene.journal.indexing.error.description"
+msgstr "Dit e-mail sjabloon wordt gebruikt om de technische contactpersoon op de hoogte te brengen van een fout bij het indexeren van het tijdschrift."
+
+msgid "plugins.generic.lucene.article.indexing.error.subject"
+msgstr "Artikel indexeerfout"
+
+msgid "plugins.generic.lucene.article.indexing.error.body"
+msgstr ""
+"Er is een indexeerfout opgetreden bij het indexeren van het artikel \"{$submissionTitle}\" in tijdschrift \"{$contextName}\".<br /><br />"
+"Deze e-mail is gegenereerd door de Lucene zoekplugin van Open Journal Systems."
+
+msgid "plugins.generic.lucene.article.indexing.error.description"
+msgstr "Dit e-mailsjabloon wordt gebruikt voor het op de hoogte brengen van  de technische contactpersoon van een tijdschrift van een indexeerfout van een artikel."
+

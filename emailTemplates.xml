@@ -11,7 +11,19 @@
   *
   -->
 <emails>
-	<email key="LUCENE_ARTICLE_INDEXING_ERROR_NOTIFICATION" can_edit="1" can_disable="1"/>
-	<email key="LUCENE_JOURNAL_INDEXING_ERROR_NOTIFICATION" can_edit="1" can_disable="1"/>
-	<email key="LUCENE_SEARCH_SERVICE_ERROR_NOTIFICATION" can_edit="1" can_disable="1"/>
+	<email key="LUCENE_ARTICLE_INDEXING_ERROR_NOTIFICATION" can_edit="1" can_disable="1" 
+        subject="plugins.generic.lucene.article.indexing.error.subject"
+        description="plugins.generic.lucene.article.indexing.error.description"
+        body="plugins.generic.lucene.article.indexing.error.body"
+    />
+	<email key="LUCENE_JOURNAL_INDEXING_ERROR_NOTIFICATION" can_edit="1" can_disable="1"
+        subject="plugins.generic.lucene.journal.indexing.error.subject"
+        description="plugins.generic.lucene.journal.indexing.error.description"
+        body="plugins.generic.lucene.journal.indexing.error.body"
+    />
+	<email key="LUCENE_SEARCH_SERVICE_ERROR_NOTIFICATION" can_edit="1" can_disable="1"
+        subject="plugins.generic.lucene.search.service.error.subject"
+        description="plugins.generic.lucene.search.service.error.description"
+        body="plugins.generic.lucene.search.service.error.body"
+    />
 </emails>

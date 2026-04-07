@@ -331,3 +331,36 @@ msgstr "Normale"
 
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "Classifica più in alto"
+msgid "plugins.generic.lucene.article.indexing.error.subject"
+msgstr "Errore nell'indicizzazione di un articolo"
+
+msgid "plugins.generic.lucene.article.indexing.error.body"
+msgstr ""
+"Si è verificato un errore durante l'indicizzazione dell'articolo \"{$submissionTitle}\" pubblicato in \"{$contextName}\".<br /><br />"
+"Questa email è generata automaticamente dal plugin Lucene search di OJS"
+
+msgid "plugins.generic.lucene.article.indexing.error.description"
+msgstr "Questo messaggio viene inviato al contatto tecnico di una rivista in caso di errori occorsi durante l'indicizzazione di un articolo."
+
+msgid "plugins.generic.lucene.journal.indexing.error.subject"
+msgstr "Errore nell'indicizzazione della rivista"
+
+msgid "plugins.generic.lucene.journal.indexing.error.body"
+msgstr ""
+"Si è verificato un errore durante l'indicizzazione di \"{$contextName}\".<br /><br />"
+"Questa email è stata generata automaticamente dal plugin Lucene search di OJS."
+
+msgid "plugins.generic.lucene.journal.indexing.error.description"
+msgstr "Email inviata al supporto tecnico di una rivista in caso di errori occorsi durante l'indicizzazione della rivista."
+
+msgid "plugins.generic.lucene.search.service.error.subject"
+msgstr "Errore nel sistema di ricerca"
+
+msgid "plugins.generic.lucene.search.service.error.body"
+msgstr ""
+"Si è verificato un errore quando qualcuno ha tentato di accedere al sistema di ricerca di \"{$siteName}\".<br /><br />"
+"Questa email è stata generata automaticamente dal plugin Lucene search di OJS."
+
+msgid "plugins.generic.lucene.search.service.error.description"
+msgstr "Questa email viene inviata al supporto tecnico di una rivista quando avviene un errore durante una ricerca."
+

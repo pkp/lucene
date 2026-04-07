@@ -460,12 +460,6 @@ msgstr "Název časopisu"
 msgid "plugins.generic.lucene.settings.orderBy.article"
 msgstr "Název článku"
 
-msgid "plugins.generic.lucene.settings.solr7"
-msgstr "Použít Solr 7"
-
-msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
-msgstr "Zkontrolovat, zda používáte Solr 7"
-
 msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
 msgstr ""
 "\n"
@@ -488,3 +482,39 @@ msgstr "Hodnotit normálně"
 
 msgid "plugins.generic.lucene.settings.orderBy.date"
 msgstr "Datum zveřejnění"
+
+msgid "plugins.generic.lucene.article.indexing.error.subject"
+msgstr "Chyby indexování článku"
+
+msgid "plugins.generic.lucene.article.indexing.error.description"
+msgstr "Tato šablona emailu je používána pro upozornění technického kontaktu časopisu na skutečnost, že došlo k chybě během indexování článku."
+
+msgid "plugins.generic.lucene.article.indexing.error.body"
+msgstr ""
+"Během aktualizace tohoto článku došlo k chybě indexování.<br /><br />"
+"Chybové hlášení bylo vygenerováno webovou službou (pokud existuje): \"{$error}\"<br /><br />"
+"Tento email byl vytvořen pluginem hledání Lucene systému Open Journal Systems."
+
+msgid "plugins.generic.lucene.journal.indexing.error.subject"
+msgstr "Chyba indexování časopisu"
+
+msgid "plugins.generic.lucene.journal.indexing.error.description"
+msgstr "Tato šablona emailu je používána pro upozornění technického kontaktu časopisu na skutečnost, že došlo k chybě během indexování časopisu."
+
+msgid "plugins.generic.lucene.journal.indexing.error.body"
+msgstr ""
+"Došlo k chybě během indexování časopisu \"{$contextName}\".<br /><br />"
+"Chybové hlášení bylo vygenerováno webovou službou (pokud existuje): \"{$error}\"<br /><br />"
+"Tento email byl vytvořen pluginem hledání Lucene systému Open Journal Systems."
+
+msgid "plugins.generic.lucene.search.service.error.subject"
+msgstr "Chyba služby hledání"
+
+msgid "plugins.generic.lucene.search.service.error.description"
+msgstr "Tato šablona emailu je používána pro upozornění technického kontaktu časopisu na skutečnost, že došlo k chybě během snahy o přístup k hledací službě Solr."
+
+msgid "plugins.generic.lucene.search.service.error.body"
+msgstr ""
+"Došlo k chybě, když se někdo pokoušel hledat instalaci \"{$siteName}\".<br /><br />"
+"Chybové hlášení bylo vygenerováno webovou službou (pokud existuje): \"{$error}\"<br /><br />"
+"Tento email byl vytvořen pluginem hledání Lucene systému Open Journal Systems."

@@ -27,9 +27,9 @@ use APP\submission\Submission;
 use DOMDocument;
 use DOMXPath;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use GuzzleHttp\Psr7\Query;
-use PKP\cache\CacheManager;
 use PKP\core\PKPPageRouter;
 use PKP\core\PKPString;
 use PKP\facades\Locale;
@@ -326,7 +326,6 @@ class SolrWebService {
 		} else {
 			$journalDao = DAORegistry::getDAO('JournalDAO'); /** @var JournalDAO $journalDao */
 			$journal = $journalDao->getById($journalId);
-			$journal =
 			$this->_journalCache[$journalId] = $journal;
 		}
 
@@ -425,8 +424,9 @@ class SolrWebService {
 		// Titles are used for sorting, we therefore need
 		// them in all supported locales.
 		assert(!empty($supportedLocales));
+		$localizedTitles = $publication->getFullTitles();
 		foreach($supportedLocales as $locale) {
-			$localizedTitle = $publication->getFullTitles()[$locale];
+			$localizedTitle = $localizedTitles[$locale] ?? null;
 			if (!is_null($localizedTitle)) {
 				// Add the localized title.
 				$titleNode = $articleDoc->createElement('title');
@@ -458,9 +458,7 @@ class SolrWebService {
 		}
 
 		// Add disciplines.
-		/** @var SubmissionDisciplineDAO $submissionDisciplineDao */
-		$submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
-		$disciplines = $submissionDisciplineDao->getDisciplines($publication->getId());
+		$disciplines = $publication->getData('disciplines');
 
 		foreach ($disciplines as $locale => $discipline) {
 			if (empty($discipline)) {
@@ -485,27 +483,23 @@ class SolrWebService {
 			$articleNode->appendChild($disciplineList);
 		}
 
-		/** @var SubmissionSubjectDAO $submissionSubjectDao */
-		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
-		$subjects = $submissionSubjectDao->getSubjects($publication->getId());
+        // Add subjects
+		$subjects = $publication->getData('subjects');
 		foreach ($subjects as $locale => $subject) {
 			if (empty($subject)) {
 				unset($subjects[$locale]);
 			}
 		}
 
-		// in OJS2, keywords and subjects where put together into the subject Facet.
-		// For now, I do the same here. TODO: Decide if this is wanted.
-		/** @var mixed SubmissionKeywordDAO $submissionKeywordDAO */
-		$submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
-		$keywords = $submissionKeywordDAO->getKeywords($publication->getId());
+        // Add keywords
+		$keywords = $publication->getData('keywords');
 		foreach($keywords as $locale => $keyword) {
 			if (empty($keyword)) {
 				unset($keywords[$locale]);
 			}
 		}
 
-		// Add subjects and keywords.
+		// Add subjects and keywords
 		if (!empty($subjects) || !empty($keywords)) {
 			$subjectList = $articleDoc->createElement('subjectList');
 
@@ -842,9 +836,9 @@ class SolrWebService {
 	 *  an alternative query string (if any) and the number of hits for this
 	 *  string. Null if an error occurred while querying the server.
 	 */
-	function retrieveResults($searchRequest, &$totalResults, $solr7 = false) {
+	function retrieveResults($searchRequest, &$totalResults) {
 		// Construct the main query.
-		$params = $this->_getSearchQueryParameters($searchRequest, $solr7);
+		$params = $this->_getSearchQueryParameters($searchRequest);
 
 		// If we have no filters at all then return an
 		// empty result set.
@@ -1114,7 +1108,7 @@ class SolrWebService {
 	 * @return array|null A parameter array or null if something
 	 *  went wrong.
 	 */
-	function _getSearchQueryParameters($searchRequest, $solr7 = false) {
+	function _getSearchQueryParameters($searchRequest) {
 		// Pre-filter and translate query phrases.
 		$subQueries = [];
 		foreach($searchRequest->getQuery() as $fieldList => $searchPhrase) {
@@ -1127,7 +1121,7 @@ class SolrWebService {
 
 		// We differentiate between simple and multi-phrase queries.
 		$subQueryCount = count($subQueries);
-		if ($subQueryCount == 1 || $solr7) {
+		if ($subQueryCount == 1) {
 			// Use a simplified query that allows us to provide
 			// alternative spelling suggestions.
 			$fieldList = key($subQueries);
@@ -1220,7 +1214,7 @@ class SolrWebService {
 
 		// Translate the search phrase.
 		foreach($translationTable as $translateFrom => $translateTo) {
-			$searchPhrase = PKPString::regexp_replace("/(^|\s)$translateFrom(\s|$)/i", "\\1$translateTo\\2", $searchPhrase);
+			$searchPhrase = preg_replace("/(^|\s)$translateFrom(\s|$)/i", "\\1$translateTo\\2", $searchPhrase);
 		}
 
 		return $searchPhrase;
@@ -1317,39 +1311,16 @@ class SolrWebService {
 	/**
 	 * Returns an array with all (dynamic) fields in the index.
 	 *
-	 * NB: This is cached data so after an index update we may
-	 * have to flush the index to re-read the current index state.
-	 *
 	 * @param $fieldType string Either 'search' or 'sort'.
 	 * @return array
 	 */
 	function getAvailableFields($fieldType) {
-		$cache = $this->_getCache();
-		$fieldCache = $cache->get($fieldType);
-		return $fieldCache;
+        $expiration = 24 * 60 * 60;
+        return Cache::remember('lucene-' . $fieldType, $expiration, function() use ($fieldType) {
+           return $this->getFieldCache($fieldType);
+        });
 	}
 
-	/**
-	 * Get the field cache.
-	 * @return FileCache
-	 */
-	function _getCache() {
-		if (!isset($this->_fieldCache)) {
-			// Instantiate a file cache.
-			$cacheManager = CacheManager::getManager();
-			$this->_fieldCache = $cacheManager->getFileCache(
-				'plugins-lucene', 'fieldCache',
-				[$this, '_cacheMiss']
-			);
-
-			// Check to see if the data is outdated (24 hours).
-			$cacheTime = $this->_fieldCache->getCacheTime();
-			if (!is_null($cacheTime) && $cacheTime < (time() - 24 * 60 * 60)) {
-				$this->_fieldCache->flush();
-			}
-		}
-		return $this->_fieldCache;
-	}
 
 	/**
 	 * Return a list of all text fields that may occur in the
@@ -1784,14 +1755,6 @@ class SolrWebService {
 	}
 
 	/**
-	 * Flush the field cache.
-	 */
-	function flushFieldCache() {
-		$cache = $this->_getCache();
-		$cache->flush();
-	}
-
-	/**
 	 * Retrieve a document directly from the index
 	 * (for testing/debugging purposes only).
 	 *
@@ -1915,12 +1878,11 @@ class SolrWebService {
 	/**
 	 * Refresh the cache from the solr server.
 	 *
-	 * @param $cache FileCache
 	 * @param $id string The field type.
 	 *
 	 * @return array The available field names.
 	 */
-	function _cacheMiss($cache, $id) {
+	function getFieldCache($id) {
 		assert(in_array($id, ['search', 'sort']));
 
 		// Get the fields that may be found in the index.
@@ -2007,7 +1969,6 @@ class SolrWebService {
 			}
 		}
 
-		$cache->setEntireCache($fieldCache);
 		return $fieldCache[$id];
 	}
 

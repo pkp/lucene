@@ -57,6 +57,8 @@ class LucenePlugin extends GenericPlugin {
 	/** @var array */
 	var $_facets;
 
+	public $application;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -176,7 +178,7 @@ class LucenePlugin extends GenericPlugin {
 				Hook::add('Templates::Manager::Sections::SectionForm::AdditionalMetadata', [$this, 'callbackTemplateSectionFormAdditionalMetadata']);
 			}
 
-			PluginRegistry::register('blocks', new LuceneFacetsBlockPlugin($this), $this->getPluginPath());
+			PluginRegistry::register('blocks', new \APP\plugins\generic\lucene\LuceneFacetsBlockPlugin($this), $this->getPluginPath());
 
 
 			// Register callbacks (view-level).
@@ -238,12 +240,6 @@ class LucenePlugin extends GenericPlugin {
 		return ($this->getPluginPath() . '/emailTemplates.xml');
 	}
 
-	/**
-	 * @see Plugin::getInstallEmailTemplateDataFile()
-	 */
-	function getInstallEmailTemplateDataFile() {
-		return ($this->getPluginPath() . '/locale/{$installedLocale}/emailTemplates.xml');
-	}
 
 	/**
 	 * @see Plugin::isSitePlugin()
@@ -299,7 +295,6 @@ class LucenePlugin extends GenericPlugin {
 					$journal = null;
 					if ($request->getUserVar('journalToReindex')) {
 						$journalId = $request->getUserVar('journalToReindex');
-						/** @var JournalDAO $journalDao */
 						$journalDao = DAORegistry::getDAO('JournalDAO');
 						$journal = $journalDao->getById($journalId);
 						if (! $journal instanceof \APP\journal\Journal) $journal = null;
@@ -369,7 +364,7 @@ class LucenePlugin extends GenericPlugin {
 		if (empty($enabledFacetCategories)) return false;
 
 		// Instantiate the block plug-in for facets.
-		$luceneFacetsBlockPlugin = new LuceneFacetsBlockPlugin($this);
+		$luceneFacetsBlockPlugin = new \APP\plugins\generic\lucene\LuceneFacetsBlockPlugin($this);
 
 		// Add the plug-in to the registry.
 		$plugins =& $args[1];
@@ -486,7 +481,7 @@ class LucenePlugin extends GenericPlugin {
 
 		// Call the solr web service.
 		$solrWebService = $this->getSolrWebService();
-		$result = $solrWebService->retrieveResults($searchRequest, $totalResults, $this->getSetting(CONTEXT_SITE, 'useSolr7'));
+		$result = $solrWebService->retrieveResults($searchRequest, $totalResults);
 		if (is_null($result)) {
 			$error = $solrWebService->getServiceMessage();
 			$this->_informTechAdmin($error, $journal, true);
@@ -544,7 +539,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackArticleMetadataChanged($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::articleMetadataChanged');
 		list($article) = $params;
-		/** @var Submission $article  */
+		/* @var $article Article */
 		$this->_solrWebService->setArticleStatus($article->getId());
 		// in OJS core in many cases callbackArticleChangesFinished is not called.
 		// So we call it ourselves, it won't do anything is pull-indexing is active
@@ -559,7 +554,7 @@ class LucenePlugin extends GenericPlugin {
 	function callbackSubmissionFilesChanged($hookName, $params) {
 		assert($hookName == 'ArticleSearchIndex::submissionFilesChanged');
 		list($article) = $params;
-		/** @var Submission $article */
+		/* @var $article Article */
 		$this->_solrWebService->setArticleStatus($article->getId());
 
 		return true;
